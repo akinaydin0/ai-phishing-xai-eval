@@ -1,0 +1,7 @@
+Dataset,Source,Total emails,Positive class count,Imbalance ratio (positive:negative)
+Kaggle Phishing Email Dataset (full),Kaggle: naserabdullahalam/phishing-email-dataset,82486,42891,1.083 : 1
+"Kaggle Phishing Email Dataset (decontaminated, Enron-removed; used in fig 3)","Kaggle, with Enron.csv rows excluded",52719,28915,1.215 : 1
+"Enron-Spam (AUEB, Metsis et al. 2006; used in fig 3)",http://www2.aueb.gr/users/ion/data/enron-spam/preprocessed/,33716,17171,1.038 : 1
+PhishFuzzer seeds (Tóth et al. 2025),GitHub: DataPhish/PhishFuzzer — seed templates,3300,2200,2.000 : 1
+"PhishFuzzer variants (Tóth et al. 2025, all languages)",GitHub: DataPhish/PhishFuzzer — LLM variants,19800,13200,2.000 : 1
+PhishFuzzer variants (English only; used in fig 3),"GitHub: DataPhish/PhishFuzzer — LLM variants, language == en",19164,12660,1.946 : 1
