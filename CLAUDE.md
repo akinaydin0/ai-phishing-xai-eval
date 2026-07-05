@@ -1,94 +1,136 @@
 # MSc Thesis Project — Context
 
 ## Project
+
 **Title:** An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails
 **Author:** Akın Aydın, MSc Machine Learning, Liverpool John Moores University
-**Deadline:** Interim Report 22 May 2026 (very soon); Final dissertation late August 2026
-**Hardware:** Local workstation with NVIDIA RTX 3090 (24 GB VRAM)
+**Final deadline:** 31 August 2026 (dissertation). Interim report submitted May 2026.
+**Hardware:** Local workstation with NVIDIA RTX 3090 (24 GB VRAM).
 
-## Current Task
-**Phase: Exploratory Data Analysis (EDA)**
+The project designs and evaluates an **explainable** phishing-detection framework, with
+particular emphasis on **AI-generated** phishing. It compares three model families and
+integrates explainability as a first-class, quantitatively-evaluated component:
 
-Build a clean Jupyter notebook (`notebooks/01_eda.ipynb`) and supporting modules under `src/` to:
-1. Download two phishing email datasets (instructions in "Datasets" below)
-2. Load, clean, and characterise them
-3. Produce three figures (PNG, 200 dpi) saved under `figures/` for inclusion in the interim report
-4. Output a summary statistics table (`figures/table_dataset_summary.csv`)
-5. Provide a written EDA findings summary (200-300 words) as `notes/eda_findings.md`
+- **Classical models:** Logistic Regression, Naïve Bayes, SVM, Decision Tree, Random Forest.
+- **Ensembles:** XGBoost, LightGBM.
+- **Transformers:** BERT-base, DistilBERT, RoBERTa-base.
+- **XAI:** SHAP, LIME, Integrated Gradients — evaluated quantitatively for
+  **faithfulness, stability, and plausibility** (not treated as post-hoc decoration).
 
-The interim report submission this week needs *real numbers from this EDA*, not placeholders.
+## Current Phase
 
-## Repository Structure (already exists, do not recreate)
-msc-thesis/
-├── CLAUDE.md                 (this file)
-├── proposal.docx             (full project proposal)
-├── interim_slides.pptx       (university template / structure requirements)
-├── data/
-│   ├── raw/
-│   │   ├── phishing_email_dataset/   (Dataset 1 lands here)
-│   │   └── enron-spam/               (Dataset 2 lands here)
-│   └── processed/
-├── notebooks/
-├── src/
-├── figures/
-├── notes/
-└── report/
+**Data engineering — cleaning pipeline complete.** EDA (three-dataset acquisition,
+characterisation, cross-corpus comparison) is finished and committed. The cleaning
+pipeline (`src/cleaning.py`) is the current deliverable. Modelling has **not** started.
 
-## Datasets
+## Datasets (authoritative counts — do not change)
 
-### Dataset 1: Phishing Email Dataset (multi-source curated)
-- **Source:** Kaggle — naserabdullahalam/phishing-email-dataset
+### D1 — Kaggle multi-source phishing dataset
+- **Source:** Kaggle — `naserabdullahalam/phishing-email-dataset`
 - **URL:** https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset
-- **Target path:** `data/raw/phishing_email_dataset/`
-- **Note:** Kaggle CLI requires kaggle.json credentials. If unavailable, surface a `curl`/`wget` command or instruct me (Akın) to drop the ZIP into the folder manually.
+- **Path:** `data/raw/phishing_email_dataset/` (Kaggle CLI needs `kaggle.json`; if absent,
+  download the ZIP manually and unzip into this folder).
+- **Counts:** 82,486 emails aggregated from 6 sub-corpora (CEAS_08, Enron, Ling-Spam,
+  Nazario, Nigerian Fraud, SpamAssassin); ~52% phishing (label 1).
+- **Decontaminated:** 52,719 emails — the 29,767-row `Enron.csv` sub-collection removed,
+  because those rows duplicate the D2 legacy corpus and would contaminate cross-corpus
+  comparison. Use `load_phishing_dataset(decontaminate=True)`.
 
-### Dataset 2: Enron-Spam (Metsis et al., 2006)
-- **Source:** AUEB (Androutsopoulos lab)
-- **URL:** http://www2.aueb.gr/users/ion/data/enron-spam/
-- **Files:** 6 `.tar.gz` archives (enron1.tar.gz through enron6.tar.gz) plus pre-processed versions. Use the pre-processed ham/spam folder structure.
-- **Target path:** `data/raw/enron-spam/`
-- **Note:** Direct `wget`/`curl` from AUEB should work — try it.
+### D2 — Enron-Spam (Metsis et al. 2006)
+- **Source:** AUEB (Androutsopoulos lab), pre-processed ham/spam folder structure.
+- **URL:** http://www2.aueb.gr/users/ion/data/enron-spam/  (6 `.tar.gz`: enron1–enron6)
+- **Path:** `data/raw/enron-spam/`
+- **Counts:** 33,716 emails — 16,545 ham (label 0) / 17,171 spam (label 1).
 
-## Environment
-- Python 3.11 expected. A venv may already exist at `./venv/`; check before creating.
-- Required packages: pandas, numpy, matplotlib, seaborn, wordcloud, scikit-learn, jupyter, nltk
-- After install: `pip freeze > requirements.txt`
+### D3 — PhishFuzzer (Tóth et al. 2025)
+- **Source:** GitHub — `DataPhish/PhishFuzzer` (paper: arXiv 2511.21448; CC BY 4.0).
+- **Path:** `data/raw/phishfuzzer/` (two JSON files: original seeds + entity-rephrased variants).
+- **Counts:** 23,100 emails = 3,300 seeds + 19,800 LLM variants.
+- **Usage rule:** use **only the 19,800 variants** (`load_phishfuzzer(variant="variants")`).
+  Exclude non-English variants from cross-corpus comparisons.
+  - ⚠️ **Count correction:** the "742 non-English" figure refers to the *full 23,100-row
+    corpus*. Among the **19,800 variants only**, non-English count is **636** (635 after
+    cleaning). Use 636/635 when filtering variants; 742 applies only if seeds are included.
+- **Labels (binary):** Phishing + Spam → 1, Valid → 0 (Decision C2).
 
-## Methodology Context (informs analysis choices)
+## Known data facts (raw, from EDA — for sanity-checking downstream work)
 
-The literature review (already conducted) identified several methodological revisions to the original proposal. These affect what EDA should surface:
+- **Exact-duplicate rates — two definitions, kept distinct** so dissertation figures
+  never look contradictory:
+  - **9.6% exact-raw** on the untouched loaded text (D2; ≈3,253 rows). D1 ~0.5%, D3 ~0.3%.
+    This is the interim-report figure.
+  - **11.64% after normalisation** (D2; 3,926 rows) — header-stripping + whitespace-collapse
+    make additional near-identical bodies hash-identical. The cleaning pipeline removes this
+    larger set. See `notes/cleaning_report.md`.
+- **D2 class-balance finding:** 74% of D2's duplicates (2,918 of 3,926) are spam —
+  spam-campaign repetition. Mandatory full within-corpus dedup therefore shifts D2's spam
+  share **50.93% → 47.28% (−3.65pp)**. This is an expected consequence of the dedup rule,
+  not a defect; duplicates are never retained to preserve a ratio. Post-cleaning D2 is still
+  healthy (15,406 ham / 13,818 spam). The ±2pp class-shift guard is replaced for the three
+  frozen corpora by exact **determinism fingerprints** (`CLEANING_EXPECTED` in
+  `src/cleaning.py`): any drift hard-fails the pipeline and forces a conscious re-pin.
+- **Token-length medians:** modern phishing 62, modern legitimate 199, Enron ham 176,
+  Enron spam 138, AI-generated phishing 232.
+- **Pairwise Jaccard (top-500 tokens):** legacy↔modern 0.351, legacy↔AI 0.250,
+  modern↔AI 0.263 — three distinct lexical clusters; substantiates dataset-aware evaluation.
 
-1. **Pipeline A extension:** Classical preprocessing will add spelling correction, word segmentation, URL/email/phone placeholder substitution (Kulal et al. 2025). EDA should report counts of: tokens with potential misspellings, URLs, email addresses, phone numbers per class.
+## NON-NEGOTIABLE evaluation rules
 
-2. **Stopword removal as ablation variable:** Don't assume stopword removal is harmless. Report top tokens per class both with and without stopword filtering.
+1. **Dedup BEFORE any split.** Exact-deduplicate within each corpus before train/val/test
+   partitioning — duplicates spanning splits leak labels and inflate scores.
+2. **Decontamination as above.** D1 cross-corpus work uses the decontaminated 52,719-row
+   set; the Enron sub-collection lives only in D2.
+3. **Dataset-aware evaluation.** Cross-corpus degradation (train on one corpus, test on
+   another, both directions) is a **primary reported outcome**, not an afterthought.
+4. **No test-set leakage in tuning.** All hyperparameter optimisation happens on a
+   validation split of the **training** corpus only — never touch test sets during tuning.
+5. **Global seed = 42** for every stochastic step (splits, model init, resampling).
+6. **Results log.** Every experiment appends exactly one row to `results/results.csv`.
 
-3. **Dataset mixing risk (CRITICAL):** The original plan to combine Enron (2000s) with modern phishing is high-risk — a model can learn "old vs new language" rather than phishing intent. The EDA must produce a **cross-dataset comparison figure** (text length distribution overlaid) that visually demonstrates this temporal/domain shift. This figure will support the §4 (Difficulties) section of the interim report.
+## Conventions
 
-4. **Class imbalance:** Report imbalance ratios for both datasets. Plan mentions class-ratio experiments at 1:9, 1:19, 1:49.
+- **Directory map:**
+  ```
+  msc-thesis/
+  ├── CLAUDE.md
+  ├── data/
+  │   ├── raw/{phishing_email_dataset, enron-spam, phishfuzzer}/   (git-ignored)
+  │   ├── processed/                                               (loader caches)
+  │   └── cache/            clean_<id>.pkl + clean_<id>_report.json (cleaned corpora)
+  ├── src/       data_loader.py, cleaning.py
+  ├── notebooks/ 01_eda.ipynb (+ build script)
+  ├── figures/   PNG + PDF
+  ├── notes/     eda_findings.md, cleaning_report.md
+  ├── results/   results.csv
+  └── report/
+  ```
+- **Environment:** Python 3.11.9 venv at `./venv/`. Freeze after any install:
+  `./venv/Scripts/python.exe -m pip freeze > requirements.txt`.
+- **Figures:** save as **both PNG and PDF** (PNG for the report, PDF for LaTeX/vector).
+- **Scripts:** runnable **headless from the repo root** (e.g. `python -m src.cleaning --all`).
+- **Corpus ids:** `d1_full`, `d1_decontaminated`, `d2`, `d3`.
+
+## Supervisor feedback (5 Jul 2026 — honour throughout)
+
+1. Use **peer-reviewed** sources.
+2. **Clean before EDA** (data cleaning precedes exploratory analysis).
+3. Perform **hyperparameter optimisation** for all models.
+4. Keep references **consistent and with valid DOIs**.
+5. Complete the **STARD-AI checklist** on completion.
 
 ## Reference Errata (Important — do not cite these)
 
-During literature review, 3 references in `proposal.docx` were found to be fabricated (likely LLM hallucination). DO NOT cite them in any output you generate:
+Three references in the original `proposal.docx` were found to be fabricated (LLM
+hallucination). DO NOT cite them in any output:
 
-- Aljofey et al. (2022) "IEEE Access 10, 15321-15333" — does not exist. Real paper is Aljofey et al. (2022) in *Scientific Reports* 12, 8842, DOI 10.1038/s41598-022-10841-5.
+- Aljofey et al. (2022) "IEEE Access 10, 15321-15333" — does not exist. Real paper:
+  Aljofey et al. (2022), *Scientific Reports* 12, 8842, DOI 10.1038/s41598-022-10841-5.
 - Almeida et al. (2020) "Stopword removal, ESWA 153, 113434" — does not exist.
-- Alsharnouby et al. (2020) "IJHCS 141, 102432" — does not exist. Real paper is Alsharnouby et al. (2015) in IJHCS 82.
-
-## Output Expectations
-
-1. **Notebook:** `notebooks/01_eda.ipynb` — clean, sectioned with markdown headers, all cells re-runnable from a fresh kernel.
-2. **Three figures (PNG, 200 dpi) under `figures/`:**
-   - `fig_class_dist_phishing.png` — class distribution of Dataset 1
-   - `fig_text_length_phishing.png` — text length by class for Dataset 1
-   - `fig_cross_dataset_length.png` — overlaid length distributions of both datasets (CRITICAL — supports §4 of interim report)
-3. **Summary CSV:** `figures/table_dataset_summary.csv` with columns: Dataset, Source, Total emails, Positive class count, Imbalance ratio.
-4. **Written findings:** `notes/eda_findings.md` — 200-300 words covering: dataset sizes, class balance, length characteristics, evidence of temporal/domain shift, any data quality issues noticed.
-5. **Reproducibility:** add `src/data_loader.py` with two functions: `load_phishing_dataset()` and `load_enron_spam()`. The notebook imports from these rather than embedding loading logic.
+- Alsharnouby et al. (2020) "IJHCS 141, 102432" — does not exist. Real paper:
+  Alsharnouby et al. (2015), IJHCS 82.
 
 ## Working Style
 
-- Plan before executing. Show me the plan, get confirmation, then execute.
-- If a download fails, surface the exact `curl`/`wget` URL so I can run it manually.
-- Don't fabricate dataset statistics — if a dataset isn't downloaded yet, say so and stop.
-- Use the existing venv if present (`source venv/bin/activate`).
-- Commit at logical milestones with descriptive messages.
+- Plan before executing; checkpoint at methodological decisions before committing to them.
+- Flag inference vs cited fact. Don't fabricate statistics — if data isn't present, say so.
+- Use the existing venv. Commit at logical milestones with descriptive messages.
