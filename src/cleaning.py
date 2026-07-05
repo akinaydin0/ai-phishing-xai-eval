@@ -57,12 +57,14 @@ try:
         load_enron_spam,
         load_phishfuzzer,
         load_phishing_dataset,
+        load_phishing_sources,
     )
 except ImportError:  # pragma: no cover
     from data_loader import (
         load_enron_spam,
         load_phishfuzzer,
         load_phishing_dataset,
+        load_phishing_sources,
     )
 
 logger = logging.getLogger("cleaning")
@@ -77,19 +79,22 @@ MIN_TOKENS = 5            # drop_empty threshold: rows with < MIN_TOKENS are rem
 CLASS_BALANCE_TOL_PP = 2.0  # WARN threshold for UNPINNED corpora only (see below)
 
 # --- Determinism fingerprints (pinned expectations) --------------------------
-# The three corpora are frozen public snapshots, so cleaning is deterministic.
-# Each pinned corpus asserts its EXACT post-cleaning final row count and per-class
+# The corpora are frozen public snapshots, so cleaning is deterministic. Each
+# pinned corpus asserts its EXACT post-cleaning final row count and per-class
 # counts. Any drift (re-download, library/parser change, cleaning-logic change)
 # hard-fails the pipeline and forces a CONSCIOUS re-pin recorded in the commit
 # message. This replaces the generic ±2pp class-shift gate for pinned corpora —
 # the ±2pp check would otherwise trip on D2, whose duplicates are 74% spam so
 # mandatory full dedup legitimately shifts its spam share by -3.65pp.
 # Corpora NOT listed here fall back to the ±2pp shift check as a prominent WARN.
+# d1_decontaminated_sb = the subject+body natural-text D1 view used by cross-corpus
+# EDA v2 (52,704 text_combined vs 51,839 subject+body; see notes/decisions.md).
 CLEANING_EXPECTED = {
-    "d1_full":           {"final": 81970, "counts": {0: 39181, 1: 42789}},
-    "d1_decontaminated": {"final": 52704, "counts": {0: 23798, 1: 28906}},
-    "d2":                {"final": 29224, "counts": {0: 15406, 1: 13818}},
-    "d3":                {"final": 19799, "counts": {0: 6600,  1: 13199}},
+    "d1_full":              {"final": 81970, "counts": {0: 39181, 1: 42789}},
+    "d1_decontaminated":    {"final": 52704, "counts": {0: 23798, 1: 28906}},
+    "d1_decontaminated_sb": {"final": 51839, "counts": {0: 23777, 1: 28062}},
+    "d2":                   {"final": 29224, "counts": {0: 15406, 1: 13818}},
+    "d3":                   {"final": 19799, "counts": {0: 6600,  1: 13199}},
 }
 
 # Known email header keys stripped from the START of a body when they appear as
@@ -108,6 +113,20 @@ _HEADER_KEYS = {
 _HEADER_LINE_RE = re.compile(r"^\s*([A-Za-z][A-Za-z-]*)\s*:\s*(.*)$")
 _WHITESPACE_RE = re.compile(r"\s+")
 
+
+def _load_d1_srcbody():
+    """D1 decontaminated as raw subject+body (the 5 non-Enron per-source CSVs).
+
+    This is the natural-text counterpart to `d1_decontaminated`, whose loader
+    returns the Kaggle-preprocessed `text_combined` field. Cross-corpus EDA uses
+    this variant so D1 length/lexical stats are measured on the same
+    representation as D2/D3 (and as the interim report). See notes/decisions.md
+    ("D1 dual text representation").
+    """
+    src = load_phishing_sources()
+    return src[src["source"] != "Enron"].reset_index(drop=True)
+
+
 # Corpus registry for the CLI. expected_dup_pct is the reference figure recorded
 # in CLAUDE.md from the EDA phase (computed on raw loaded text); observed values
 # will differ slightly because normalisation collapses near-identical bodies.
@@ -122,6 +141,12 @@ CORPUS_SPECS = {
         "name": "D1 — Kaggle multi-source phishing (decontaminated, Enron removed)",
         "source": "Kaggle, with the 29,767-row Enron.csv sub-collection removed",
         "loader": lambda: load_phishing_dataset(decontaminate=True),
+        "expected_dup_pct": 0.5,
+    },
+    "d1_decontaminated_sb": {
+        "name": "D1 — Kaggle decontaminated, subject+body (natural text for cross-corpus EDA)",
+        "source": "Kaggle per-source CSVs (subject+body), Enron excluded",
+        "loader": _load_d1_srcbody,
         "expected_dup_pct": 0.5,
     },
     "d2": {

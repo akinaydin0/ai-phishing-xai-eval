@@ -19,9 +19,13 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 
 ## Current Phase
 
-**Data engineering — cleaning pipeline complete.** EDA (three-dataset acquisition,
-characterisation, cross-corpus comparison) is finished and committed. The cleaning
-pipeline (`src/cleaning.py`) is the current deliverable. Modelling has **not** started.
+**Data engineering — EDA v2 on cleaned corpora complete.** The cleaning pipeline
+(`src/cleaning.py`) and EDA v2 (`src/eda_v2.py`, figures under `figures/eda_v2/`,
+`notes/eda_v2_summary.md`) are finished and committed; all interim findings were verified to
+hold on the deduplicated data. **Next:** classical baseline models (Pipeline A). Modelling
+has **not** started.
+
+> **Standing rule:** every task's final commit updates this Current Phase section.
 
 ## Datasets (authoritative counts — do not change)
 
@@ -51,7 +55,7 @@ pipeline (`src/cleaning.py`) is the current deliverable. Modelling has **not** s
   - ⚠️ **Count correction:** the "742 non-English" figure refers to the *full 23,100-row
     corpus*. Among the **19,800 variants only**, non-English count is **636** (635 after
     cleaning). Use 636/635 when filtering variants; 742 applies only if seeds are included.
-- **Labels (binary):** Phishing + Spam → 1, Valid → 0 (Decision C2).
+- **Labels (binary):** Phishing + Spam → 1, Valid → 0 (see `notes/decisions.md`).
 
 ## Known data facts (raw, from EDA — for sanity-checking downstream work)
 
@@ -97,18 +101,21 @@ pipeline (`src/cleaning.py`) is the current deliverable. Modelling has **not** s
   │   ├── raw/{phishing_email_dataset, enron-spam, phishfuzzer}/   (git-ignored)
   │   ├── processed/                                               (loader caches)
   │   └── cache/            clean_<id>.pkl + clean_<id>_report.json (cleaned corpora)
-  ├── src/       data_loader.py, cleaning.py
+  ├── src/       data_loader.py, cleaning.py, eda_v2.py
   ├── notebooks/ 01_eda.ipynb (+ build script)
-  ├── figures/   PNG + PDF
-  ├── notes/     eda_findings.md, cleaning_report.md
+  ├── figures/   PNG + PDF (eda_v2/ = EDA-on-cleaned-data figures)
+  ├── notes/     eda_findings.md, cleaning_report.md, eda_v2_summary.md, decisions.md
   ├── results/   results.csv
   └── report/
   ```
 - **Environment:** Python 3.11.9 venv at `./venv/`. Freeze after any install:
   `./venv/Scripts/python.exe -m pip freeze > requirements.txt`.
 - **Figures:** save as **both PNG and PDF** (PNG for the report, PDF for LaTeX/vector).
-- **Scripts:** runnable **headless from the repo root** (e.g. `python -m src.cleaning --all`).
-- **Corpus ids:** `d1_full`, `d1_decontaminated`, `d2`, `d3`.
+- **Scripts:** runnable **headless from the repo root** (e.g. `python -m src.cleaning --all`,
+  `python -m src.eda_v2`).
+- **Corpus ids:** `d1_full`, `d1_decontaminated`, `d1_decontaminated_sb` (subject+body
+  natural-text D1 for cross-corpus EDA), `d2`, `d3`.
+- **Phase log:** every task's final commit updates the **Current Phase** section above.
 
 ## Supervisor feedback (5 Jul 2026 — honour throughout)
 
