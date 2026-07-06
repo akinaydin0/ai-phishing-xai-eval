@@ -17,6 +17,7 @@ Run: python -m src.experiments.run_baselines
 from __future__ import annotations
 
 import csv
+import json
 import time
 from datetime import datetime
 from pathlib import Path
@@ -220,6 +221,68 @@ def main():
             _append_row(_row("LogisticRegression", "length3", "subject_body", src, tgt,
                              n_src_train, len(te), m, time.time() - t0, "cross-corpus shortcut floor"))
 
+    # ---------- Trivial reference baselines (no training) ----------
+    print("\n== Trivial references: all_positive, majority_class ==")
+    for c in PRIMARY:
+        te = parts[c]["test"]
+        yte = te["label"].to_numpy()
+        ones = np.ones(len(yte), dtype=int)
+        m = _metrics(yte, ones, ones.astype(float))  # constant score -> AUC 0.5
+        _append_row(_row("all_positive", "none", TEXT_FIELD[c], c, c,
+                         0, len(te), m, 0.0, "trivial reference: predict all positive (label 1)"))
+        maj = int(yte.mean() >= 0.5)
+        preds = np.full(len(yte), maj, dtype=int)
+        m = _metrics(yte, preds, preds.astype(float))
+        _append_row(_row("majority_class", "none", TEXT_FIELD[c], c, c,
+                         0, len(te), m, 0.0, f"trivial reference: predict majority class ({maj})"))
+        print(f"  {c:22s} all_positive + majority({maj}) written")
+
+    # ---------- Run E: monotonic length probe (token_count only) ----------
+    # A single feature => the LR score is monotonic in token_count, so cross-corpus
+    # ROC-AUC exactly encodes direction: AUC>0.5 <=> longer emails are more positive
+    # in the target. The source coef sign gives the source's learned direction.
+    print("\n== Run E: monotonic length probe (token_count-only LR) ==")
+
+    def _toklen(texts):
+        return np.array([len(t.split()) for t in texts], dtype=float).reshape(-1, 1)
+
+    tok_sc, tok_lr, tok_sign = {}, {}, {}
+    for c in PRIMARY:
+        tr, te = parts[c]["train"], parts[c]["test"]
+        ytr, yte = tr["label"].to_numpy(), te["label"].to_numpy()
+        sc = StandardScaler().fit(_toklen(tr["text"]))  # scaling preserves the coef sign
+        lr = LogisticRegression(class_weight="balanced", max_iter=2000, random_state=SEED)
+        lr.fit(sc.transform(_toklen(tr["text"])), ytr)
+        sign = "+" if lr.coef_[0][0] > 0 else "-"
+        tok_sc[c], tok_lr[c], tok_sign[c] = sc, lr, sign
+        Xte = sc.transform(_toklen(te["text"]))
+        m = _metrics(yte, lr.predict(Xte), lr.predict_proba(Xte)[:, 1])
+        _append_row(_row("LogisticRegression", "token_count", TEXT_FIELD[c], c, c,
+                         len(tr), len(te), m, 0.0, f"monotonic length probe; coef_sign={sign}"))
+        print(f"  {c:22s} in-corpus auc={m['roc_auc']:.4f} coef_sign={sign}")
+    for src in PRIMARY:
+        for tgt in PRIMARY:
+            if src == tgt:
+                continue
+            te = parts[tgt]["test"]
+            yte = te["label"].to_numpy()
+            Xte = tok_sc[src].transform(_toklen(te["text"]))
+            m = _metrics(yte, tok_lr[src].predict(Xte), tok_lr[src].predict_proba(Xte)[:, 1])
+            _append_row(_row("LogisticRegression", "token_count", "subject_body", src, tgt,
+                             len(parts[src]["train"]), len(te), m, 0.0,
+                             f"monotonic length probe (cross); source coef_sign={tok_sign[src]}"))
+            print(f"  {src:20s} -> {tgt:20s} auc={m['roc_auc']:.4f}")
+
+    # ---------- Coefficient sidecar (consumed by the summary generator) ----------
+    floor_signs = {c: ["+" if v > 0 else "-" for v in len_lr[c].coef_[0]] for c in PRIMARY}
+    coefs = {
+        "probe_token_count_sign": tok_sign,           # per source corpus
+        "floor_signs_tok_char_logtok": floor_signs,   # per source corpus, order [tok, char, log-tok]
+    }
+    (RESULTS_DIR / "baseline_coefs.json").write_text(json.dumps(coefs, indent=2), encoding="utf-8")
+    print(f"  floor coef signs (tok/char/logtok): "
+          + ", ".join(f"{c}={'/'.join(floor_signs[c])}" for c in PRIMARY))
+
     print(f"\nWrote {RESULTS_CSV.relative_to(_PROJECT_ROOT)}")
     write_baseline_summary()
     print(f"Wrote notes/baseline_summary.md")
@@ -274,6 +337,45 @@ def write_baseline_summary():
             L.append(f"| D | LogReg | length3 | subject_body | {SHORT[src]} → {SHORT[tgt]} | {f1:.4f} | {auc:.4f} |")
     L.append("")
 
+    # ---- trivial references + monotonic probe + floor coef signs ----
+    coefs = json.loads((RESULTS_DIR / "baseline_coefs.json").read_text(encoding="utf-8"))
+    probe_sign = coefs["probe_token_count_sign"]
+    floor_sign = coefs["floor_signs_tok_char_logtok"]
+
+    L.append("## Trivial reference baselines (no training)\n")
+    L.append("| Corpus | all_positive F1 | majority_class F1 | ROC-AUC |")
+    L.append("|---|--:|--:|--:|")
+    for c in prim:
+        L.append(f"| {SHORT[c]} | {g('all_positive','none',c,c)[0]:.4f} | "
+                 f"{g('majority_class','none',c,c)[0]:.4f} | 0.50 |")
+    L.append("")
+    L.append("*Constant predictors → ROC-AUC 0.50. `majority_class` predicts label 0 on d2 "
+             "(ham-majority) so its positive-class F1 = 0; on d1_sb/d3_en it coincides with "
+             "`all_positive`.*\n")
+
+    L.append("## Monotonic length probe — token_count-only LR (ROC-AUC)\n")
+    L.append("| Source (coef sign) | → d1_sb | → d2 | → d3_en |")
+    L.append("|---|--:|--:|--:|")
+    for src in prim:
+        cells = []
+        for tgt in prim:
+            a = g("LogisticRegression", "token_count", src, tgt)[1]
+            cells.append(f"**{a:.3f}**" if src == tgt else f"{a:.3f}")
+        L.append(f"| {SHORT[src]} ({probe_sign[src]}) | {cells[0]} | {cells[1]} | {cells[2]} |")
+    L.append("")
+    L.append("*Diagonal = in-corpus. All three source coef signs are **−** (model learns "
+             "*shorter→positive*), so every source produces the same ranking and each column is "
+             "source-independent — pure length **direction** is universal across the three "
+             "corpora; only its strength varies.*\n")
+
+    L.append("## 3-feature floor coefficient signs (tok / char / log-tok)\n")
+    L.append("| Source | tok | char | log-tok |")
+    L.append("|---|:--:|:--:|:--:|")
+    for c in prim:
+        s = floor_sign[c]
+        L.append(f"| {SHORT[c]} | {s[0]} | {s[1]} | {s[2]} |")
+    L.append("")
+
     # ---- numbers used in the observations ----
     inc = {c: g("LogisticRegression", "tfidf", c, c)[0] for c in prim}
     nb = {c: g("MultinomialNB", "tfidf", c, c)[0] for c in prim}
@@ -286,6 +388,11 @@ def write_baseline_summary():
               for s in prim for t in prim if s != t}
     xc_floor_auc = {(s, t): g("LogisticRegression", "length3", s, t)[1]
                     for s in prim for t in prim if s != t}
+    ap = {c: g("all_positive", "none", c, c)[0] for c in prim}
+    floor_auc = {c: g("LogisticRegression", "length3", c, c)[1] for c in prim}
+    probe_in = {c: g("LogisticRegression", "token_count", c, c)[1] for c in prim}
+    probe_auc = {(s, t): g("LogisticRegression", "token_count", s, t)[1]
+                 for s in prim for t in prim if s != t}
     p = lambda k: SHORT[k]
 
     L.append("## Observations\n")
@@ -308,19 +415,22 @@ def write_baseline_summary():
              f"AI-generated data is a weak training source for real-world detection — direct "
              f"support for the dataset-aware evaluation mandate.")
     L.append("")
-    L.append(f"3. **The length-only shortcut floor is real but beatable in-corpus, and "
-             f"collapses out-of-corpus.** In-corpus the floor reaches F1 "
+    L.append(f"3. **The 3-feature 'length floor' barely clears the trivial all-positive "
+             f"baseline on F1 — judge it on ROC-AUC.** In-corpus the floor's F1 is "
              f"{floor['d1_decontaminated_sb']:.3f}/{floor['d2']:.3f}/{floor['d3_en']:.3f} "
-             f"(d1_sb/d2/d3_en); TF-IDF beats it by "
-             f"{d1_sb_f1 - floor['d1_decontaminated_sb']:.2f}/"
-             f"{inc['d2'] - floor['d2']:.2f}/{inc['d3_en'] - floor['d3_en']:.2f} F1, so models "
-             f"learn far more than length. d3_en has the highest floor ({floor['d3_en']:.3f}) — "
-             f"structurally uniform LLM output carries the most length signal, a mild shortcut "
-             f"flag for AI data. Cross-corpus, the floor **inverts**: several directions post "
-             f"ROC-AUC < 0.5 (d2→d3_en {xc_floor_auc[('d2','d3_en')]:.3f}, "
-             f"d2→d1_sb {xc_floor_auc[('d2','d1_decontaminated_sb')]:.3f}), i.e. the "
-             f"length–label relationship reverses between corpora. Length is a non-transferable, "
-             f"corpus-specific shortcut.")
+             f"(d1_sb/d2/d3_en) — at or just **below** the all-positive reference "
+             f"{ap['d1_decontaminated_sb']:.3f}/{ap['d2']:.3f}/{ap['d3_en']:.3f}, because both "
+             f"are dominated by the positive-class prior, so F1 alone makes the floor look "
+             f"competent when it has learned almost nothing. Its real (weak) signal is in "
+             f"ROC-AUC {floor_auc['d1_decontaminated_sb']:.3f}/{floor_auc['d2']:.3f}/"
+             f"{floor_auc['d3_en']:.3f} — only modestly above the 0.5 chance line (d2 nearly at "
+             f"chance), vs TF-IDF LR's ≥0.995. Cross-corpus the floor's AUC drops below 0.5 "
+             f"(d2→d1_sb {xc_floor_auc[('d2','d1_decontaminated_sb')]:.3f}, "
+             f"d2→d3_en {xc_floor_auc[('d2','d3_en')]:.3f}) — what signal it has does not "
+             f"transfer. **Takeaway:** any model whose F1 merely matches "
+             f"~{ap['d1_decontaminated_sb']:.2f}/{ap['d2']:.2f}/{ap['d3_en']:.2f} has learned "
+             f"nothing beyond the class prior; models must be judged on AUC and cross-corpus "
+             f"behaviour, not in-corpus F1 alone.")
     L.append("")
     L.append(f"4. **subject+body vs text_combined: a negligible in-corpus gap → subject+body "
              f"for modelling.** In-corpus D1 LR F1 is {d1_sb_f1:.4f} (subject_body) vs "
@@ -331,7 +441,11 @@ def write_baseline_summary():
              f"(a) is representation-consistent with D2/D3 (both natural text), enabling clean "
              f"cross-corpus experiments, and (b) preserves stop-words/punctuation so Pipeline A's "
              f"stop-word-removal ablation is possible (impossible on the pre-stripped "
-             f"text_combined). **Upgraded from working hypothesis to evidence-backed decision.**")
+             f"text_combined). **Upgraded from working hypothesis to evidence-backed decision.** "
+             f"*Caveat: subject+body (51,839) and text_combined (52,704) are different "
+             f"post-dedup universes (865-row delta), so the "
+             f"{abs(d1_tc_f1 - d1_sb_f1) * 100:.2f} pp gap is indicative, not a paired test on "
+             f"identical emails.*")
     L.append("")
     L.append(f"5. **Anomaly — ranking transfers but the threshold does not.** Several "
              f"cross-corpus directions keep high ROC-AUC while F1 drops sharply "
@@ -342,6 +456,36 @@ def write_baseline_summary():
              f"classes, but the fixed 0.5 threshold is miscalibrated for the target's class "
              f"prior — a calibration artifact, not a feature failure. Cross-corpus deployment "
              f"needs target-domain threshold recalibration, and AUC must be reported alongside F1.")
+    L.append("")
+    L.append(f"6. **Transfer direction, made exact by a monotonic (token_count-only) probe — "
+             f"with a correction.** A single-feature LR is monotonic in length, so its "
+             f"cross-corpus ROC-AUC exactly encodes whether the source's learned length "
+             f"direction holds in the target. The fitted coef sign is **negative in all three "
+             f"source corpora** — the model learns **shorter→positive**, not longer→positive as "
+             f"the directive anticipated (correction: phishing/spam skews shorter in every "
+             f"corpus here — short modern-phishing and Enron-spam medians). Because all three "
+             f"signs agree, each source produces the same ranking, so the cross-corpus probe "
+             f"AUC is source-independent: →d1_sb {probe_auc[('d2','d1_decontaminated_sb')]:.3f}, "
+             f"→d2 {probe_auc[('d1_decontaminated_sb','d2')]:.3f}, →d3_en "
+             f"{probe_auc[('d1_decontaminated_sb','d3_en')]:.3f} (all > 0.5). Pure length "
+             f"**direction is universal** across the three corpora; only its strength varies "
+             f"(strong in d1_sb, near-chance in d2/d3_en).")
+    L.append("")
+    L.append(f"### Why the 3-feature floor inverts (d2→d1_sb AUC "
+             f"{xc_floor_auc[('d2','d1_decontaminated_sb')]:.3f})\n")
+    L.append(f"The floor fits mixed-sign coefficients on the collinear [token, char, log-token] "
+             f"features — d1_sb {'/'.join(floor_sign['d1_decontaminated_sb'])}, "
+             f"d2 {'/'.join(floor_sign['d2'])}, d3_en {'/'.join(floor_sign['d3_en'])}. For d2 "
+             f"the token(−)/char(+) contrast on near-collinear features cancels the pure-length "
+             f"component and leaves a **chars-per-token / character-density style signal**, not "
+             f"length. That style signal is corpus-specific and reverses on d1_sb, giving "
+             f"d2→d1_sb floor AUC {xc_floor_auc[('d2','d1_decontaminated_sb')]:.3f} (inverted). "
+             f"The monotonic probe confirms the mechanism: d2→d1_sb on token_count alone is "
+             f"{probe_auc[('d2','d1_decontaminated_sb')]:.3f} (**not** inverted) — so the "
+             f"inversion is the style component the extra features introduce, exactly the "
+             f"hypothesised mechanism. In-corpus that same style component *helps* (the floor's "
+             f"AUC {floor_auc['d3_en']:.3f} on d3_en far exceeds token-only "
+             f"{probe_in['d3_en']:.3f}), which is precisely why it fails to transfer.")
     L.append("")
     L.append("## Confusion matrices\n")
     L.append("Per in-corpus LR run, under `figures/baselines/` (PNG + PDF): "

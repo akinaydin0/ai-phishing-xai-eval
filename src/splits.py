@@ -62,6 +62,14 @@ TEXT_FIELD = {
     "d3_en": "subject_body",
 }
 
+# Determinism fingerprints for corpora DERIVED at split time (i.e. not already
+# pinned by src.cleaning.CLEANING_EXPECTED). d3_en = clean_d3 filtered to English;
+# pinning n + per-class counts here means a re-pinned/regenerated clean_d3 cannot
+# silently change the split universe without a conscious re-pin + split rebuild.
+DERIVED_FINGERPRINT = {
+    "d3_en": {"n": 19164, "counts": {0: 6504, 1: 12660}},
+}
+
 
 def body_hash(text: str) -> str:
     """sha1 of the cleaned body — the stable, position-independent split key."""
@@ -78,6 +86,15 @@ def load_corpus(corpus_id: str) -> pd.DataFrame:
             f"{corpus_id}: {n_dup} duplicate body hashes — corpus is not deduplicated. "
             "Re-run `python -m src.cleaning --all`."
         )
+    fp = DERIVED_FINGERPRINT.get(corpus_id)
+    if fp is not None:
+        counts = {int(k): int(v) for k, v in df["label"].value_counts().items()}
+        if len(df) != fp["n"] or counts != fp["counts"]:
+            raise ValueError(
+                f"{corpus_id}: fingerprint drift — got n={len(df):,} counts={counts}; "
+                f"pinned n={fp['n']:,} counts={fp['counts']}. The cleaned cache changed; "
+                "re-pin DERIVED_FINGERPRINT and re-run `python -m src.splits --all`."
+            )
     return df
 
 

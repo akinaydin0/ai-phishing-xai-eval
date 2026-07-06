@@ -96,3 +96,45 @@ pre-stripped text_combined field).
 
 **Links.** `notes/baseline_summary.md` (§Results Run A/B, Observation 4);
 `results/results.csv`; `src/experiments/run_baselines.py`.
+
+---
+
+## 2026-07-06 · Evaluate the shortcut floor on ROC-AUC + cross-corpus, not in-corpus F1
+
+**Decision.** Judge the length-only shortcut floor — and models generally — on **ROC-AUC
+and cross-corpus behaviour**, not in-corpus F1. `results/results.csv` now logs trivial
+`all_positive` / `majority_class` references and a `token_count`-only monotonic probe as the
+honest floors every model must clear.
+
+**Evidence (baselines addendum).** The 3-feature length floor's in-corpus F1
+(0.694/0.636/0.777, d1_sb/d2/d3_en) is **at or below** the all-positive reference
+(0.702/0.642/0.796) — F1 is dominated by the class prior and makes a near-signal-free model
+look competent. The floor's weak real signal shows only in ROC-AUC (0.729/0.635/0.745, d2
+almost at chance). A monotonic token_count-only probe shows the **pure-length direction is
+universal** (coef sign − / *shorter→positive* in all three corpora; cross-corpus AUC
+source-independent, all > 0.5), whereas the 3-feature floor's cross-corpus **inversion**
+(d2→d1_sb AUC 0.341) is a **chars-per-token / character-density style signal**, not length —
+confirmed because the pure-length probe d2→d1_sb = 0.722 does **not** invert.
+
+**Correction to prior framing.** The earlier "d3_en has the highest length signal / AI is
+structurally uniform" note overstated it: d3_en's high *floor* AUC (0.745) is largely the
+style component, not token length (token-only AUC 0.560). The refined shortcut narrative:
+length direction transfers; the style contrast the floor adds does not.
+
+**Links.** `notes/baseline_summary.md` (Observations 3 & 6, trivial + probe tables);
+`results/results.csv`; `results/baseline_coefs.json`; `src/experiments/run_baselines.py`.
+
+---
+
+## 2026-07-06 · Pin d3_en as a split-time determinism fingerprint
+
+**Decision.** Add `DERIVED_FINGERPRINT` in `src/splits.py` pinning `d3_en` (n=19,164;
+counts {0: 6504, 1: 12660}). `load_corpus` hard-fails on drift.
+
+**Rationale.** `d3_en` is `clean_d3` filtered to English and is **not** covered by
+`src.cleaning.CLEANING_EXPECTED` (which pins the full 19,799-row d3). The scoped leakage
+review flagged the realistic path where clean_d3 is re-pinned/regenerated and the English
+subset silently changes without the splits being rebuilt. The fingerprint + the earlier
+`load_splits` coverage guard now make that impossible to miss.
+
+**Links.** `src/splits.py` (`DERIVED_FINGERPRINT`, `load_corpus`).

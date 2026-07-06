@@ -22,11 +22,14 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 **Modelling — classical baselines complete.** Frozen 70/15/15 splits (`src/splits.py`,
 `data/splits/*.json`, sha1-keyed), TF-IDF features (`src/features.py`), and baseline runs
 (`src/experiments/run_baselines.py` → `results/results.csv`, `notes/baseline_summary.md`,
-`figures/baselines/`) are committed. In-corpus TF-IDF LR F1 0.975–0.991; length-only
-shortcut floor 0.64–0.78 (beaten by 20–35 pts in-corpus, inverts cross-corpus); cross-corpus
-F1 0.57–0.86 with AI→real the weakest direction. D1 modelling representation fixed to
-subject+body (see `notes/decisions.md`). **Next:** hyperparameter optimisation on val splits,
-then SVM/DT/RF + ensembles (XGBoost/LightGBM), then transformers.
+`figures/baselines/`) are committed. In-corpus TF-IDF LR F1 0.975–0.991. The length shortcut
+floor's F1 (0.69/0.64/0.78) ≈ trivial all-positive (0.70/0.64/0.80) — judge models on
+**ROC-AUC + cross-corpus**, not in-corpus F1 (see `notes/decisions.md`). A monotonic
+token_count probe shows pure-length direction is universal; the 3-feature floor inverts
+cross-corpus via a chars-per-token style signal. Cross-corpus F1 0.57–0.86, AI→real weakest.
+D1 modelling representation fixed to subject+body. `d3_en` now fingerprint-pinned in
+`src.splits`. **Next:** hyperparameter optimisation on val splits, then SVM/DT/RF + ensembles
+(XGBoost/LightGBM), then transformers.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
