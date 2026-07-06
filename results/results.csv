@@ -1,0 +1,23 @@
+run_id,timestamp,model,features,text_field,train_corpus,test_corpus,n_train,n_test,accuracy,precision,recall,f1,roc_auc,runtime_s,seed,notes
+LogisticRegression__tfidf__d1_decontaminated_sb__d1_decontaminated_sb,2026-07-06T01:10:27,LogisticRegression,tfidf,subject_body,d1_decontaminated_sb,d1_decontaminated_sb,36287,7776,0.9898,0.991,0.9903,0.9906,0.9995,0.74,42,in-corpus
+MultinomialNB__tfidf__d1_decontaminated_sb__d1_decontaminated_sb,2026-07-06T01:10:27,MultinomialNB,tfidf,subject_body,d1_decontaminated_sb,d1_decontaminated_sb,36287,7776,0.9765,0.9963,0.9601,0.9779,0.9985,0.08,42,in-corpus
+LogisticRegression__tfidf__d2__d2,2026-07-06T01:10:40,LogisticRegression,tfidf,subject_body,d2,d2,20456,4384,0.9881,0.9773,0.9981,0.9876,0.9992,0.43,42,in-corpus
+MultinomialNB__tfidf__d2__d2,2026-07-06T01:10:40,MultinomialNB,tfidf,subject_body,d2,d2,20456,4384,0.9868,0.9884,0.9836,0.986,0.9989,0.04,42,in-corpus
+LogisticRegression__tfidf__d3_en__d3_en,2026-07-06T01:10:51,LogisticRegression,tfidf,subject_body,d3_en,d3_en,13414,2875,0.967,0.9708,0.9795,0.9751,0.9949,0.63,42,in-corpus
+MultinomialNB__tfidf__d3_en__d3_en,2026-07-06T01:10:51,MultinomialNB,tfidf,subject_body,d3_en,d3_en,13414,2875,0.9231,0.9077,0.9837,0.9442,0.972,0.04,42,in-corpus
+LogisticRegression__tfidf__d1_decontaminated__d1_decontaminated,2026-07-06T01:11:12,LogisticRegression,tfidf,text_combined,d1_decontaminated,d1_decontaminated,36892,7906,0.992,0.9926,0.9929,0.9927,0.9992,0.55,42,representation ablation vs d1_decontaminated_sb
+LogisticRegression__length3__d1_decontaminated_sb__d1_decontaminated_sb,2026-07-06T01:11:13,LogisticRegression,length3,subject_body,d1_decontaminated_sb,d1_decontaminated_sb,36287,7776,0.6829,0.7269,0.6633,0.6937,0.7285,0.02,42,shortcut floor (token/char/log-token)
+LogisticRegression__length3__d2__d2,2026-07-06T01:11:13,LogisticRegression,length3,subject_body,d2,d2,20456,4384,0.5851,0.5435,0.766,0.6358,0.6353,0.02,42,shortcut floor (token/char/log-token)
+LogisticRegression__length3__d3_en__d3_en,2026-07-06T01:11:13,LogisticRegression,length3,subject_body,d3_en,d3_en,13414,2875,0.7169,0.8106,0.7458,0.7769,0.7452,0.0,42,shortcut floor (token/char/log-token)
+LogisticRegression__tfidf__d1_decontaminated_sb__d2,2026-07-06T01:11:14,LogisticRegression,tfidf,subject_body,d1_decontaminated_sb,d2,36287,4384,0.825,0.7907,0.8567,0.8224,0.9152,0.92,42,cross-corpus
+LogisticRegression__length3__d1_decontaminated_sb__d2,2026-07-06T01:11:14,LogisticRegression,length3,subject_body,d1_decontaminated_sb,d2,36287,4384,0.5438,0.5195,0.4694,0.4932,0.538,0.05,42,cross-corpus shortcut floor
+LogisticRegression__tfidf__d1_decontaminated_sb__d3_en,2026-07-06T01:11:15,LogisticRegression,tfidf,subject_body,d1_decontaminated_sb,d3_en,36287,2875,0.8247,0.9261,0.7984,0.8575,0.9263,0.75,42,cross-corpus
+LogisticRegression__length3__d1_decontaminated_sb__d3_en,2026-07-06T01:11:15,LogisticRegression,length3,subject_body,d1_decontaminated_sb,d3_en,36287,2875,0.3802,0.7398,0.0958,0.1696,0.5506,0.04,42,cross-corpus shortcut floor
+LogisticRegression__tfidf__d2__d1_decontaminated_sb,2026-07-06T01:11:18,LogisticRegression,tfidf,subject_body,d2,d1_decontaminated_sb,20456,7776,0.7248,0.6647,0.9922,0.796,0.9469,2.28,42,cross-corpus
+LogisticRegression__length3__d2__d1_decontaminated_sb,2026-07-06T01:11:18,LogisticRegression,length3,subject_body,d2,d1_decontaminated_sb,20456,7776,0.5412,0.5427,0.9686,0.6956,0.3411,0.08,42,cross-corpus shortcut floor
+LogisticRegression__tfidf__d2__d3_en,2026-07-06T01:11:18,LogisticRegression,tfidf,subject_body,d2,d3_en,20456,2875,0.7833,0.7829,0.93,0.8501,0.8559,0.77,42,cross-corpus
+LogisticRegression__length3__d2__d3_en,2026-07-06T01:11:18,LogisticRegression,length3,subject_body,d2,d3_en,20456,2875,0.6612,0.6611,1.0,0.796,0.3356,0.03,42,cross-corpus shortcut floor
+LogisticRegression__tfidf__d3_en__d1_decontaminated_sb,2026-07-06T01:11:21,LogisticRegression,tfidf,subject_body,d3_en,d1_decontaminated_sb,13414,7776,0.6726,0.9722,0.4067,0.5735,0.9225,2.25,42,cross-corpus
+LogisticRegression__length3__d3_en__d1_decontaminated_sb,2026-07-06T01:11:21,LogisticRegression,length3,subject_body,d3_en,d1_decontaminated_sb,13414,7776,0.5878,0.5806,0.8589,0.6929,0.5071,0.09,42,cross-corpus shortcut floor
+LogisticRegression__tfidf__d3_en__d2,2026-07-06T01:11:22,LogisticRegression,tfidf,subject_body,d3_en,d2,13414,4384,0.708,0.811,0.4988,0.6177,0.7967,0.87,42,cross-corpus
+LogisticRegression__length3__d3_en__d2,2026-07-06T01:11:22,LogisticRegression,length3,subject_body,d3_en,d2,13414,4384,0.4603,0.4662,0.9735,0.6304,0.4135,0.05,42,cross-corpus shortcut floor

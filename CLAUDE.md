@@ -19,11 +19,14 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 
 ## Current Phase
 
-**Data engineering — EDA v2 on cleaned corpora complete.** The cleaning pipeline
-(`src/cleaning.py`) and EDA v2 (`src/eda_v2.py`, figures under `figures/eda_v2/`,
-`notes/eda_v2_summary.md`) are finished and committed; all interim findings were verified to
-hold on the deduplicated data. **Next:** classical baseline models (Pipeline A). Modelling
-has **not** started.
+**Modelling — classical baselines complete.** Frozen 70/15/15 splits (`src/splits.py`,
+`data/splits/*.json`, sha1-keyed), TF-IDF features (`src/features.py`), and baseline runs
+(`src/experiments/run_baselines.py` → `results/results.csv`, `notes/baseline_summary.md`,
+`figures/baselines/`) are committed. In-corpus TF-IDF LR F1 0.975–0.991; length-only
+shortcut floor 0.64–0.78 (beaten by 20–35 pts in-corpus, inverts cross-corpus); cross-corpus
+F1 0.57–0.86 with AI→real the weakest direction. D1 modelling representation fixed to
+subject+body (see `notes/decisions.md`). **Next:** hyperparameter optimisation on val splits,
+then SVM/DT/RF + ensembles (XGBoost/LightGBM), then transformers.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
@@ -116,6 +119,10 @@ has **not** started.
 - **Corpus ids:** `d1_full`, `d1_decontaminated`, `d1_decontaminated_sb` (subject+body
   natural-text D1 for cross-corpus EDA), `d2`, `d3`.
 - **Phase log:** every task's final commit updates the **Current Phase** section above.
+- **Figure provenance:** every figure title/caption names its universe — corpus id + row
+  count (e.g. "d1_decontaminated_sb, test n=7,776").
+- **Frozen splits:** all experiments consume `data/splits/<corpus>.json` via
+  `src.splits.load_splits` (sha1-body-keyed, seed 42); never re-split ad hoc.
 
 ## Supervisor feedback (5 Jul 2026 — honour throughout)
 

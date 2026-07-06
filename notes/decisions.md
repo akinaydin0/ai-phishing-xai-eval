@@ -69,3 +69,30 @@ per-source CSVs) must never appear in one table without labels.
 
 **Links.** `notes/eda_v2_summary.md` (§5); `src/eda_v2.py`; `src/cleaning.py`
 (`d1_decontaminated_sb`, `CLEANING_EXPECTED`).
+
+---
+
+## 2026-07-06 · D1 modelling representation = subject+body (evidence-backed)
+
+**Decision.** Use **subject+body** (`d1_decontaminated_sb`) as the D1 modelling
+representation. This upgrades the [D1 dual text representation] working hypothesis to a
+decision, now backed by the baseline ablation. **Still a supervisor-meeting talking point.**
+
+**Evidence (representation ablation, Run B vs Run A; frozen splits, seed 42).** In-corpus
+TF-IDF + Logistic Regression:
+- subject+body (`d1_decontaminated_sb`, test n=7,776): **F1 0.9906**, ROC-AUC 0.9995.
+- text_combined (`d1_decontaminated`, test n=7,906): **F1 0.9927**, ROC-AUC 0.9992.
+
+The gap is **0.21 pp F1** (text_combined marginally higher — its stop-word/punctuation
+stripping mildly denoises the bag-of-words). So the representation choice costs ~nothing in
+accuracy.
+
+**Rationale.** subject+body wins on the two grounds that matter downstream, at negligible
+accuracy cost: (a) representation consistency with D2/D3 (both natural text), which is
+required for clean cross-corpus evaluation — a primary reported outcome; and (b) it
+preserves stop-words/punctuation, so Pipeline A's stop-word-removal ablation and
+URL/email placeholder substitution are actually possible (both are impossible on the
+pre-stripped text_combined field).
+
+**Links.** `notes/baseline_summary.md` (§Results Run A/B, Observation 4);
+`results/results.csv`; `src/experiments/run_baselines.py`.
