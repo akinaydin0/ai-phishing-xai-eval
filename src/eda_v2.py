@@ -111,7 +111,8 @@ def _nltk_sets():
 def _save(fig, stem: str):
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / f"{stem}.png", dpi=200, bbox_inches="tight")
-    fig.savefig(FIG_DIR / f"{stem}.pdf", bbox_inches="tight")
+    # metadata CreationDate=None -> byte-deterministic PDF (no embedded timestamp)
+    fig.savefig(FIG_DIR / f"{stem}.pdf", bbox_inches="tight", metadata={"CreationDate": None})
     plt.close(fig)
 
 

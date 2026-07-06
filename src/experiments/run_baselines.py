@@ -72,7 +72,9 @@ def save_confusion_matrix(y_true, y_pred, corpus_id, n_test, text_field):
     fig.tight_layout()
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / f"cm_{corpus_id}.png", dpi=200, bbox_inches="tight")
-    fig.savefig(FIG_DIR / f"cm_{corpus_id}.pdf", bbox_inches="tight")
+    # metadata CreationDate=None -> byte-deterministic PDF (no embedded timestamp)
+    fig.savefig(FIG_DIR / f"cm_{corpus_id}.pdf", bbox_inches="tight",
+                metadata={"CreationDate": None})
     plt.close(fig)
 
 PRIMARY = ["d1_decontaminated_sb", "d2", "d3_en"]  # cross-corpus universe
