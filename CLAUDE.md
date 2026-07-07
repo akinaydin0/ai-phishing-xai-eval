@@ -19,17 +19,18 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 
 ## Current Phase
 
-**Modelling — classical baselines complete.** Frozen 70/15/15 splits (`src/splits.py`,
-`data/splits/*.json`, sha1-keyed), TF-IDF features (`src/features.py`), and baseline runs
-(`src/experiments/run_baselines.py` → `results/results.csv`, `notes/baseline_summary.md`,
-`figures/baselines/`) are committed. In-corpus TF-IDF LR F1 0.975–0.991. The length shortcut
-floor's F1 (0.69/0.64/0.78) ≈ trivial all-positive (0.70/0.64/0.80) — judge models on
-**ROC-AUC + cross-corpus**, not in-corpus F1 (see `notes/decisions.md`). A monotonic
-token_count probe shows pure-length direction is universal; the 3-feature floor inverts
-cross-corpus via a chars-per-token style signal. Cross-corpus F1 0.57–0.86, AI→real weakest.
-D1 modelling representation fixed to subject+body. `d3_en` now fingerprint-pinned in
-`src.splits`. **Next:** hyperparameter optimisation on val splits, then SVM/DT/RF + ensembles
-(XGBoost/LightGBM), then transformers.
+**Modelling — HPO + classical/ensemble grid + dense embeddings complete.** On the frozen
+70/15/15 splits (`src/splits.py`, consumed via `src.splits.load_splits`), Optuna HPO
+(`src/experiments/hpo.py`, val-ROC-AUC objective, test untouched) tuned 7 families × 3 corpora;
+plus dense baselines (`dense.py`: Word2Vec + GloVe × LR/MLP) and champion cross-corpus
+(`cross_corpus.py` → `figures/models/*_heatmap.*`). Reporting in `notes/hpo_summary.md`,
+log in `results/results.csv` (109 rows), studies in `results/hpo/*.json`.
+**Findings:** tuned **linear TF-IDF wins in-corpus** every corpus (AUC 0.9993–0.9998);
+LightGBM best ensemble but doesn't beat linear; HPO is near-ceiling (ΔF1 ≤ ~0.018); trees tune
+to ~20k features; champion cross-corpus AUC 0.68–0.91, **AI→real weakest**. XGB search on GPU
+via QuantileDMatrix, max_features capped {10k,20k} by the 24 GB ceiling (see `notes/decisions.md`
+"XGBoost GPU episode"); all finalists + test eval on CPU (seed 42, deterministic).
+**Next:** transformers (BERT-base, DistilBERT, RoBERTa-base), then XAI (SHAP/LIME/IG).
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 

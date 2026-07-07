@@ -2,6 +2,8 @@ venv/
 data/raw/
 data/processed/
 data/cache/
+data/embeddings/
+results/hpo/*.log
 __pycache__/
 .ipynb_checkpoints/
 *.pyc

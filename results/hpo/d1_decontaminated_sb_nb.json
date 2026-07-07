@@ -1,0 +1,295 @@
+{
+  "corpus": "d1_decontaminated_sb",
+  "family": "nb",
+  "model": "MultinomialNB",
+  "objective": "val_roc_auc + 1e-6*val_f1",
+  "n_trials": 25,
+  "search_device": "cpu",
+  "runtime_s": 25.1,
+  "best_params": {
+    "alpha": 0.0010031790577147317,
+    "ngram": "1_1",
+    "min_df": 1,
+    "sublinear": false
+  },
+  "best_val_auc": 0.9994,
+  "best_val_f1": 0.9879,
+  "best_iteration": null,
+  "trials": [
+    {
+      "number": 0,
+      "params": {
+        "alpha": 0.03148911647956861,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9993,
+      "val_f1": 0.9874
+    },
+    {
+      "number": 1,
+      "params": {
+        "alpha": 0.2537815508265665,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9988,
+      "val_f1": 0.9862
+    },
+    {
+      "number": 2,
+      "params": {
+        "alpha": 0.016480446427978974,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": false
+      },
+      "val_auc": 0.9993,
+      "val_f1": 0.9863
+    },
+    {
+      "number": 3,
+      "params": {
+        "alpha": 0.06672367170464207,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9988,
+      "val_f1": 0.9825
+    },
+    {
+      "number": 4,
+      "params": {
+        "alpha": 0.0018205657658407262,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9784
+    },
+    {
+      "number": 5,
+      "params": {
+        "alpha": 0.003077180271250686,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9879
+    },
+    {
+      "number": 6,
+      "params": {
+        "alpha": 0.1537592023548176,
+        "ngram": "1_2",
+        "min_df": 2,
+        "sublinear": false
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9831
+    },
+    {
+      "number": 7,
+      "params": {
+        "alpha": 0.002259279742015696,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9825
+    },
+    {
+      "number": 8,
+      "params": {
+        "alpha": 0.013296521457299506,
+        "ngram": "1_1",
+        "min_df": 5,
+        "sublinear": true
+      },
+      "val_auc": 0.9987,
+      "val_f1": 0.9794
+    },
+    {
+      "number": 9,
+      "params": {
+        "alpha": 0.0010521761868451127,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9992,
+      "val_f1": 0.9818
+    },
+    {
+      "number": 10,
+      "params": {
+        "alpha": 6.033178530661212,
+        "ngram": "1_2",
+        "min_df": 5,
+        "sublinear": false
+      },
+      "val_auc": 0.9973,
+      "val_f1": 0.9773
+    },
+    {
+      "number": 11,
+      "params": {
+        "alpha": 0.007858322032474677,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9875
+    },
+    {
+      "number": 12,
+      "params": {
+        "alpha": 0.005051405003488872,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9873
+    },
+    {
+      "number": 13,
+      "params": {
+        "alpha": 0.004545122870350106,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9875
+    },
+    {
+      "number": 14,
+      "params": {
+        "alpha": 0.8404638014517112,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9986,
+      "val_f1": 0.9823
+    },
+    {
+      "number": 15,
+      "params": {
+        "alpha": 0.003563804062597825,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9878
+    },
+    {
+      "number": 16,
+      "params": {
+        "alpha": 0.032137311055139846,
+        "ngram": "1_1",
+        "min_df": 5,
+        "sublinear": false
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9838
+    },
+    {
+      "number": 17,
+      "params": {
+        "alpha": 0.0030593490708430843,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9879
+    },
+    {
+      "number": 18,
+      "params": {
+        "alpha": 0.0012653130267405953,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9835
+    },
+    {
+      "number": 19,
+      "params": {
+        "alpha": 0.007366314869214952,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9874
+    },
+    {
+      "number": 20,
+      "params": {
+        "alpha": 0.021744245799734507,
+        "ngram": "1_1",
+        "min_df": 5,
+        "sublinear": false
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9837
+    },
+    {
+      "number": 21,
+      "params": {
+        "alpha": 0.003293565714651827,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9879
+    },
+    {
+      "number": 22,
+      "params": {
+        "alpha": 0.002542009608021518,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9879
+    },
+    {
+      "number": 23,
+      "params": {
+        "alpha": 0.0010363815972848716,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.988
+    },
+    {
+      "number": 24,
+      "params": {
+        "alpha": 0.0010031790577147317,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9879
+    }
+  ]
+}

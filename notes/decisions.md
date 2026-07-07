@@ -138,3 +138,67 @@ subset silently changes without the splits being rebuilt. The fingerprint + the 
 `load_splits` coverage guard now make that impossible to miss.
 
 **Links.** `src/splits.py` (`DERIVED_FINGERPRINT`, `load_corpus`).
+
+---
+
+## 2026-07-07 · XGBoost GPU episode (reportable engineering finding)
+
+**Context.** Supervisor item #3 HPO runs the XGBoost search on the RTX 3090 GPU (device
+`cuda`) for a ~100× speedup. Getting a correct, in-memory GPU search took four diagnosed
+steps — worth documenting in the implementation chapter (and a candidate upstream XGBoost
+issue).
+
+**(a) CUDA path silently degenerate on scipy sparse CSR.** Feeding a sparse CSR matrix to
+`XGBClassifier(device='cuda')` (or `QuantileDMatrix(sparse)`) produces **degenerate models**
+— `best_iteration=0`, val AUC ≈ 0.69 (no early stopping) / 0.43 — with **no error**. The
+identical params on CPU give AUC 0.995. Caught by the 2-trial smoke test (val_auc 0.70 for
+XGB vs ~0.99 for every other family), which is exactly why the smoke test exists.
+
+**(b) Dense-on-GPU OOMs at 50k.** Densifying the TF-IDF matrix fixes correctness (cuda+dense
+AUC 0.996) but a 36,287×50,000 float32 matrix needs ~27 GB of GPU histogram memory → OOM on
+the 24 GB card.
+
+**(c) Fix: `QuantileDMatrix` from a dense array.** Quantising the dense matrix to uint8
+(~1.8 GB) is both correct and memory-efficient. GPU search uses this; CPU finalisation keeps
+sparse (works, and is the deterministic authority).
+
+**(d) 24 GB ceiling binds at 50k × depth-10.** Even quantised, depth-10 histograms over 50k
+features exceed 24 GB, and XGBoost's caching allocator retains memory across trials. Resolution
+(Akın-approved): **XGB tunable `max_features` capped to {10k, 20k}**; the CPU-trained tree
+families (**LightGBM keeps {10k, 20k, 50k}**, as do DT/RF) provide the empirical 50k check.
+GPU hygiene: booster/QuantileDMatrix references are dropped + `gc.collect()` after every trial
+so allocator retention cannot compound. All finalists re-set `n_estimators` via early stopping
+on the val split **on CPU** (the GPU search's `best_iteration` is not reused).
+
+**Links.** `src/experiments/hpo.py` (`_xgb_gpu_fit`, `XGB_MAXFEAT`, `finalize`);
+`results/probe_timings.json`.
+
+---
+
+## 2026-07-07 · HPO methodology + headline modelling findings
+
+**Decisions.** (1) One Optuna study per (family, corpus), **objective = validation ROC-AUC**
+(tie-break val F1 via +1e-6·F1); the **test split is never touched during tuning**, the val
+split is the sole optimisation surface. (2) **Representation-appropriate feature spaces**:
+linear families (LR/NB/SVC) use 100k TF-IDF (LR/NB also tune ngram/min_df/sublinear);
+tree/boosting families **tune** max_features ∈ {10k, 20k, 50k} (XGB {10k,20k}). (3) Boosting
+fixes n_estimators=800 with **early_stopping_rounds=50 on val AUC** (finalists re-set it on
+CPU). (4) Dense baselines: Word2Vec (trained on train only, mean-pooled) and pretrained GloVe,
+classified by LR and an MLP that **early-stops on val**. (5) Champions (best tfidf / ensemble /
+dense by val AUC per source) evaluated across all directed pairs.
+
+**Findings (evidence for the write-up).**
+- **Tuned linear TF-IDF is the in-corpus champion** on every corpus (LinearSVC/LR/MNB, AUC
+  0.9993–0.9998); LightGBM is the best ensemble but does not beat linear; dense (W2V/GloVe-MLP)
+  is competitive only on the AI corpus. Ensembles do **not** justify their cost on high-dim
+  sparse text.
+- **HPO is near-ceiling**: ΔF1 ≈ +0.002…+0.018, largest on weak defaults (NB); LinearSVC is
+  optimal by default. **DecisionTree tuning trades F1 for AUC** (objective is AUC) — the 0.5
+  threshold must be set separately from the ranking model.
+- **Trees prefer ~20k features** (LightGBM 20k on all three) — the tuned-dimension decision
+  was correct; the fair comparison is each family at its own best representation.
+- **Champion cross-corpus AUC 0.68–0.91, asymmetric, AI→real weakest** (d3_en→d2 AUC 0.71–0.75)
+  — reaffirms the dataset-aware-evaluation mandate for the tuned champions across families.
+
+**Links.** `notes/hpo_summary.md`; `results/results.csv`; `results/hpo/*.json`;
+`results/champions.json`; `figures/models/cross_corpus_*_heatmap.*`.

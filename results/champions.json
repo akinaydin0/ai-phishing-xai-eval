@@ -1,0 +1,35 @@
+{
+  "tfidf|d1_sb": {
+    "family": "lr",
+    "val_auc": 0.9997
+  },
+  "ensemble|d1_sb": {
+    "family": "lgbm",
+    "val_auc": 0.9996
+  },
+  "dense|d1_sb": {
+    "config": "w2v+MLP"
+  },
+  "tfidf|d2": {
+    "family": "lr",
+    "val_auc": 0.9991
+  },
+  "ensemble|d2": {
+    "family": "lgbm",
+    "val_auc": 0.9985
+  },
+  "dense|d2": {
+    "config": "w2v+MLP"
+  },
+  "tfidf|d3_en": {
+    "family": "svc",
+    "val_auc": 0.9989
+  },
+  "ensemble|d3_en": {
+    "family": "lgbm",
+    "val_auc": 0.9972
+  },
+  "dense|d3_en": {
+    "config": "glove+MLP"
+  }
+}

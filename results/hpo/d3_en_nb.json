@@ -1,0 +1,295 @@
+{
+  "corpus": "d3_en",
+  "family": "nb",
+  "model": "MultinomialNB",
+  "objective": "val_roc_auc + 1e-6*val_f1",
+  "n_trials": 25,
+  "search_device": "cpu",
+  "runtime_s": 7.2,
+  "best_params": {
+    "alpha": 0.001003272149149236,
+    "ngram": "1_2",
+    "min_df": 1,
+    "sublinear": true
+  },
+  "best_val_auc": 0.9867,
+  "best_val_f1": 0.9647,
+  "best_iteration": null,
+  "trials": [
+    {
+      "number": 0,
+      "params": {
+        "alpha": 0.03148911647956861,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.981,
+      "val_f1": 0.96
+    },
+    {
+      "number": 1,
+      "params": {
+        "alpha": 0.2537815508265665,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9769,
+      "val_f1": 0.9515
+    },
+    {
+      "number": 2,
+      "params": {
+        "alpha": 0.016480446427978974,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": false
+      },
+      "val_auc": 0.9814,
+      "val_f1": 0.9599
+    },
+    {
+      "number": 3,
+      "params": {
+        "alpha": 0.06672367170464207,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9801,
+      "val_f1": 0.9564
+    },
+    {
+      "number": 4,
+      "params": {
+        "alpha": 0.0018205657658407262,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9862,
+      "val_f1": 0.9641
+    },
+    {
+      "number": 5,
+      "params": {
+        "alpha": 0.003077180271250686,
+        "ngram": "1_1",
+        "min_df": 1,
+        "sublinear": false
+      },
+      "val_auc": 0.9822,
+      "val_f1": 0.9611
+    },
+    {
+      "number": 6,
+      "params": {
+        "alpha": 0.1537592023548176,
+        "ngram": "1_2",
+        "min_df": 2,
+        "sublinear": false
+      },
+      "val_auc": 0.98,
+      "val_f1": 0.9557
+    },
+    {
+      "number": 7,
+      "params": {
+        "alpha": 0.002259279742015696,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9832,
+      "val_f1": 0.9616
+    },
+    {
+      "number": 8,
+      "params": {
+        "alpha": 0.013296521457299506,
+        "ngram": "1_1",
+        "min_df": 5,
+        "sublinear": true
+      },
+      "val_auc": 0.9788,
+      "val_f1": 0.9539
+    },
+    {
+      "number": 9,
+      "params": {
+        "alpha": 0.0010521761868451127,
+        "ngram": "1_1",
+        "min_df": 2,
+        "sublinear": true
+      },
+      "val_auc": 0.9834,
+      "val_f1": 0.9624
+    },
+    {
+      "number": 10,
+      "params": {
+        "alpha": 6.033178530661212,
+        "ngram": "1_2",
+        "min_df": 5,
+        "sublinear": true
+      },
+      "val_auc": 0.9597,
+      "val_f1": 0.9058
+    },
+    {
+      "number": 11,
+      "params": {
+        "alpha": 0.0010909716523066404,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9866,
+      "val_f1": 0.9647
+    },
+    {
+      "number": 12,
+      "params": {
+        "alpha": 0.0040595843112118885,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9855,
+      "val_f1": 0.9631
+    },
+    {
+      "number": 13,
+      "params": {
+        "alpha": 0.0011507284916255733,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9866,
+      "val_f1": 0.9647
+    },
+    {
+      "number": 14,
+      "params": {
+        "alpha": 0.00759543249222089,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9849,
+      "val_f1": 0.9617
+    },
+    {
+      "number": 15,
+      "params": {
+        "alpha": 0.0015034686189221826,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9864,
+      "val_f1": 0.9644
+    },
+    {
+      "number": 16,
+      "params": {
+        "alpha": 1.223759424719126,
+        "ngram": "1_2",
+        "min_df": 5,
+        "sublinear": true
+      },
+      "val_auc": 0.9703,
+      "val_f1": 0.9471
+    },
+    {
+      "number": 17,
+      "params": {
+        "alpha": 0.0056251036036845305,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9852,
+      "val_f1": 0.9617
+    },
+    {
+      "number": 18,
+      "params": {
+        "alpha": 0.0012653130267405953,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9865,
+      "val_f1": 0.9644
+    },
+    {
+      "number": 19,
+      "params": {
+        "alpha": 0.02764010854721641,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9832,
+      "val_f1": 0.9604
+    },
+    {
+      "number": 20,
+      "params": {
+        "alpha": 0.007328937814960514,
+        "ngram": "1_2",
+        "min_df": 5,
+        "sublinear": true
+      },
+      "val_auc": 0.9847,
+      "val_f1": 0.9589
+    },
+    {
+      "number": 21,
+      "params": {
+        "alpha": 0.001209639960062837,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9865,
+      "val_f1": 0.9644
+    },
+    {
+      "number": 22,
+      "params": {
+        "alpha": 0.0011065136021090993,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9866,
+      "val_f1": 0.9647
+    },
+    {
+      "number": 23,
+      "params": {
+        "alpha": 0.0036841471364945804,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9856,
+      "val_f1": 0.9631
+    },
+    {
+      "number": 24,
+      "params": {
+        "alpha": 0.001003272149149236,
+        "ngram": "1_2",
+        "min_df": 1,
+        "sublinear": true
+      },
+      "val_auc": 0.9867,
+      "val_f1": 0.9647
+    }
+  ]
+}

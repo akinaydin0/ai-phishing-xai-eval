@@ -1,0 +1,501 @@
+{
+  "corpus": "d1_decontaminated_sb",
+  "family": "lgbm",
+  "model": "LightGBM",
+  "objective": "val_roc_auc + 1e-6*val_f1",
+  "n_trials": 40,
+  "search_device": "cpu",
+  "runtime_s": 5660.6,
+  "best_params": {
+    "learning_rate": 0.08319577644332436,
+    "num_leaves": 32,
+    "feature_fraction": 0.9847685553939328,
+    "bagging_fraction": 0.9729161367647149,
+    "tfidf_max_features": 20000
+  },
+  "best_val_auc": 0.9996,
+  "best_val_f1": 0.9917,
+  "best_iteration": 314,
+  "trials": [
+    {
+      "number": 0,
+      "params": {
+        "learning_rate": 0.03574712922600244,
+        "num_leaves": 244,
+        "feature_fraction": 0.8659969709057025,
+        "bagging_fraction": 0.8394633936788146,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9866
+    },
+    {
+      "number": 1,
+      "params": {
+        "learning_rate": 0.19030368381735815,
+        "num_leaves": 166,
+        "feature_fraction": 0.8540362888980227,
+        "bagging_fraction": 0.608233797718321,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9875
+    },
+    {
+      "number": 2,
+      "params": {
+        "learning_rate": 0.01855998084649059,
+        "num_leaves": 72,
+        "feature_fraction": 0.6521211214797689,
+        "bagging_fraction": 0.8099025726528951,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9906
+    },
+    {
+      "number": 3,
+      "params": {
+        "learning_rate": 0.01607123851203988,
+        "num_leaves": 96,
+        "feature_fraction": 0.6831809216468459,
+        "bagging_fraction": 0.7824279936868144,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9894
+    },
+    {
+      "number": 4,
+      "params": {
+        "learning_rate": 0.07500118950416987,
+        "num_leaves": 41,
+        "feature_fraction": 0.8037724259507192,
+        "bagging_fraction": 0.6682096494749166,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9918
+    },
+    {
+      "number": 5,
+      "params": {
+        "learning_rate": 0.1563510870813346,
+        "num_leaves": 99,
+        "feature_fraction": 0.5488360570031919,
+        "bagging_fraction": 0.8736932106048627,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9993,
+      "val_f1": 0.9898
+    },
+    {
+      "number": 6,
+      "params": {
+        "learning_rate": 0.011240768803005551,
+        "num_leaves": 235,
+        "feature_fraction": 0.6293899908000085,
+        "bagging_fraction": 0.8650089137415928,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9992,
+      "val_f1": 0.9875
+    },
+    {
+      "number": 7,
+      "params": {
+        "learning_rate": 0.01875220945578641,
+        "num_leaves": 249,
+        "feature_fraction": 0.8875664116805573,
+        "bagging_fraction": 0.9757995766256756,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9872
+    },
+    {
+      "number": 8,
+      "params": {
+        "learning_rate": 0.01351182947645082,
+        "num_leaves": 75,
+        "feature_fraction": 0.522613644455269,
+        "bagging_fraction": 0.7301321323053057,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9897
+    },
+    {
+      "number": 9,
+      "params": {
+        "learning_rate": 0.03364867144187954,
+        "num_leaves": 94,
+        "feature_fraction": 0.7713480415791243,
+        "bagging_fraction": 0.6563696899899051,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9896
+    },
+    {
+      "number": 10,
+      "params": {
+        "learning_rate": 0.08319577644332436,
+        "num_leaves": 32,
+        "feature_fraction": 0.9847685553939328,
+        "bagging_fraction": 0.9729161367647149,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9996,
+      "val_f1": 0.9917
+    },
+    {
+      "number": 11,
+      "params": {
+        "learning_rate": 0.08496761732351853,
+        "num_leaves": 33,
+        "feature_fraction": 0.9859113542175745,
+        "bagging_fraction": 0.9787847505560596,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9912
+    },
+    {
+      "number": 12,
+      "params": {
+        "learning_rate": 0.0956879175072948,
+        "num_leaves": 32,
+        "feature_fraction": 0.9864625740036377,
+        "bagging_fraction": 0.9978788005857686,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9917
+    },
+    {
+      "number": 13,
+      "params": {
+        "learning_rate": 0.08224826689440806,
+        "num_leaves": 32,
+        "feature_fraction": 0.999463140441777,
+        "bagging_fraction": 0.9289856202403852,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9909
+    },
+    {
+      "number": 14,
+      "params": {
+        "learning_rate": 0.04887054239076089,
+        "num_leaves": 137,
+        "feature_fraction": 0.9387375815042069,
+        "bagging_fraction": 0.9325675189348646,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9871
+    },
+    {
+      "number": 15,
+      "params": {
+        "learning_rate": 0.27472307382214894,
+        "num_leaves": 61,
+        "feature_fraction": 0.9527313680593351,
+        "bagging_fraction": 0.938798449355466,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9992,
+      "val_f1": 0.9891
+    },
+    {
+      "number": 16,
+      "params": {
+        "learning_rate": 0.12012810326827857,
+        "num_leaves": 136,
+        "feature_fraction": 0.9191763722087183,
+        "bagging_fraction": 0.9153172503190079,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9881
+    },
+    {
+      "number": 17,
+      "params": {
+        "learning_rate": 0.04803423687792658,
+        "num_leaves": 54,
+        "feature_fraction": 0.7970931840326904,
+        "bagging_fraction": 0.9977104161822977,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9912
+    },
+    {
+      "number": 18,
+      "params": {
+        "learning_rate": 0.061690243824797854,
+        "num_leaves": 126,
+        "feature_fraction": 0.9522501708816654,
+        "bagging_fraction": 0.8859557201085267,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9992,
+      "val_f1": 0.9873
+    },
+    {
+      "number": 19,
+      "params": {
+        "learning_rate": 0.12772573725501948,
+        "num_leaves": 207,
+        "feature_fraction": 0.8973226820560445,
+        "bagging_fraction": 0.9618129387677082,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9868
+    },
+    {
+      "number": 20,
+      "params": {
+        "learning_rate": 0.02974282541944059,
+        "num_leaves": 52,
+        "feature_fraction": 0.9996228107481688,
+        "bagging_fraction": 0.9041554329412358,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9919
+    },
+    {
+      "number": 21,
+      "params": {
+        "learning_rate": 0.07163799482679455,
+        "num_leaves": 31,
+        "feature_fraction": 0.8129989624132341,
+        "bagging_fraction": 0.7311941285873849,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9922
+    },
+    {
+      "number": 22,
+      "params": {
+        "learning_rate": 0.10886934223568158,
+        "num_leaves": 51,
+        "feature_fraction": 0.6979082043622318,
+        "bagging_fraction": 0.6853133342524489,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9906
+    },
+    {
+      "number": 23,
+      "params": {
+        "learning_rate": 0.05758003769976882,
+        "num_leaves": 80,
+        "feature_fraction": 0.7494607265440545,
+        "bagging_fraction": 0.774439933428912,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.99
+    },
+    {
+      "number": 24,
+      "params": {
+        "learning_rate": 0.17979297219320786,
+        "num_leaves": 46,
+        "feature_fraction": 0.8418170959416678,
+        "bagging_fraction": 0.6267865556535103,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9904
+    },
+    {
+      "number": 25,
+      "params": {
+        "learning_rate": 0.09148231546805749,
+        "num_leaves": 67,
+        "feature_fraction": 0.5852306392660566,
+        "bagging_fraction": 0.7386447635775795,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9908
+    },
+    {
+      "number": 26,
+      "params": {
+        "learning_rate": 0.04362471636111642,
+        "num_leaves": 44,
+        "feature_fraction": 0.7420471663463967,
+        "bagging_fraction": 0.6899795074444863,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9917
+    },
+    {
+      "number": 27,
+      "params": {
+        "learning_rate": 0.04067655481935891,
+        "num_leaves": 80,
+        "feature_fraction": 0.7327776663702422,
+        "bagging_fraction": 0.836136894046777,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9899
+    },
+    {
+      "number": 28,
+      "params": {
+        "learning_rate": 0.25721460452771155,
+        "num_leaves": 117,
+        "feature_fraction": 0.9622243535883693,
+        "bagging_fraction": 0.9653982920799119,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.999,
+      "val_f1": 0.9877
+    },
+    {
+      "number": 29,
+      "params": {
+        "learning_rate": 0.02956796689749231,
+        "num_leaves": 62,
+        "feature_fraction": 0.9168864830143129,
+        "bagging_fraction": 0.8199581541141068,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9899
+    },
+    {
+      "number": 30,
+      "params": {
+        "learning_rate": 0.02581823545832221,
+        "num_leaves": 44,
+        "feature_fraction": 0.8731994013262859,
+        "bagging_fraction": 0.6936366377858174,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9918
+    },
+    {
+      "number": 31,
+      "params": {
+        "learning_rate": 0.0720154194292825,
+        "num_leaves": 43,
+        "feature_fraction": 0.8212532689985839,
+        "bagging_fraction": 0.6636976461559223,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9915
+    },
+    {
+      "number": 32,
+      "params": {
+        "learning_rate": 0.04398189955114846,
+        "num_leaves": 39,
+        "feature_fraction": 0.707289201615861,
+        "bagging_fraction": 0.6146190357304882,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9913
+    },
+    {
+      "number": 33,
+      "params": {
+        "learning_rate": 0.05923764243027862,
+        "num_leaves": 60,
+        "feature_fraction": 0.7849527378148702,
+        "bagging_fraction": 0.6455214736059448,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9908
+    },
+    {
+      "number": 34,
+      "params": {
+        "learning_rate": 0.13580277958013773,
+        "num_leaves": 88,
+        "feature_fraction": 0.6596574834897572,
+        "bagging_fraction": 0.698187870339329,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9993,
+      "val_f1": 0.9896
+    },
+    {
+      "number": 35,
+      "params": {
+        "learning_rate": 0.0760011862390791,
+        "num_leaves": 70,
+        "feature_fraction": 0.8380313423077558,
+        "bagging_fraction": 0.7599590377836145,
+        "tfidf_max_features": 10000
+      },
+      "val_auc": 0.9994,
+      "val_f1": 0.9898
+    },
+    {
+      "number": 36,
+      "params": {
+        "learning_rate": 0.10003194969739201,
+        "num_leaves": 106,
+        "feature_fraction": 0.7593710254121725,
+        "bagging_fraction": 0.8532570591956528,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9993,
+      "val_f1": 0.9888
+    },
+    {
+      "number": 37,
+      "params": {
+        "learning_rate": 0.15956540600780267,
+        "num_leaves": 186,
+        "feature_fraction": 0.607288590617261,
+        "bagging_fraction": 0.8947292536234722,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9991,
+      "val_f1": 0.9881
+    },
+    {
+      "number": 38,
+      "params": {
+        "learning_rate": 0.022631863448175697,
+        "num_leaves": 43,
+        "feature_fraction": 0.7254426108920368,
+        "bagging_fraction": 0.6027292581596158,
+        "tfidf_max_features": 50000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9915
+    },
+    {
+      "number": 39,
+      "params": {
+        "learning_rate": 0.038656172989473186,
+        "num_leaves": 56,
+        "feature_fraction": 0.6707744594084097,
+        "bagging_fraction": 0.7159072946336856,
+        "tfidf_max_features": 20000
+      },
+      "val_auc": 0.9995,
+      "val_f1": 0.9913
+    }
+  ]
+}

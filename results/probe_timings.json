@@ -1,0 +1,31 @@
+{
+  "note": "Per-fit calibration timings on d1_decontaminated_sb (train n=36,287). Motivates (a) tuning max_features for tree/boosting families and (b) running the XGBoost search on the GPU. Feeds the dissertation's accuracy-vs-computational-cost analysis.",
+  "tfidf_fit_transform_100k_s": 26.9,
+  "cpu_100k_features_single_fit_s": {
+    "LogisticRegression": 0.7,
+    "MultinomialNB": 0.0,
+    "LinearSVC": 0.5,
+    "DecisionTree_depth40": 19.7,
+    "RandomForest_400_depth40_full": 7.9,
+    "RandomForest_400_15k_subsample": 3.5,
+    "RandomForest_800_15k_subsample": 11.6,
+    "XGBoost_500_hist": 605.8,
+    "LightGBM_500_hist": 242.8
+  },
+  "xgboost_gpu_vs_cpu_20k_features": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "gpu_cuda_s": 3.4,
+    "cpu_s": 360.2,
+    "speedup_x": 105.9,
+    "gpu_engaged": true,
+    "device": "NVIDIA RTX 3090"
+  },
+  "decisions": [
+    "XGBoost is pathologically slow on 100k-dim TF-IDF on CPU (605 s/fit); RF is fine (7.9 s); linear models trivial.",
+    "XGBoost search runs on GPU (device=cuda): 106x speedup measured at 20k features.",
+    "Tree/boosting families (dt, rf, xgb, lgbm) tune TF-IDF max_features in {10k, 20k, 50k}; linear (lr, nb, svc) keep 100k.",
+    "XGB/LGBM drop n_estimators from the search: fixed 800 with early_stopping_rounds=50 on validation AUC.",
+    "Determinism: search may use GPU, but every finalist retrain and the single test evaluation run on CPU (device=cpu, seed 42)."
+  ]
+}
