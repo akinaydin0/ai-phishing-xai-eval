@@ -258,3 +258,58 @@ mode. Mitigations that make runs *stable and auditable* rather than bit-identica
 **Links.** `src/experiments/transformers_ft.py`, `transformer_cross.py`, `transformer_report.py`;
 `notes/transformer_summary.md`; `results/results.csv`; `results/transformers/*.json`;
 `results/transformer_champions.json`; `figures/models/transformer_cross_*_heatmap.*`.
+
+**Cost figure note (canonical).** Two wall-clock numbers appear for the 9-grid: **132.8 min is
+canonical** — the sum of the nine units' *training* wall-clock (three-lr loops + per-epoch val
+scoring), the figure comparable to the classical champions' sklearn fit seconds. The **143.7 min**
+end-to-end grid-script time additionally includes the per-unit tokenization + full untruncated
+truncation-statistics passes, best-checkpoint `save_pretrained` I/O, and the single finalist test
+evals — none of which are training. Stated in `notes/transformer_summary.md` §(d).
+
+---
+
+## 2026-07-16 · PRE-REGISTERED ablation (ablation week) · max_length=512 vs the legacy↔AI transfer losses
+
+**Status: NOT YET RUN.** Registered *before* execution so the outcome cannot be reinterpreted
+post-hoc. To be run in the ablation week.
+
+**Hypothesis (falsifiable).** The transformers' *only* two cross-corpus losses vs the best
+classical champion are the legacy-Enron↔AI directions — d2→d3_en (0.7748 vs 0.8429) and d3_en→d2
+(0.7306 vs 0.7523) — and d3_en is by far the most truncated corpus at `max_length=256` (75.95% of
+train docs truncated; median 364, p95 707 WordPiece tokens). **H1:** the 256-token window discards
+discriminative content and *causes* the legacy↔AI transfer loss; raising the window to 512 (which
+covers d3_en's median 364 and cuts truncation from ~76% to the fraction >512, well under half) will
+recover a material share of the lost transfer AUC. **H0 (null):** the loss is representational /
+distributional (1990s–2000s corporate Enron vs LLM-generated phishing are genuinely far apart in
+token space — cf. pairwise Jaccard legacy↔AI 0.250, the lowest of the three), not a context-window
+artifact, and 512 will not recover it.
+
+**Method.** Re-run the affected units at `max_length=512`, everything else identical to the 256 run
+(same frozen splits, seeds=42, lr grid {2e-5,3e-5,5e-5}, ≤4 epochs, val-AUC selection, single test
+eval, resumable). Because train/eval tokenisation must stay identical (leakage-review Surface 4), a
+512 evaluation of a champion requires that champion to have been *trained* at 512 — so the ablation
+re-runs **both the d2 and d3_en units** at 512 (six units; d1_sb is untouched — all its transfers
+already win and it is not part of H1), then re-evaluates the two legacy↔AI cross directions:
+d3_en→d2 (512 d3_en champion on d2 test@512) and d2→d3_en (512 d2 champion on d3_en test@512).
+
+**Pre-specified decision rule.** Comparing 512 vs the committed 256 numbers:
+- **Supports H1** if *either* legacy↔AI direction recovers **≥ +0.03 AUC** at 512 **and** closes
+  **≥ 50%** of its gap to the best classical champion (d3_en→d2 gap 0.0217 → target ≥ 0.742;
+  d2→d3_en gap 0.0681 → target ≥ 0.809).
+- **Supports H0 (refutes truncation-cause)** if *both* directions move **< +0.01 AUC** at 512.
+- Between those bands = partial/inconclusive; report as such, no reinterpretation.
+- Secondary, weak check: in-corpus d3_en test AUC at 512 (already ceiling ~0.997, little headroom —
+  a null there does not by itself refute H1 for the cross directions).
+
+**Cost / feasibility.** 512 ≈ 2–4× the per-step compute and activation memory of 256; the six
+d2+d3_en units cost ~73 min at 256, so expect ~2.5–3 h at 512. Peak GPU ~2× (well under the 24 GB
+ceiling; effective batch 32 retained, grad-accum fallback already implemented).
+
+**Implementation notes (do at ablation time).** Parametrise `MAX_LEN` as a `--max-length` CLI arg in
+`transformers_ft.py` / `transformer_cross.py`, and write to an **isolated namespace**
+(`results/transformers_512/`, checkpoints under it, run_id suffix `__finetune512` /
+`__xcorpus_transformer512`) so the canonical 256 results and `results/results.csv` rows are **not**
+overwritten — the deliverable is a 512-vs-256 side-by-side, not a replacement.
+
+**Links.** `notes/transformer_summary.md` §(b)/(c); `results/results.csv` (256 baseline rows);
+this hypothesis tests the "legacy↔AI, not AI→real in general" finding logged in the entry above.

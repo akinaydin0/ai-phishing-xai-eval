@@ -69,7 +69,7 @@ WordPiece = BERT-base & DistilBERT (shared uncased vocab, identical lengths); BP
 | d3_en | BERT-base | 257 | 770 | 5004 | LinearSVC 0.41s |
 | d3_en | RoBERTa-base | 262 | 784 | 5184 | LinearSVC 0.41s |
 
-*Total fine-tuning wall-clock across the 9 (model, corpus) grids: **132.8 min** (2.21 h) on one RTX 3090. The tuned classical champions fit in **seconds** — the accuracy-vs-compute trade-off the dissertation quantifies.*
+*Canonical fine-tuning compute: **132.8 min** (2.21 h) on one RTX 3090 — the sum of the nine units' training wall-clock (the *unit wall* column above: the three-lr training loops per unit, including per-epoch validation scoring). This is the number comparable to the classical champions' sklearn fit times. The **end-to-end grid-script wall-clock was 143.7 min**; the ~11-min difference is not training — it is the per-unit tokenization + truncation-statistics passes (a full *untruncated* tokenisation of every split for the table in (c)), best-checkpoint `save_pretrained` I/O, and the single finalist TEST evaluations. The tuned classical champions fit in **seconds** — the accuracy-vs-compute trade-off the dissertation quantifies.*
 
 *The 9 finalist checkpoints total **3.6 GB** on disk (`results/transformers/checkpoints/`, git-ignored as regenerable artifacts); they are reused by the cross-corpus transfer above and by the upcoming XAI phase.*
 

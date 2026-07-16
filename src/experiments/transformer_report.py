@@ -196,10 +196,15 @@ def build():
     ckpt_dir = OUT_DIR / "checkpoints"
     ckpt_bytes = sum(p.stat().st_size for p in ckpt_dir.rglob("*") if p.is_file()) if ckpt_dir.exists() else 0
     ckpt_gb = ckpt_bytes / 1e9
-    L.append(f"*Total fine-tuning wall-clock across the 9 (model, corpus) grids: "
-             f"**{total_unit / 60:.1f} min** ({total_unit / 3600:.2f} h) on one RTX 3090. "
-             f"The tuned classical champions fit in **seconds** — the accuracy-vs-compute trade-off "
-             f"the dissertation quantifies.*\n")
+    L.append(f"*Canonical fine-tuning compute: **{total_unit / 60:.1f} min** ({total_unit / 3600:.2f} h) "
+             f"on one RTX 3090 — the sum of the nine units' training wall-clock (the *unit wall* column "
+             f"above: the three-lr training loops per unit, including per-epoch validation scoring). This "
+             f"is the number comparable to the classical champions' sklearn fit times. The **end-to-end "
+             f"grid-script wall-clock was 143.7 min**; the ~11-min difference is not training — it is the "
+             f"per-unit tokenization + truncation-statistics passes (a full *untruncated* tokenisation of "
+             f"every split for the table in (c)), best-checkpoint `save_pretrained` I/O, and the single "
+             f"finalist TEST evaluations. The tuned classical champions fit in **seconds** — the "
+             f"accuracy-vs-compute trade-off the dissertation quantifies.*\n")
     L.append(f"*The 9 finalist checkpoints total **{ckpt_gb:.1f} GB** on disk "
              f"(`results/transformers/checkpoints/`, git-ignored as regenerable artifacts); they are "
              f"reused by the cross-corpus transfer above and by the upcoming XAI phase.*\n")
