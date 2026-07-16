@@ -1,0 +1,208 @@
+{
+  "model": "roberta-base",
+  "display": "RoBERTa-base",
+  "corpus": "d2",
+  "text_field": "subject_body",
+  "n_train": 20456,
+  "n_val": 4384,
+  "n_test": 4384,
+  "grid_lrs": [
+    2e-05,
+    3e-05,
+    5e-05
+  ],
+  "selected_lr": 2e-05,
+  "best_val_auc": 0.9998,
+  "selection": "val_roc_auc",
+  "max_epochs": 4,
+  "patience": 1,
+  "test": {
+    "accuracy": 0.9941,
+    "precision": 0.9985,
+    "recall": 0.9889,
+    "f1": 0.9937,
+    "roc_auc": 0.9999,
+    "test_loss": 0.0197
+  },
+  "lr_results": {
+    "2e-05": {
+      "lr": 2e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 2,
+      "epochs_run": 4,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0236,
+          "val_accuracy": 0.992,
+          "val_precision": 0.988,
+          "val_recall": 0.9952,
+          "val_f1": 0.9916,
+          "val_roc_auc": 0.9996
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0262,
+          "val_accuracy": 0.9909,
+          "val_precision": 0.9951,
+          "val_recall": 0.9855,
+          "val_f1": 0.9903,
+          "val_roc_auc": 0.9997
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0246,
+          "val_accuracy": 0.9925,
+          "val_precision": 0.9966,
+          "val_recall": 0.9875,
+          "val_f1": 0.992,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 3,
+          "val_loss": 0.0212,
+          "val_accuracy": 0.9948,
+          "val_precision": 0.9952,
+          "val_recall": 0.9937,
+          "val_f1": 0.9944,
+          "val_roc_auc": 0.9998
+        }
+      ],
+      "peak_mem_mb": 5162.8,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 394.7
+    },
+    "3e-05": {
+      "lr": 3e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 2,
+      "epochs_run": 4,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0323,
+          "val_accuracy": 0.9913,
+          "val_precision": 0.9834,
+          "val_recall": 0.9986,
+          "val_f1": 0.9909,
+          "val_roc_auc": 0.9996
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0362,
+          "val_accuracy": 0.9886,
+          "val_precision": 0.9971,
+          "val_recall": 0.9788,
+          "val_f1": 0.9878,
+          "val_roc_auc": 0.9997
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0247,
+          "val_accuracy": 0.9943,
+          "val_precision": 0.9956,
+          "val_recall": 0.9923,
+          "val_f1": 0.994,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 3,
+          "val_loss": 0.022,
+          "val_accuracy": 0.9943,
+          "val_precision": 0.9952,
+          "val_recall": 0.9928,
+          "val_f1": 0.994,
+          "val_roc_auc": 0.9998
+        }
+      ],
+      "peak_mem_mb": 5181.1,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 396.6
+    },
+    "5e-05": {
+      "lr": 5e-05,
+      "val_auc": 0.9997,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0263,
+          "val_accuracy": 0.9913,
+          "val_precision": 0.9875,
+          "val_recall": 0.9942,
+          "val_f1": 0.9909,
+          "val_roc_auc": 0.9996
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0253,
+          "val_accuracy": 0.992,
+          "val_precision": 0.9937,
+          "val_recall": 0.9894,
+          "val_f1": 0.9915,
+          "val_roc_auc": 0.9997
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0244,
+          "val_accuracy": 0.995,
+          "val_precision": 0.9947,
+          "val_recall": 0.9947,
+          "val_f1": 0.9947,
+          "val_roc_auc": 0.9997
+        }
+      ],
+      "peak_mem_mb": 5184.0,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 298.1
+    }
+  },
+  "truncation": {
+    "train": {
+      "n": 20456,
+      "truncated": 7572,
+      "truncated_pct": 37.02,
+      "median_len": 179,
+      "p95_len": 1124,
+      "max_len_obs": 38822
+    },
+    "val": {
+      "n": 4384,
+      "truncated": 1590,
+      "truncated_pct": 36.27,
+      "median_len": 176,
+      "p95_len": 1073,
+      "max_len_obs": 49951
+    },
+    "test": {
+      "n": 4384,
+      "truncated": 1581,
+      "truncated_pct": 36.06,
+      "median_len": 173,
+      "p95_len": 1119,
+      "max_len_obs": 22398
+    }
+  },
+  "cost": {
+    "finalist_wall_s": 394.7,
+    "unit_wall_s": 1089.4,
+    "peak_gpu_mem_mb": 5184.0
+  },
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "device": "cuda"
+  },
+  "checkpoint": "results\\transformers\\checkpoints\\roberta-base__d2"
+}

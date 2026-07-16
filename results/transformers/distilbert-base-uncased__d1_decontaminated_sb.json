@@ -1,0 +1,190 @@
+{
+  "model": "distilbert-base-uncased",
+  "display": "DistilBERT",
+  "corpus": "d1_decontaminated_sb",
+  "text_field": "subject_body",
+  "n_train": 36287,
+  "n_val": 7776,
+  "n_test": 7776,
+  "grid_lrs": [
+    2e-05,
+    3e-05,
+    5e-05
+  ],
+  "selected_lr": 3e-05,
+  "best_val_auc": 0.9999,
+  "selection": "val_roc_auc",
+  "max_epochs": 4,
+  "patience": 1,
+  "test": {
+    "accuracy": 0.9958,
+    "precision": 0.9964,
+    "recall": 0.9957,
+    "f1": 0.9961,
+    "roc_auc": 0.9999,
+    "test_loss": 0.0139
+  },
+  "lr_results": {
+    "2e-05": {
+      "lr": 2e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 0,
+      "epochs_run": 2,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.018,
+          "val_accuracy": 0.9938,
+          "val_precision": 0.9941,
+          "val_recall": 0.9945,
+          "val_f1": 0.9943,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0157,
+          "val_accuracy": 0.9954,
+          "val_precision": 0.9943,
+          "val_recall": 0.9971,
+          "val_f1": 0.9957,
+          "val_roc_auc": 0.9998
+        }
+      ],
+      "peak_mem_mb": 2719.0,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 171.9
+    },
+    "3e-05": {
+      "lr": 3e-05,
+      "val_auc": 0.9999,
+      "best_epoch": 2,
+      "epochs_run": 4,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.018,
+          "val_accuracy": 0.9941,
+          "val_precision": 0.9948,
+          "val_recall": 0.9943,
+          "val_f1": 0.9945,
+          "val_roc_auc": 0.9997
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0152,
+          "val_accuracy": 0.9947,
+          "val_precision": 0.9943,
+          "val_recall": 0.996,
+          "val_f1": 0.9951,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0152,
+          "val_accuracy": 0.9959,
+          "val_precision": 0.9953,
+          "val_recall": 0.9971,
+          "val_f1": 0.9962,
+          "val_roc_auc": 0.9999
+        },
+        {
+          "epoch": 3,
+          "val_loss": 0.0163,
+          "val_accuracy": 0.996,
+          "val_precision": 0.9953,
+          "val_recall": 0.9974,
+          "val_f1": 0.9963,
+          "val_roc_auc": 0.9999
+        }
+      ],
+      "peak_mem_mb": 2722.8,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 352.9
+    },
+    "5e-05": {
+      "lr": 5e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0203,
+          "val_accuracy": 0.9934,
+          "val_precision": 0.9924,
+          "val_recall": 0.9955,
+          "val_f1": 0.994,
+          "val_roc_auc": 0.9997
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0176,
+          "val_accuracy": 0.9952,
+          "val_precision": 0.9943,
+          "val_recall": 0.9969,
+          "val_f1": 0.9956,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0225,
+          "val_accuracy": 0.9945,
+          "val_precision": 0.9967,
+          "val_recall": 0.9931,
+          "val_f1": 0.9949,
+          "val_roc_auc": 0.9997
+        }
+      ],
+      "peak_mem_mb": 2724.2,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 265.2
+    }
+  },
+  "truncation": {
+    "train": {
+      "n": 36287,
+      "truncated": 17751,
+      "truncated_pct": 48.92,
+      "median_len": 247,
+      "p95_len": 1505,
+      "max_len_obs": 228292
+    },
+    "val": {
+      "n": 7776,
+      "truncated": 3799,
+      "truncated_pct": 48.86,
+      "median_len": 248,
+      "p95_len": 1474,
+      "max_len_obs": 33662
+    },
+    "test": {
+      "n": 7776,
+      "truncated": 3793,
+      "truncated_pct": 48.78,
+      "median_len": 245,
+      "p95_len": 1475,
+      "max_len_obs": 2901223
+    }
+  },
+  "cost": {
+    "finalist_wall_s": 352.9,
+    "unit_wall_s": 790.0,
+    "peak_gpu_mem_mb": 2724.2
+  },
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "device": "cuda"
+  },
+  "checkpoint": "results\\transformers\\checkpoints\\distilbert-base-uncased__d1_decontaminated_sb"
+}

@@ -19,18 +19,25 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 
 ## Current Phase
 
-**Modelling — HPO + classical/ensemble grid + dense embeddings complete.** On the frozen
-70/15/15 splits (`src/splits.py`, consumed via `src.splits.load_splits`), Optuna HPO
-(`src/experiments/hpo.py`, val-ROC-AUC objective, test untouched) tuned 7 families × 3 corpora;
-plus dense baselines (`dense.py`: Word2Vec + GloVe × LR/MLP) and champion cross-corpus
-(`cross_corpus.py` → `figures/models/*_heatmap.*`). Reporting in `notes/hpo_summary.md`,
-log in `results/results.csv` (109 rows), studies in `results/hpo/*.json`.
-**Findings:** tuned **linear TF-IDF wins in-corpus** every corpus (AUC 0.9993–0.9998);
-LightGBM best ensemble but doesn't beat linear; HPO is near-ceiling (ΔF1 ≤ ~0.018); trees tune
-to ~20k features; champion cross-corpus AUC 0.68–0.91, **AI→real weakest**. XGB search on GPU
-via QuantileDMatrix, max_features capped {10k,20k} by the 24 GB ceiling (see `notes/decisions.md`
-"XGBoost GPU episode"); all finalists + test eval on CPU (seed 42, deterministic).
-**Next:** transformers (BERT-base, DistilBERT, RoBERTa-base), then XAI (SHAP/LIME/IG).
+**Modelling — transformer fine-tuning complete (HPO + classical/ensemble + dense done earlier).**
+Fine-tuned **DistilBERT, BERT-base, RoBERTa-base** on the frozen 70/15/15 splits (subject+body,
+`max_length=256`) via `src/experiments/transformers_ft.py` (lr ∈ {2e-5,3e-5,5e-5}, ≤4 epochs,
+batch 32 + fp16, wd 0.01, warmup 0.1; **val-AUC early-stop patience 1, best-val checkpoint kept,
+best lr by val AUC, TEST evaluated once per finalist**). Cross-corpus champions (best val AUC per
+source; ties→smaller model) in `transformer_cross.py` → `figures/models/transformer_cross_*_heatmap.*`;
+reporting in `notes/transformer_summary.md`; per-run val curves in `results/transformers/*.json`;
+9 finalist checkpoints in `results/transformers/checkpoints/` (git-ignored, ~3.6 GB); log in
+`results/results.csv` (124 rows).
+**Findings:** in-corpus **at ceiling — transformers match but don't beat tuned linear TF-IDF**
+(best-T vs classical AUC: d1_sb 0.9999/0.9998, d2 0.9999/0.9996, d3_en 0.9979/0.9993). Cross-corpus
+**mixed**: transformers beat best classical on **4/6** pairs — every transfer touching modern-real
+d1_sb (d3_en→d1_sb 0.966 vs 0.889) — but **lose both legacy-Enron↔AI pairs**; the **AI→real
+(d3_en→d2) gap is NOT closed** (0.731 vs classical 0.752). Truncation@256 hardest on d3_en (76%,
+median 364 WordPiece). Full 9-grid **132.8 min** on the RTX 3090 (peak ≤5.2 GB); GPU fine-tuning is
+**not bit-exact** (SDPA attention has no deterministic CUDA kernel) — mitigated by fixed seeds,
+cudnn.deterministic, CUBLAS workspace pin, pinned versions, and saved checkpoints as the
+reproducibility anchor (see `notes/decisions.md` "Transformer fine-tuning").
+**Next:** XAI (SHAP/LIME/IG) — reuses the saved finalist checkpoints.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
@@ -127,6 +134,15 @@ via QuantileDMatrix, max_features capped {10k,20k} by the 24 GB ceiling (see `no
   count (e.g. "d1_decontaminated_sb, test n=7,776").
 - **Frozen splits:** all experiments consume `data/splits/<corpus>.json` via
   `src.splits.load_splits` (sha1-body-keyed, seed 42); never re-split ad hoc.
+- **Transformer finalist checkpoints:** the 9 fine-tuned models live at
+  `results/transformers/checkpoints/<model>__<corpus>/` (HF `save_pretrained` format:
+  `model.safetensors` + `config.json` + tokenizer), where `<model>` ∈
+  {`distilbert-base-uncased`, `bert-base-uncased`, `roberta-base`} and `<corpus>` ∈
+  {`d1_decontaminated_sb`, `d2`, `d3_en`}. **Git-ignored** (~3.6 GB, regenerable via
+  `python -m src.experiments.transformers_ft --all`). The **XAI phase reuses these**:
+  `AutoModelForSequenceClassification.from_pretrained(<dir>)` + `AutoTokenizer.from_pretrained(<dir>)`;
+  per-model metadata (selected lr, val curves, truncation, versions) in
+  `results/transformers/<model>__<corpus>.json`.
 
 ## Supervisor feedback (5 Jul 2026 — honour throughout)
 

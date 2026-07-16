@@ -202,3 +202,59 @@ dense by val AUC per source) evaluated across all directed pairs.
 
 **Links.** `notes/hpo_summary.md`; `results/results.csv`; `results/hpo/*.json`;
 `results/champions.json`; `figures/models/cross_corpus_*_heatmap.*`.
+
+---
+
+## 2026-07-16 · Transformer fine-tuning — determinism policy + methodology + findings
+
+**Decisions.** (1) Fine-tune DistilBERT, BERT-base and RoBERTa-base on the three frozen
+corpora (subject+body, `max_length=256`, truncation on). Per (model, corpus) grid: lr ∈
+{2e-5, 3e-5, 5e-5}, up to 4 epochs, batch 32 + fp16 (grad-accum on OOM), weight_decay 0.01,
+warmup_ratio 0.1. **Validation ROC-AUC each epoch; early-stop patience 1; best-val-AUC
+checkpoint kept; the best lr is selected by val AUC only.** The **TEST split is evaluated
+exactly once per finalist**, after selection. (2) Cross-corpus: champion per source = model
+with the highest **val** AUC; ties at 4 d.p. (the corpora saturate near 1.0) broken toward the
+**smaller/cheaper** model (distilbert < bert < roberta). Each champion's fine-tuned checkpoint
+is applied unchanged to the other corpora's TEST splits (6 directed pairs); the diagonal reuses
+the single official in-corpus test eval. (3) Environment: `torch==2.11.0+cu128` (the driver is
+CUDA 13.1-capable, so any 12.x runtime runs on the RTX 3090), `transformers==4.57.6`,
+`accelerate==1.14.0`.
+
+**Determinism policy (not bit-exact — deliberately).** GPU fine-tuning here is **not
+bit-reproducible**. The concrete cause: the memory-efficient / SDPA attention path used by
+these encoders has **no deterministic CUDA kernel** for its backward pass — with
+`torch.use_deterministic_algorithms(True)` it *raises*; we therefore run it in `warn_only=True`
+mode. Mitigations that make runs *stable and auditable* rather than bit-identical:
+- **Fixed seeds = 42** (`random`, `numpy`, `torch`, `torch.cuda`) set before every model init,
+  so classifier-head init and data-shuffle order are reproducible and lr is the only difference.
+- **`torch.backends.cudnn.deterministic = True`, `benchmark = False`** (deterministic cuDNN
+  where a kernel exists; no autotuner nondeterminism).
+- **`CUBLAS_WORKSPACE_CONFIG=":4096:8"`** pinned *before* the CUDA context (deterministic cuBLAS
+  GEMMs).
+- **Pinned library/CUDA versions**, recorded in every `results/transformers/*.json` (`versions`
+  block: python/torch/transformers/cuda_build/cudnn/gpu).
+- **Saved finalist checkpoints are the reproducibility anchor** — the exact evaluated weights are
+  persisted (`save_pretrained`), so every reported number is re-verifiable from the checkpoint
+  regardless of run-to-run FP noise. Checkpoints (~3.6 GB) are git-ignored as regenerable; only
+  code, JSONs, figures and summaries are committed.
+
+**Findings (evidence for the write-up).**
+- **In-corpus at ceiling; transformers do not beat tuned linear TF-IDF.** Best-transformer vs
+  classical champion test AUC: d1_sb 0.9999 vs 0.9998, d2 0.9999 vs 0.9996, d3_en 0.9979 vs
+  0.9993. All ≥ 0.997; no meaningful in-corpus gain for ~1000× the compute.
+- **Cross-corpus is a mixed, informative result — NOT a blanket transformer win.** Transformer
+  champions beat the best classical champion on **4/6** directed pairs — **every pair involving
+  the modern-real corpus d1_sb** (e.g. d3_en→d1_sb 0.966 vs 0.889, +0.077) — and **lose the two
+  legacy-Enron↔AI pairs** (d2→d3_en 0.775 vs 0.843; d3_en→d2 0.731 vs 0.752).
+- **The headline AI→real gap (d3_en→d2) is NOT closed** by contextual modelling: 0.731 lands
+  inside the classical band (0.675–0.752) but −0.022 below the best classical (LinearSVC 0.752).
+  The residual hard case is **legacy↔AI** transfer specifically, not AI→real in general.
+- **Truncation @256 bites hardest on the AI corpus, not the legacy one** — AI-generated emails are
+  the longest (d3_en train 75.95% truncated, median 364 WordPiece tokens) vs d1_sb 48.92%/247 and
+  d2 36.53%/176. RoBERTa still tops d3_en in-corpus, so the signal survives the first 256 tokens.
+- **Cost:** full 9-grid = **132.8 min** on one RTX 3090 (peak ≤ 5.2 GB, effective batch 32
+  throughout, no OOM) vs seconds for the tuned linear champions.
+
+**Links.** `src/experiments/transformers_ft.py`, `transformer_cross.py`, `transformer_report.py`;
+`notes/transformer_summary.md`; `results/results.csv`; `results/transformers/*.json`;
+`results/transformer_champions.json`; `figures/models/transformer_cross_*_heatmap.*`.

@@ -4,6 +4,8 @@ data/processed/
 data/cache/
 data/embeddings/
 results/hpo/*.log
+results/transformers/checkpoints/
+results/transformers/_partial/
 __pycache__/
 .ipynb_checkpoints/
 *.pyc

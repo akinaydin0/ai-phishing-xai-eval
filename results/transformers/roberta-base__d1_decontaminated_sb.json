@@ -1,0 +1,172 @@
+{
+  "model": "roberta-base",
+  "display": "RoBERTa-base",
+  "corpus": "d1_decontaminated_sb",
+  "text_field": "subject_body",
+  "n_train": 36287,
+  "n_val": 7776,
+  "n_test": 7776,
+  "grid_lrs": [
+    2e-05,
+    3e-05,
+    5e-05
+  ],
+  "selected_lr": 2e-05,
+  "best_val_auc": 0.9999,
+  "selection": "val_roc_auc",
+  "max_epochs": 4,
+  "patience": 1,
+  "test": {
+    "accuracy": 0.9973,
+    "precision": 0.9974,
+    "recall": 0.9976,
+    "f1": 0.9975,
+    "roc_auc": 0.9998,
+    "test_loss": 0.0109
+  },
+  "lr_results": {
+    "2e-05": {
+      "lr": 2e-05,
+      "val_auc": 0.9999,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0174,
+          "val_accuracy": 0.9947,
+          "val_precision": 0.9962,
+          "val_recall": 0.9941,
+          "val_f1": 0.9951,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0133,
+          "val_accuracy": 0.9963,
+          "val_precision": 0.9979,
+          "val_recall": 0.9952,
+          "val_f1": 0.9966,
+          "val_roc_auc": 0.9999
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0131,
+          "val_accuracy": 0.9965,
+          "val_precision": 0.9969,
+          "val_recall": 0.9967,
+          "val_f1": 0.9968,
+          "val_roc_auc": 0.9999
+        }
+      ],
+      "peak_mem_mb": 5162.8,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 519.9
+    },
+    "3e-05": {
+      "lr": 3e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 0,
+      "epochs_run": 2,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0158,
+          "val_accuracy": 0.9949,
+          "val_precision": 0.9964,
+          "val_recall": 0.9941,
+          "val_f1": 0.9952,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0145,
+          "val_accuracy": 0.9955,
+          "val_precision": 0.9957,
+          "val_recall": 0.996,
+          "val_f1": 0.9958,
+          "val_roc_auc": 0.9998
+        }
+      ],
+      "peak_mem_mb": 5181.1,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 350.8
+    },
+    "5e-05": {
+      "lr": 5e-05,
+      "val_auc": 0.9998,
+      "best_epoch": 0,
+      "epochs_run": 2,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0199,
+          "val_accuracy": 0.9936,
+          "val_precision": 0.9938,
+          "val_recall": 0.9943,
+          "val_f1": 0.9941,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0165,
+          "val_accuracy": 0.9955,
+          "val_precision": 0.9969,
+          "val_recall": 0.9948,
+          "val_f1": 0.9958,
+          "val_roc_auc": 0.9997
+        }
+      ],
+      "peak_mem_mb": 5184.0,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 351.9
+    }
+  },
+  "truncation": {
+    "train": {
+      "n": 36287,
+      "truncated": 16510,
+      "truncated_pct": 45.5,
+      "median_len": 218,
+      "p95_len": 1402,
+      "max_len_obs": 168684
+    },
+    "val": {
+      "n": 7776,
+      "truncated": 3541,
+      "truncated_pct": 45.54,
+      "median_len": 218,
+      "p95_len": 1400,
+      "max_len_obs": 36021
+    },
+    "test": {
+      "n": 7776,
+      "truncated": 3524,
+      "truncated_pct": 45.32,
+      "median_len": 218,
+      "p95_len": 1401,
+      "max_len_obs": 3149911
+    }
+  },
+  "cost": {
+    "finalist_wall_s": 519.9,
+    "unit_wall_s": 1222.6,
+    "peak_gpu_mem_mb": 5184.0
+  },
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "device": "cuda"
+  },
+  "checkpoint": "results\\transformers\\checkpoints\\roberta-base__d1_decontaminated_sb"
+}

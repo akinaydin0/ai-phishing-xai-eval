@@ -1,0 +1,190 @@
+{
+  "model": "bert-base-uncased",
+  "display": "BERT-base",
+  "corpus": "d1_decontaminated_sb",
+  "text_field": "subject_body",
+  "n_train": 36287,
+  "n_val": 7776,
+  "n_test": 7776,
+  "grid_lrs": [
+    2e-05,
+    3e-05,
+    5e-05
+  ],
+  "selected_lr": 2e-05,
+  "best_val_auc": 0.9999,
+  "selection": "val_roc_auc",
+  "max_epochs": 4,
+  "patience": 1,
+  "test": {
+    "accuracy": 0.9952,
+    "precision": 0.9962,
+    "recall": 0.995,
+    "f1": 0.9956,
+    "roc_auc": 0.9998,
+    "test_loss": 0.0154
+  },
+  "lr_results": {
+    "2e-05": {
+      "lr": 2e-05,
+      "val_auc": 0.9999,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.023,
+          "val_accuracy": 0.9922,
+          "val_precision": 0.9878,
+          "val_recall": 0.9979,
+          "val_f1": 0.9928,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0131,
+          "val_accuracy": 0.9958,
+          "val_precision": 0.9962,
+          "val_recall": 0.996,
+          "val_f1": 0.9961,
+          "val_roc_auc": 0.9999
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0153,
+          "val_accuracy": 0.9963,
+          "val_precision": 0.9967,
+          "val_recall": 0.9964,
+          "val_f1": 0.9966,
+          "val_roc_auc": 0.9999
+        }
+      ],
+      "peak_mem_mb": 4983.4,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 511.8
+    },
+    "3e-05": {
+      "lr": 3e-05,
+      "val_auc": 0.9999,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0224,
+          "val_accuracy": 0.9922,
+          "val_precision": 0.9866,
+          "val_recall": 0.999,
+          "val_f1": 0.9928,
+          "val_roc_auc": 0.9998
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0154,
+          "val_accuracy": 0.9941,
+          "val_precision": 0.9971,
+          "val_recall": 0.9919,
+          "val_f1": 0.9945,
+          "val_roc_auc": 0.9999
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0156,
+          "val_accuracy": 0.9954,
+          "val_precision": 0.9967,
+          "val_recall": 0.9948,
+          "val_f1": 0.9957,
+          "val_roc_auc": 0.9999
+        }
+      ],
+      "peak_mem_mb": 4994.4,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 518.4
+    },
+    "5e-05": {
+      "lr": 5e-05,
+      "val_auc": 0.9999,
+      "best_epoch": 1,
+      "epochs_run": 3,
+      "curves": [
+        {
+          "epoch": 0,
+          "val_loss": 0.0188,
+          "val_accuracy": 0.9943,
+          "val_precision": 0.9927,
+          "val_recall": 0.9969,
+          "val_f1": 0.9948,
+          "val_roc_auc": 0.9996
+        },
+        {
+          "epoch": 1,
+          "val_loss": 0.0139,
+          "val_accuracy": 0.9961,
+          "val_precision": 0.9971,
+          "val_recall": 0.9957,
+          "val_f1": 0.9964,
+          "val_roc_auc": 0.9999
+        },
+        {
+          "epoch": 2,
+          "val_loss": 0.0165,
+          "val_accuracy": 0.9956,
+          "val_precision": 0.9962,
+          "val_recall": 0.9957,
+          "val_f1": 0.996,
+          "val_roc_auc": 0.9999
+        }
+      ],
+      "peak_mem_mb": 5003.6,
+      "batch": 32,
+      "per_device_batch": 32,
+      "grad_accum": 1,
+      "wall_s": 518.8
+    }
+  },
+  "truncation": {
+    "train": {
+      "n": 36287,
+      "truncated": 17751,
+      "truncated_pct": 48.92,
+      "median_len": 247,
+      "p95_len": 1505,
+      "max_len_obs": 228292
+    },
+    "val": {
+      "n": 7776,
+      "truncated": 3799,
+      "truncated_pct": 48.86,
+      "median_len": 248,
+      "p95_len": 1474,
+      "max_len_obs": 33662
+    },
+    "test": {
+      "n": 7776,
+      "truncated": 3793,
+      "truncated_pct": 48.78,
+      "median_len": 245,
+      "p95_len": 1475,
+      "max_len_obs": 2901223
+    }
+  },
+  "cost": {
+    "finalist_wall_s": 511.8,
+    "unit_wall_s": 1549.0,
+    "peak_gpu_mem_mb": 5003.6
+  },
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "device": "cuda"
+  },
+  "checkpoint": "results\\transformers\\checkpoints\\bert-base-uncased__d1_decontaminated_sb"
+}

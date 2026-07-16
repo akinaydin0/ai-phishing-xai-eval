@@ -1,0 +1,20 @@
+{
+  "d1_sb": {
+    "model": "DistilBERT",
+    "val_auc": 0.9999,
+    "selected_lr": 3e-05,
+    "checkpoint": "results\\transformers\\checkpoints\\distilbert-base-uncased__d1_decontaminated_sb"
+  },
+  "d2": {
+    "model": "DistilBERT",
+    "val_auc": 0.9999,
+    "selected_lr": 3e-05,
+    "checkpoint": "results\\transformers\\checkpoints\\distilbert-base-uncased__d2"
+  },
+  "d3_en": {
+    "model": "RoBERTa-base",
+    "val_auc": 0.9986,
+    "selected_lr": 5e-05,
+    "checkpoint": "results\\transformers\\checkpoints\\roberta-base__d3_en"
+  }
+}
