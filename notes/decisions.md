@@ -281,8 +281,8 @@ discriminative content and *causes* the legacy↔AI transfer loss; raising the w
 covers d3_en's median 364 and cuts truncation from ~76% to the fraction >512, well under half) will
 recover a material share of the lost transfer AUC. **H0 (null):** the loss is representational /
 distributional (1990s–2000s corporate Enron vs LLM-generated phishing are genuinely far apart in
-token space — cf. pairwise Jaccard legacy↔AI 0.250, the lowest of the three), not a context-window
-artifact, and 512 will not recover it.
+token space — cf. pairwise Jaccard legacy↔AI **0.248 (cleaned)**, the lowest of the three
+(legacy↔modern 0.353, modern↔AI 0.256)), not a context-window artifact, and 512 will not recover it.
 
 **Method.** Re-run the affected units at `max_length=512`, everything else identical to the 256 run
 (same frozen splits, seeds=42, lr grid {2e-5,3e-5,5e-5}, ≤4 epochs, val-AUC selection, single test
