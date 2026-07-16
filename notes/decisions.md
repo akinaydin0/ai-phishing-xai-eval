@@ -313,3 +313,85 @@ overwritten — the deliverable is a 512-vs-256 side-by-side, not a replacement.
 
 **Links.** `notes/transformer_summary.md` §(b)/(c); `results/results.csv` (256 baseline rows);
 this hypothesis tests the "legacy↔AI, not AI→real in general" finding logged in the entry above.
+
+---
+
+## 2026-07-16 · PRE-REGISTERED XAI evaluation protocol (Directive 7) — written BEFORE any results
+
+**Status when written: NO XAI RESULTS EXIST YET.** This protocol, and the fixed cue lexicon
+(`src/xai/cue_lexicon.py`, 206 terms across 6 categories), are committed *before* any attribution or
+metric is computed, so faithfulness/stability/plausibility numbers cannot be reverse-fitted.
+
+**Units (12).** Family champions per corpus (in-corpus, 9) + transformer transfer (cross, 3):
+- **tfidf** (val-selected): d1_sb LogisticRegression, d2 LogisticRegression, d3_en **LinearSVC** —
+  rebuilt from the stored HPO `best_params` (`results/hpo/*.json`), fit on the SOURCE train split.
+- **ensemble**: tuned **LightGBM** per corpus (rebuilt from HPO best_params, early-stopped on val).
+- **transformer** (saved checkpoints, `results/transformers/checkpoints/`): d1_sb DistilBERT,
+  d2 DistilBERT, d3_en RoBERTa.
+- **cross (transformers only, n=100):** d3_en champion (RoBERTa) on **d1_sb** test (success axis);
+  d2 champion (DistilBERT) on **d3_en** test and d3_en champion (RoBERTa) on **d2** test (hard
+  legacy↔AI axis). Question: does explanation quality degrade with transfer, and more on the hard axis?
+
+**Model score `p`.** Faithfulness uses `p = p(predicted class)` — the probability the model assigns
+its own predicted class on the ORIGINAL doc (class fixed from the original prediction). `predict_proba`
+for LogisticRegression / LightGBM / transformers (softmax); **LinearSVC has no `predict_proba`, so
+`p = sigmoid(decision_function)`** — a monotonic pseudo-probability (documented; comprehensiveness /
+sufficiency are *differences* of the same monotone score, so calibration is immaterial, only monotonicity).
+
+**Attribution granularity + the identical removal mechanic.** All attributions are reduced to the
+raw-text **word** level under one fixed segmentation (`\w+`, unicode, with character spans). Removal
+blanks the chosen words' spans in the raw text and **re-runs the full pipeline** (re-vectorise for
+tfidf/LightGBM, re-tokenise for transformers) — so the mechanic is byte-identical across families.
+Method→word reduction: (i) **tfidf/LightGBM** SHAP feature values (unigram+bigram vocab) are
+distributed **equally to the constituent word positions** that generated each feature; (ii)
+**transformer** sub-word attributions (SHAP text tokens / IG sub-tokens) are **summed within each
+word span**. Top-k = the k word positions with the highest attribution **toward the predicted class**
+(for methods giving class-1 attribution, oriented by `sign = +1 if pred==1 else −1`).
+
+**Explanation set (per unit, TEST split ONLY).** n=200 in-corpus (100 per TRUE class); include ALL
+misclassified docs up to **30** (by the unit's champion prediction), fill the remainder with correctly
+classified docs holding the 100/100 balance; **seed 42**. Cross units: n=100 (50/class), misclassified
+cap **15** (proportional to 30/200). Selected doc ids (sha1 body-hash keys) persisted to
+`results/xai/explained_ids_<unit>.json`; the **same docs feed every method** on that unit.
+
+**(1) Faithfulness — token-removal.** For k ∈ {1,5,10,20}, on `p = p(pred class)`:
+- **comprehensiveness@k** = `p_orig − p(top-k attributed words REMOVED)` (higher = more faithful).
+- **sufficiency@k** = `p_orig − p(ONLY top-k words kept)` (nearer 0 = more faithful).
+- **AOPC** = mean over k=1..20 of comprehensiveness@k (per doc, then averaged).
+- **MANDATORY random-attribution baseline** through the identical pipeline (random word ranking,
+  seed 42): every faithfulness number is reported beside its random-baseline equivalent.
+
+**(2) Stability.** Per doc, **5 perturbed variants**: randomly delete **5% of the NON-top-10 tokens**
+(seeded). Metrics: mean **top-10 Jaccard** and mean **Spearman** of shared-token attributions
+(original vs perturbed). Plus **LIME seed-agreement**: LIME with two seeds (42, 43), top-10 Jaccard.
+
+**(3) Plausibility (heuristic proxy, NOT human annotation — stated as such in the summary).**
+Cue-hit rate within the **top-10** attributed words on **phishing-PREDICTED** docs (pred==1), using
+the fixed `cue_lexicon.py`; a word hits if it is any category term, or (url_email) its span overlaps a
+URL/e-mail match. Reported against the random-attribution baseline.
+
+**Method hyperparameters (fixed here).**
+- **SHAP**: LinearExplainer (masker = Independent over a 1,000-row train-feature background) for
+  linear; TreeExplainer (tree_path_dependent, exact) for LightGBM; **Partition/Text explainer** for
+  transformers (word masker aligned to the removal `\w+` tokenizer, `max_evals=500`).
+- **LIME**: `LimeTextExplainer(bow=True)`, `num_samples=1000`, split_expression `\w+`; main
+  attribution seed 42; seed-agreement uses seeds {42, 43}.
+- **IG** (transformers only): `LayerIntegratedGradients` on the input-embedding layer, **n_steps=32**,
+  **baseline = PAD-token embedding** (choice recorded), target = predicted-class logit; sub-token
+  attributions summed to words.
+- Determinism: seed 42 for all sampling/perturbation; transformer forward passes batched on GPU
+  (not bit-exact — same SDPA caveat as Directive 6).
+
+**Cost control.** After the first (transformer, SHAP) unit, project full-plan wall-clock; if any
+method projects **beyond ~6 h**, checkpoint Akın with options rather than silently trimming
+(e.g. reduce SHAP `max_evals` / LIME `num_samples`, recorded if changed). Incremental per-unit JSON
+persistence with resume, exactly like Directives 5–6.
+
+**Outputs.** `results/xai_metrics.csv` (unit, corpus, family, method, n_explained, aopc,
+comp@{1,5,10,20}, suff@{1,5,10,20}, stability_jaccard, stability_spearman, lime_seed_agreement,
+plausibility@10, random-baseline equivalents, runtime_s); per-unit JSON `results/xai/<unit>.json`;
+figures (deletion curves; method×family bars for comp@10/stability/plausibility; 6 qualitative
+examples) PNG+PDF; `notes/xai_summary.md` with the RQ3 answer + 5 observations.
+
+**Links.** `src/xai/` (`cue_lexicon.py`, `champions.py`, `explainers.py`, `metrics.py`, `run_xai.py`,
+`report_xai.py`, `figures_xai.py`); `results/xai/`; `results/xai_metrics.csv`; `notes/xai_summary.md`.
