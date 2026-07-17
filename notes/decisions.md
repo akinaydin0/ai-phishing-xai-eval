@@ -473,3 +473,31 @@ timed metric blocks). No numeric defect found; the CSV stands.
 
 **Links.** `notes/xai_summary.md` (RQ3 bullet, Observations 4–5); `src/xai/report_xai.py`;
 `results/xai_metrics.csv`.
+
+---
+
+## 2026-07-17 · Supervisor feedback (weekly report 1) logged
+
+Recorded from the first weekly supervisor report so the actions are tracked and dated.
+
+- **Overfitting concern → queued as Directive 10 (plausibility *validation*).** The supervisor
+  suggested guarding against over-reading the heuristic cue-lexicon plausibility proxy. Planned
+  response: a **method-blind human plausibility annotation** of the explanation top-10 sets
+  (SHAP / LIME / IG / random, **~20 docs per corpus** drawn from the *existing*
+  `results/xai/explained_ids_*.json` **TEST** sets), plus an **LLM-judge cross-check under the same
+  blind protocol**. The annotation guide + agreement metrics (inter-rater + human-vs-LLM) will be
+  **pre-registered in this log BEFORE any rating happens** — same discipline as the XAI
+  pre-registration. This directly tests whether the lexicon proxy tracks human judgement.
+- **LSEP (Legal/Social/Ethical/Professional): stays as Chapter 1 §1.4.** Supervisor approved either
+  placement; keeping it in Ch1 §1.4, to be anchored in **relevant, DOI-verified** literature during
+  the writing phase (honours supervisor feedback items 1 + 4).
+- **Conference confirmed: DeSE 2026** — 19th International Conference on Developments in eSystems
+  Engineering, **16–18 Dec 2026, Selangor Darul Ehsan, Malaysia**; IEEE Xplore proceedings.
+  **Full-paper deadline 15/09/2026; camera-ready + author registration 15/10/2026.** Plan: distil the
+  paper from the full dissertation draft in **August** (before the 31 Aug dissertation deadline gives
+  a draft to compress).
+- **Viva:** the online-viva question was redirected by the supervisor to programme leader **[name redacted]**;
+  email sent, **answer pending** (follow up if no reply within a week).
+
+**Links.** Directive 10 (to be pre-registered before ratings); `CLAUDE.md` (Supervisor feedback);
+`results/xai/explained_ids_*.json` (source docs for the annotation subset).

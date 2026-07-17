@@ -37,8 +37,10 @@ their best explainer). **RQ3 answer: linear TF-IDF + SHAP** — top accuracy, fa
 (6 s/unit vs transformer 686–2408 s). Prior transformer findings unchanged (in-corpus at ceiling;
 cross-corpus win 4/6, **AI→real d3_en→d2 NOT closed** 0.731 vs 0.752; results.csv 124 rows;
 `results/transformers/checkpoints/` git-ignored ~3.6 GB).
-**Next:** pre-registered `max_length=512` ablation (see decisions.md); STARD-AI checklist (supervisor
-item 5); dissertation writing.
+**Now running:** pre-registered `max_length=512` ablation (Directive 8; isolated namespace
+`results/transformers_512/`, canonical results untouched). **Next after:** STARD-AI checklist
+(supervisor item 5); Directive 10 (HITL + LLM plausibility validation, pre-registered first);
+dissertation writing.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
@@ -155,6 +157,16 @@ item 5); dissertation writing.
 3. Perform **hyperparameter optimisation** for all models.
 4. Keep references **consistent and with valid DOIs**.
 5. Complete the **STARD-AI checklist** on completion.
+
+### Weekly report 1 (17 Jul 2026 — see `notes/decisions.md`)
+
+6. **Overfitting/plausibility over-reading** → **Directive 10**: method-blind human plausibility
+   annotation (~20 docs/corpus from the existing TEST `explained_ids`) + LLM-judge cross-check;
+   annotation guide + agreement metrics **pre-registered before any rating**.
+7. **LSEP** stays **Chapter 1 §1.4** (supervisor approved either placement); DOI-anchored at writing.
+8. **Conference: DeSE 2026** (16–18 Dec 2026, Malaysia; IEEE Xplore) — **full paper 15/09/2026**,
+   camera-ready + registration 15/10/2026; distil from the dissertation draft in August.
+9. **Viva** question redirected to programme leader **[name redacted]** (email sent, pending).
 
 ## Reference Errata (Important — do not cite these)
 
