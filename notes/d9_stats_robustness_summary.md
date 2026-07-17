@@ -4,25 +4,29 @@ All comparisons, champions and claim directions were **pre-registered before any
 
 ## (a) The seven comparisons — Δ AUC (95% paired stratified bootstrap, B=10,000) + McNemar/Holm
 
-| id | comparison | AUC_a | AUC_b | Δ=a−b | 95% CI | McNemar n01/n10 | p_raw | p_holm | verdict |
-|---|---|--:|--:|--:|---|:--:|--:|--:|---|
-| C1a | LinearSVC vs DistilBERT-256 | 0.9998 | 0.9999 | -0.0001 | [-0.0002, -0.0000] | 27/17 | 0.174 | 0.174 | **CI includes 0** |
-| C1b | MultinomialNB vs DistilBERT-256 | 0.9996 | 0.9999 | -0.0003 | [-0.0005, -0.0001] | 37/20 | 0.0331 | 0.0663 | separated |
-| C1c | LinearSVC vs RoBERTa-256 | 0.9993 | 0.9976 | +0.0017 | [+0.0006, +0.0030] | 14/36 | 0.0026 | 0.0104 | separated |
-| C2 | RoBERTa-512(d3en->d2) vs RoBERTa-256(d3en->d2) | 0.8440 | 0.7306 | +0.1134 | [+0.1042, +0.1229] | 139/607 | 0 | 0 | separated |
-| C3 | RoBERTa-512(d3en->d2) vs LinearSVC-cross | 0.8440 | 0.7523 | +0.0917 | [+0.0784, +0.1052] | 496/859 | 0 | 0 | separated |
-| C4 | LogReg-cross(d2->d3en) vs DistilBERT-256(d2->d3en) | 0.8429 | 0.7748 | +0.0681 | [+0.0534, +0.0832] | 249/360 | 8e-06 | 3.9e-05 | separated |
-| C5 | DistilBERT-512(d2->d3en) vs DistilBERT-256(d2->d3en) | 0.7642 | 0.7748 | -0.0106 | [-0.0223, +0.0009] | 266/209 | 0.0101 | 0.0303 | **CI includes 0** |
+The **AUC-level** CI tests the ranking; the **threshold-level** McNemar tests 0.5-operating-point errors. They answer different questions and are reported in separate columns; a claim never cites a McNemar p it does not support. CIs are shown to 6 dp (they are stored to 6 dp in the CSV).
 
-## (b) Which committed claims gain (or lack) statistical separation
+| id | comparison | AUC_a | AUC_b | Δ=a−b | 95% CI (Δ) | McNemar n01/n10 | p_raw | p_holm | AUC-level | thr-level |
+|---|---|--:|--:|--:|---|:--:|--:|--:|:--:|:--:|
+| C1a | LinearSVC vs DistilBERT-256 | 0.9998 | 0.9999 | -0.0001 | [-0.000219, -0.000023] | 27/17 | 0.174 | 0.174 | excl 0 | ns |
+| C1b | MultinomialNB vs DistilBERT-256 | 0.9996 | 0.9999 | -0.0003 | [-0.000543, -0.000092] | 37/20 | 0.0331 | 0.0663 | excl 0 | ns |
+| C1c | LinearSVC vs RoBERTa-256 | 0.9993 | 0.9976 | +0.0017 | [+0.000584, +0.003044] | 14/36 | 0.0026 | 0.0104 | excl 0 | sig |
+| C2 | RoBERTa-512(d3en->d2) vs RoBERTa-256(d3en->d2) | 0.8440 | 0.7306 | +0.1134 | [+0.104178, +0.122906] | 139/607 | 0 | 0 | excl 0 | sig |
+| C3 | RoBERTa-512(d3en->d2) vs LinearSVC-cross | 0.8440 | 0.7523 | +0.0917 | [+0.078399, +0.105240] | 496/859 | 0 | 0 | excl 0 | sig |
+| C4 | LogReg-cross(d2->d3en) vs DistilBERT-256(d2->d3en) | 0.8429 | 0.7748 | +0.0681 | [+0.053360, +0.083210] | 249/360 | 8e-06 | 3.9e-05 | excl 0 | sig |
+| C5 | DistilBERT-512(d2->d3en) vs DistilBERT-256(d2->d3en) | 0.7642 | 0.7748 | -0.0106 | [-0.022303, +0.000919] | 266/209 | 0.0101 | 0.0303 | incl 0 | sig |
 
-- **C1a** (in-corpus d1_sb: 256 transformer vs classical champion): AUC Δ=-0.0001 — **the 95% CI includes 0** ([-0.0002,-0.0000]): no AUC-level separation (Holm-McNemar p=0.174).
-- **C1b** (in-corpus d2: 256 transformer vs classical champion): AUC Δ=-0.0003 is **statistically separated** (CI [-0.0005,-0.0001] excludes 0; Holm-McNemar p=0.0663).
-- **C1c** (in-corpus d3_en: classical champion vs 256 transformer): AUC Δ=+0.0017 is **statistically separated** (CI [+0.0006,+0.0030] excludes 0; Holm-McNemar p=0.0104).
-- **C2** (d3_en→d2: 512 vs 256 transformer (the ablation recovery)): AUC Δ=+0.1134 is **statistically separated** (CI [+0.1042,+0.1229] excludes 0; Holm-McNemar p=0).
-- **C3** (d3_en→d2: 512 transformer vs best classical cross champion): AUC Δ=+0.0917 is **statistically separated** (CI [+0.0784,+0.1052] excludes 0; Holm-McNemar p=0).
-- **C4** (d2→d3_en: best classical cross champion vs 256 transformer): AUC Δ=+0.0681 is **statistically separated** (CI [+0.0534,+0.0832] excludes 0; Holm-McNemar p=3.9e-05).
-- **C5** (d2→d3_en: 512 vs 256 transformer (expected null)): AUC Δ=-0.0106 — **the 95% CI includes 0** ([-0.0223,+0.0009]): no AUC-level separation (Holm-McNemar p=0.0303).
+**Champion-identity disclosure (in-corpus, C1a/C1b/C1c).** The `svc` family is **LinearSVC** (linear SVM, `sklearn.svm.LinearSVC`), not a kernel SVC. **Classical side = strongest committed classical result per corpus (test champion); transformer side = val-selected finalist. This asymmetry biases the in-corpus comparison toward the classical model, making the transformer's d1_sb/d2 parity conservative; C1c is unaffected (d3_en's val- and test-selected classical coincide).** Specifically: d1_sb LinearSVC is both val-tied-best (0.9997) and test-best (0.9998); **d2 MultinomialNB is the test champion (0.9996) but NOT val-selected** (NB val 0.9990 < LR/SVC 0.9991); d3_en LinearSVC is val-best (0.9989) AND test-best (0.9993).
+
+## (b) AUC-level vs threshold-level — reported separately wherever they diverge
+
+- **C1a** (in-corpus d1_sb, classical vs 256 transformer): **AUC-level** — nominally separated by ~1 bp (CI [-0.000219, -0.000023]; upper bound just below zero → the 95% CI **excludes 0 at full precision**). **Threshold-level** — Holm-McNemar p=0.174, **NOT** separated. Practically **indistinguishable at the 0.999 ceiling**.
+- **C1b** (in-corpus d2, classical vs 256 transformer): **AUC-level** — CI [-0.0005, -0.0001] **excludes 0** (a ~3 bp edge to the transformer). **Threshold-level** — Holm-McNemar p=0.0663, **not significant**.
+- **C1c** (in-corpus d3_en, classical vs 256 transformer): **AUC-level** — CI [+0.0006, +0.0030] **excludes 0** (classical +17 bp). **Threshold-level** — Holm-McNemar p=0.0104, **significant → the classical LinearSVC beats RoBERTa on the AI corpus** (both tests agree).
+- **C2** (d3_en→d2: 512 vs 256 transformer (the ablation recovery)): **AUC-level** — CI [+0.1042, +0.1229] excludes 0 (Δ=+0.1134); **Threshold-level** — Holm-McNemar p=0, significant. Both tests agree.
+- **C3** (d3_en→d2: 512 transformer vs best classical cross champion): **AUC-level** — CI [+0.0784, +0.1052] excludes 0 (Δ=+0.0917); **Threshold-level** — Holm-McNemar p=0, significant. Both tests agree.
+- **C4** (d2→d3_en: best classical cross champion vs 256 transformer): **AUC-level** — CI [+0.0534, +0.0832] excludes 0 (Δ=+0.0681); **Threshold-level** — Holm-McNemar p=3.9e-05, significant. Both tests agree.
+- **C5** (d2→d3_en, 512 vs 256 transformer): **AUC-level** — CI [-0.0223, +0.0009] **includes 0 — the pre-registered null holds at AUC level.** **Threshold-level** — Holm-McNemar p=0.0303 **IS significant, favouring the 256 model** (n01=266 vs n10=209) at the fixed 0.5 operating point.
 
 Single-AUC 95% CIs (bootstrap, B=10,000) for the 12 headline numbers:
 
@@ -100,11 +104,11 @@ V1 stopwords · V2 placeholders · V3 SymSpell · V4 wordninja · V5 combined. �
 
 ## Observations
 
-1. **In-corpus the gaps are near-ceiling and sign-mixed — and the one material, significant difference favours the *classical* champion on d3_en.** With Δ = classical − transformer: d1_sb Δ=-0.0001 (CI [-0.0002,-0.0000] includes 0 — indistinguishable); d2 Δ=-0.0003 (CI [-0.0005,-0.0001] excludes 0 — a ~0.03 pp edge to the transformer, Holm-McNemar p=0.0663); but **C1c d3_en Δ=+0.0017, CI [+0.0006,+0.0030] excludes 0, Holm p=0.0104 — the classical LinearSVC significantly beats RoBERTa on the AI corpus.** This sharpens the Directive-6 'match but don't beat': at the 0.999 ceiling the in-corpus gaps are ≤0.0003 either way, and the only material, significant one favours the classical model.
+1. **In-corpus the gaps are near-ceiling and sign-mixed — and the one material, significant difference favours the *classical* champion on d3_en.** With Δ = classical − transformer (classical side = strongest committed classical / test champion; transformer = val-selected — an asymmetry that makes d1_sb/d2 parity conservative): d1_sb Δ=-0.0001 — **AUC-level** nominally separated by ~1 bp (CI upper bound -0.000023, just below 0), but **threshold-level** Holm-McNemar p=0.174 not separated → practically indistinguishable at the ceiling; d2 Δ=-0.0003 (AUC CI [-0.0005,-0.0001] excludes 0 — a ~3 bp edge to the transformer; threshold p=0.0663, ns); but **C1c d3_en Δ=+0.0017, CI [+0.0006,+0.0030] excludes 0 AND Holm p=0.0104 significant — the classical LinearSVC beats RoBERTa on the AI corpus on both tests.** This sharpens the Directive-6 'match but don't beat': in-corpus gaps are ≤3 bp either way at the 0.999 ceiling, and the only material, significant one favours the classical model (C1c is unaffected by the selection asymmetry — d3_en's val- and test-selected classical coincide).
 
 2. **The 512 recovery is strongly significant and beats the classical cross champion.** C2 (512 vs 256, d3_en→d2) Δ=+0.1134 CI [+0.1042,+0.1229], C3 (512 vs classical cross) Δ=+0.0917 CI [+0.0784,+0.1052] — both exclude 0 (Holm p≈0). The Directive-8 H1 verdict survives paired inference.
 
-3. **The classical cross champion beats the 256 transformer where the source is short (d2→d3_en), and C5 is the pre-registered null.** C4 Δ=+0.0681 CI [+0.0534,+0.0832] (separated, classical wins); **C5 (512 vs 256, d2→d3_en) Δ=-0.0106, CI [-0.0223,+0.0009] includes 0** exactly as pre-registered — 512 adds no AUC-level signal when the training corpus was already un-truncated.
+3. **The classical cross champion beats the 256 transformer where the source is short (d2→d3_en); C5's two tests diverge and must be reported separately.** C4 Δ=+0.0681 CI [+0.0534,+0.0832] (both tests agree, classical wins). **C5 (512 vs 256, d2→d3_en): AUC-level — Δ=-0.0106, CI [-0.0223,+0.0009] includes 0, so the pre-registered null holds at AUC level** (512 adds no ranking signal when the training corpus was already un-truncated). **Threshold-level — Holm-McNemar p=0.0303 IS significant, favouring the 256 model** (n01=266 vs n10=209) at the fixed 0.5 operating point. The two tests answer different questions; neither is cited for the other's claim.
 
 4. **Imbalance: precision at fixed recall collapses as phishing gets rarer — the FP-per-1,000 framing shows the operational cost.** At 2% prevalence every family pays far more false positives per 1,000 legitimate emails to hold 95% recall than at 10% (see table (c)); the PR-AUC / FP-per-1000 curves (figure) are the deployment-relevant robustness signal, not the prevalence-inflated ROC-AUC. And the more-robust family is **corpus-dependent**: at 2% prevalence the transformer holds 95% recall at only 0.1 FP/1,000 on d2 (vs classical 1.7), but on the AI corpus d3_en the classical champion is cleaner (8.3 vs transformer 14.7 FP/1,000) — matching C1c, where classical wins d3_en.
 

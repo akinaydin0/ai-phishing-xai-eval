@@ -677,3 +677,48 @@ results.csv/results_512.csv byte-identical; 12/12 reproduction asserts).
 **Links.** `notes/d9_stats_robustness_summary.md`; `results/stats/stats_summary.csv`;
 `results/imbalance/imbalance_{eval,train}.csv`; `results/preproc_ablation/preproc_ablation.csv`;
 `figures/stats/imbalance_curves.*`; `src/experiments/d9_{scores,stats,imbalance,preproc,report}.py`.
+
+---
+
+## 2026-07-18 · Independent D9 verification (PASS) + precision fixes
+
+**Verification (PASS).** D9 was independently re-verified: **7/7 McNemar exact p-values** and **7/7
+Holm-adjusted values** reproduce; **all 26 AUC anchors == committed** (12 score-vector AUCs + the 7×2
+comparison endpoints); **imbalance counts == floor(frozen-split legit / ratio) on 9/9**; **preproc deltas
+internally consistent 54/54**. No arithmetic defect. Three precision refinements below are now the
+**canonical Ch6 phrasing** (they supersede any looser wording in the 2026-07-17 D9 result entry).
+
+**1. C1a confidence interval — do NOT call it "CI includes 0".** The 4-dp CSV stored ci_high as `-0.0`,
+which is a *rounded tiny negative*. The **raw bootstrap upper bound is −2.3111694852304143e-05** (ci_low
+−0.00021880386609292036); `stats_summary.csv` now carries **6 dp** (C1a CI **[−0.000219, −0.000023]**).
+Canonical C1a verdict: **nominally separated at the AUC level by ~1 bp (upper bound just below zero, so the
+95% CI excludes 0 at full precision), NOT separated at the threshold level (Holm-McNemar p=0.174),
+practically indistinguishable at the 0.999 ceiling.**
+
+**2. Separate the AUC-level and threshold-level tests wherever they diverge** (a McNemar p is never cited
+inside a claim it does not support):
+- **C5:** *AUC-level* — CI [−0.0223, +0.0009] includes 0, the pre-registered null holds at AUC level.
+  *Threshold-level* — Holm-McNemar **p=0.030 IS significant, favouring the 256 model** (n01=266 vs n10=209)
+  at the fixed 0.5 operating point.
+- **C1b:** *AUC-level* — CI [−0.0005, −0.0001] excludes 0 (a ~3 bp edge to the transformer). *Threshold-level*
+  — Holm-McNemar p=0.066, not significant.
+
+**3. Champion identities (C1a/C1b/C1c) — quoted + disclosed.** (a) The D9 pre-registration fixed the classical
+side as the committed in-corpus leaderboard #1: *"C1a … LinearSVC (tfidf, in-corpus classical champ) 0.9998
+… C1b … MultinomialNB (tfidf, in-corpus classical champ) 0.9996 … C1c … LinearSVC (tfidf, in-corpus classical
+champ) 0.9993"*. (b) Committed definitions: the `svc` family is **`sklearn.svm.LinearSVC`** (linear SVM, NOT
+kernel SVC — `hpo.py` `make_model('svc') → LinearSVC(...)`); per-corpus tuned classical, **test** AUC
+(results.csv): d1_sb LinearSVC 0.9998 / LR 0.9997 / NB 0.9994; d2 **MultinomialNB 0.9996** / LR 0.9995 /
+LinearSVC 0.9994; d3_en LinearSVC 0.9993 / LR 0.9982; **val** AUC (hpo_summary tuned): d1_sb LR 0.9997 =
+LinearSVC 0.9997 > NB 0.9994; **d2 LR 0.9991 = LinearSVC 0.9991 > NB 0.9990**; d3_en LinearSVC 0.9989 > LR
+0.9975. So the pre-registration deliberately used the **strongest committed classical (test champion)** on
+the classical side — material for **d2** (NB is the test champion but not val-selected) — while the
+transformer side is val-selected. **Disclosure (added to the summary):** *"Classical side = strongest
+committed classical result per corpus (test champion); transformer side = val-selected finalist. This
+asymmetry biases the in-corpus comparison toward the classical model, making the transformer's d1_sb/d2
+parity conservative; C1c is unaffected (d3_en's val- and test-selected classical coincide)."* No champion
+was re-run/reselected — the pre-registration and the interpretation rule (annotate, never reselect) stand;
+the asymmetry is disclosed, and it only makes the transformer's near-parity **more** conservative.
+
+**Links.** `results/stats/stats_summary.csv` (6-dp CIs); `notes/d9_stats_robustness_summary.md` §(a)/(b)/obs
+1,3; `src/experiments/d9_{stats,report}.py`.

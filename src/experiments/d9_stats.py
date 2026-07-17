@@ -96,8 +96,8 @@ def run():
     auc_boot = {sid: _auc_boot(scores_of[sid], y_of[sid], resamples_by_tc[tc_of[sid]])
                 for sid in d9_scores.SPECS}
     single_ci = {sid: (round(float(roc_auc_score(y_of[sid], scores_of[sid])), 4),
-                       round(float(np.percentile(auc_boot[sid], 2.5)), 4),
-                       round(float(np.percentile(auc_boot[sid], 97.5)), 4))
+                       round(float(np.percentile(auc_boot[sid], 2.5)), 6),
+                       round(float(np.percentile(auc_boot[sid], 97.5)), 6))
                  for sid in d9_scores.SPECS}
 
     # ---- seven comparisons ----
@@ -108,8 +108,13 @@ def run():
         delta = auc_boot[a] - auc_boot[b]                      # identical resamples → paired
         auc_a = round(float(roc_auc_score(ya, scores_of[a])), 4)
         auc_b = round(float(roc_auc_score(ya, scores_of[b])), 4)
-        ci_lo = round(float(np.percentile(delta, 2.5)), 4)
-        ci_hi = round(float(np.percentile(delta, 97.5)), 4)
+        raw_lo = float(np.percentile(delta, 2.5))
+        raw_hi = float(np.percentile(delta, 97.5))
+        ci_lo = round(raw_lo, 6)   # 6 dp: C1a's upper bound is a tiny NEGATIVE (excludes 0 at full precision)
+        ci_hi = round(raw_hi, 6)
+        if cid == "C1a":
+            print(f"[C1a raw bootstrap Δ percentiles] ci_low={raw_lo!r}  ci_high={raw_hi!r}  "
+                  f"(upper bound {'<0 → CI excludes 0' if raw_hi < 0 else '>=0'})", flush=True)
         n01, n10, p = _mcnemar((scores_of[a] >= 0.5).astype(int),
                                (scores_of[b] >= 0.5).astype(int), ya)
         raw_p[cid] = p

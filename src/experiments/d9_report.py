@@ -52,28 +52,55 @@ def build():
 
     # (a) seven comparisons
     L.append("## (a) The seven comparisons — Δ AUC (95% paired stratified bootstrap, B=10,000) + McNemar/Holm\n")
-    L.append("| id | comparison | AUC_a | AUC_b | Δ=a−b | 95% CI | McNemar n01/n10 | p_raw | p_holm | verdict |")
-    L.append("|---|---|--:|--:|--:|---|:--:|--:|--:|---|")
+    L.append("The **AUC-level** CI tests the ranking; the **threshold-level** McNemar tests 0.5-operating-point "
+             "errors. They answer different questions and are reported in separate columns; a claim never cites "
+             "a McNemar p it does not support. CIs are shown to 6 dp (they are stored to 6 dp in the CSV).\n")
+    L.append("| id | comparison | AUC_a | AUC_b | Δ=a−b | 95% CI (Δ) | McNemar n01/n10 | p_raw | p_holm | AUC-level | thr-level |")
+    L.append("|---|---|--:|--:|--:|---|:--:|--:|--:|:--:|:--:|")
     for cid, r in comp.iterrows():
-        verdict = _sep(r.ci_low, r.ci_high)
+        auc_lvl = "excl 0" if (r.ci_low > 0 or r.ci_high < 0) else "incl 0"
+        thr_lvl = "sig" if r.mcnemar_p_holm < 0.05 else "ns"
         L.append(f"| {cid} | {r.model_a} vs {r.model_b} | {r.auc_a:.4f} | {r.auc_b:.4f} | {r.delta:+.4f} "
-                 f"| [{r.ci_low:+.4f}, {r.ci_high:+.4f}] | {int(r.n01)}/{int(r.n10)} | {r.mcnemar_p_raw:.3g} "
-                 f"| {r.mcnemar_p_holm:.3g} | {verdict} |")
+                 f"| [{r.ci_low:+.6f}, {r.ci_high:+.6f}] | {int(r.n01)}/{int(r.n10)} | {r.mcnemar_p_raw:.3g} "
+                 f"| {r.mcnemar_p_holm:.3g} | {auc_lvl} | {thr_lvl} |")
     L.append("")
+    L.append("**Champion-identity disclosure (in-corpus, C1a/C1b/C1c).** The `svc` family is **LinearSVC** "
+             "(linear SVM, `sklearn.svm.LinearSVC`), not a kernel SVC. **Classical side = strongest committed "
+             "classical result per corpus (test champion); transformer side = val-selected finalist. This "
+             "asymmetry biases the in-corpus comparison toward the classical model, making the transformer's "
+             "d1_sb/d2 parity conservative; C1c is unaffected (d3_en's val- and test-selected classical "
+             "coincide).** Specifically: d1_sb LinearSVC is both val-tied-best (0.9997) and test-best (0.9998); "
+             "**d2 MultinomialNB is the test champion (0.9996) but NOT val-selected** (NB val 0.9990 < LR/SVC "
+             "0.9991); d3_en LinearSVC is val-best (0.9989) AND test-best (0.9993).\n")
 
-    # (b) which claims gain/lack separation
-    L.append("## (b) Which committed claims gain (or lack) statistical separation\n")
-    for cid, r in comp.iterrows():
-        sep = r.ci_low > 0 or r.ci_high < 0
-        holm = r.mcnemar_p_holm
-        if sep:
-            msg = (f"**{cid}** ({CLAIM[cid]}): AUC Δ={r.delta:+.4f} is **statistically separated** "
-                   f"(CI [{r.ci_low:+.4f},{r.ci_high:+.4f}] excludes 0; Holm-McNemar p={holm:.3g}).")
-        else:
-            msg = (f"**{cid}** ({CLAIM[cid]}): AUC Δ={r.delta:+.4f} — **the 95% CI includes 0** "
-                   f"([{r.ci_low:+.4f},{r.ci_high:+.4f}]): no AUC-level separation "
-                   f"(Holm-McNemar p={holm:.3g}).")
-        L.append("- " + msg)
+    # (b) AUC-level vs threshold-level, separated wherever they diverge
+    L.append("## (b) AUC-level vs threshold-level — reported separately wherever they diverge\n")
+    def bp(x):
+        return f"{abs(round(x * 10000)):.0f} bp"
+    r = comp.loc["C1a"]
+    L.append(f"- **C1a** (in-corpus d1_sb, classical vs 256 transformer): **AUC-level** — nominally separated "
+             f"by ~{bp(r.delta)} (CI [{r.ci_low:+.6f}, {r.ci_high:+.6f}]; upper bound just below zero → the "
+             f"95% CI **excludes 0 at full precision**). **Threshold-level** — Holm-McNemar p={r.mcnemar_p_holm:.3g}, "
+             f"**NOT** separated. Practically **indistinguishable at the 0.999 ceiling**.")
+    r = comp.loc["C1b"]
+    L.append(f"- **C1b** (in-corpus d2, classical vs 256 transformer): **AUC-level** — CI "
+             f"[{r.ci_low:+.4f}, {r.ci_high:+.4f}] **excludes 0** (a ~{bp(r.delta)} edge to the transformer). "
+             f"**Threshold-level** — Holm-McNemar p={r.mcnemar_p_holm:.3g}, **not significant**.")
+    r = comp.loc["C1c"]
+    L.append(f"- **C1c** (in-corpus d3_en, classical vs 256 transformer): **AUC-level** — CI "
+             f"[{r.ci_low:+.4f}, {r.ci_high:+.4f}] **excludes 0** (classical +{bp(r.delta)}). "
+             f"**Threshold-level** — Holm-McNemar p={r.mcnemar_p_holm:.3g}, **significant → the classical "
+             f"LinearSVC beats RoBERTa on the AI corpus** (both tests agree).")
+    for cid in ["C2", "C3", "C4"]:
+        r = comp.loc[cid]
+        L.append(f"- **{cid}** ({CLAIM[cid]}): **AUC-level** — CI [{r.ci_low:+.4f}, {r.ci_high:+.4f}] excludes 0 "
+                 f"(Δ={r.delta:+.4f}); **Threshold-level** — Holm-McNemar p={r.mcnemar_p_holm:.3g}, significant. "
+                 f"Both tests agree.")
+    r = comp.loc["C5"]
+    L.append(f"- **C5** (d2→d3_en, 512 vs 256 transformer): **AUC-level** — CI [{r.ci_low:+.4f}, {r.ci_high:+.4f}] "
+             f"**includes 0 — the pre-registered null holds at AUC level.** **Threshold-level** — Holm-McNemar "
+             f"p={r.mcnemar_p_holm:.3g} **IS significant, favouring the 256 model** (n01={int(r.n01)} vs "
+             f"n10={int(r.n10)}) at the fixed 0.5 operating point.")
     L.append("")
     L.append("Single-AUC 95% CIs (bootstrap, B=10,000) for the 12 headline numbers:\n")
     L.append("| number | AUC | 95% CI |")
@@ -153,26 +180,33 @@ def _observations(L, comp, v2_help):
     c1a, c1b, c1c = comp.loc["C1a"], comp.loc["C1b"], comp.loc["C1c"]
     c2, c3, c4, c5 = comp.loc["C2"], comp.loc["C3"], comp.loc["C4"], comp.loc["C5"]
     L.append(f"1. **In-corpus the gaps are near-ceiling and sign-mixed — and the one material, significant "
-             f"difference favours the *classical* champion on d3_en.** With Δ = classical − transformer: "
-             f"d1_sb Δ={c1a.delta:+.4f} (CI [{c1a.ci_low:+.4f},{c1a.ci_high:+.4f}] includes 0 — "
-             f"indistinguishable); d2 Δ={c1b.delta:+.4f} (CI [{c1b.ci_low:+.4f},{c1b.ci_high:+.4f}] "
-             f"{'excludes' if (c1b.ci_low>0 or c1b.ci_high<0) else 'includes'} 0 — a ~0.03 pp edge to the "
-             f"transformer, Holm-McNemar p={c1b.mcnemar_p_holm:.3g}); but **C1c d3_en Δ={c1c.delta:+.4f}, "
-             f"CI [{c1c.ci_low:+.4f},{c1c.ci_high:+.4f}] excludes 0, Holm p={c1c.mcnemar_p_holm:.3g} — the "
-             f"classical LinearSVC significantly beats RoBERTa on the AI corpus.** This sharpens the "
-             f"Directive-6 'match but don't beat': at the 0.999 ceiling the in-corpus gaps are ≤0.0003 "
-             f"either way, and the only material, significant one favours the classical model.")
+             f"difference favours the *classical* champion on d3_en.** With Δ = classical − transformer "
+             f"(classical side = strongest committed classical / test champion; transformer = val-selected — "
+             f"an asymmetry that makes d1_sb/d2 parity conservative): d1_sb Δ={c1a.delta:+.4f} — **AUC-level** "
+             f"nominally separated by ~1 bp (CI upper bound {c1a.ci_high:+.6f}, just below 0), but "
+             f"**threshold-level** Holm-McNemar p={c1a.mcnemar_p_holm:.3g} not separated → practically "
+             f"indistinguishable at the ceiling; d2 Δ={c1b.delta:+.4f} (AUC CI [{c1b.ci_low:+.4f},"
+             f"{c1b.ci_high:+.4f}] excludes 0 — a ~3 bp edge to the transformer; threshold p="
+             f"{c1b.mcnemar_p_holm:.3g}, ns); but **C1c d3_en Δ={c1c.delta:+.4f}, CI [{c1c.ci_low:+.4f},"
+             f"{c1c.ci_high:+.4f}] excludes 0 AND Holm p={c1c.mcnemar_p_holm:.3g} significant — the classical "
+             f"LinearSVC beats RoBERTa on the AI corpus on both tests.** This sharpens the Directive-6 'match "
+             f"but don't beat': in-corpus gaps are ≤3 bp either way at the 0.999 ceiling, and the only "
+             f"material, significant one favours the classical model (C1c is unaffected by the selection "
+             f"asymmetry — d3_en's val- and test-selected classical coincide).")
     L.append("")
     L.append(f"2. **The 512 recovery is strongly significant and beats the classical cross champion.** "
              f"C2 (512 vs 256, d3_en→d2) Δ={c2.delta:+.4f} CI [{c2.ci_low:+.4f},{c2.ci_high:+.4f}], "
              f"C3 (512 vs classical cross) Δ={c3.delta:+.4f} CI [{c3.ci_low:+.4f},{c3.ci_high:+.4f}] — both "
              f"exclude 0 (Holm p≈0). The Directive-8 H1 verdict survives paired inference.")
     L.append("")
-    L.append(f"3. **The classical cross champion beats the 256 transformer where the source is short (d2→d3_en), "
-             f"and C5 is the pre-registered null.** C4 Δ={c4.delta:+.4f} CI [{c4.ci_low:+.4f},{c4.ci_high:+.4f}] "
-             f"(separated, classical wins); **C5 (512 vs 256, d2→d3_en) Δ={c5.delta:+.4f}, CI "
-             f"[{c5.ci_low:+.4f},{c5.ci_high:+.4f}] includes 0** exactly as pre-registered — 512 adds no "
-             f"AUC-level signal when the training corpus was already un-truncated.")
+    L.append(f"3. **The classical cross champion beats the 256 transformer where the source is short (d2→d3_en); "
+             f"C5's two tests diverge and must be reported separately.** C4 Δ={c4.delta:+.4f} CI "
+             f"[{c4.ci_low:+.4f},{c4.ci_high:+.4f}] (both tests agree, classical wins). **C5 (512 vs 256, "
+             f"d2→d3_en): AUC-level — Δ={c5.delta:+.4f}, CI [{c5.ci_low:+.4f},{c5.ci_high:+.4f}] includes 0, so "
+             f"the pre-registered null holds at AUC level** (512 adds no ranking signal when the training corpus "
+             f"was already un-truncated). **Threshold-level — Holm-McNemar p={c5.mcnemar_p_holm:.3g} IS "
+             f"significant, favouring the 256 model** (n01={int(c5.n01)} vs n10={int(c5.n10)}) at the fixed 0.5 "
+             f"operating point. The two tests answer different questions; neither is cited for the other's claim.")
     L.append("")
     imb_note = ""
     if IMB_E.exists():
