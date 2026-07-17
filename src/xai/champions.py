@@ -78,15 +78,16 @@ class _SklearnChampion:
 class TransformerChampion:
     """Fine-tuned transformer champion loaded from its saved checkpoint."""
 
-    def __init__(self, model_name: str, corpus: str):
+    def __init__(self, model_name: str, corpus: str, ckpt_dir=None):
         self.model_name, self.corpus = model_name, corpus
-        d = CKPT_DIR / f"{model_name}__{corpus}"
+        d = Path(ckpt_dir) if ckpt_dir is not None else CKPT_DIR / f"{model_name}__{corpus}"
         if not d.exists():
             raise FileNotFoundError(f"{d} missing — run transformers_ft first.")
         self.tokenizer = AutoTokenizer.from_pretrained(d)
         self.model = AutoModelForSequenceClassification.from_pretrained(d).to(DEVICE).eval()
         self.name = TRANSFORMER_DISPLAY[model_name]
         self.family = "transformer"
+        self.max_length = MAX_LEN  # 256 default; set to 512 to score a 512-trained checkpoint
 
     @torch.no_grad()
     def proba(self, texts, batch_size: int = 64) -> np.ndarray:
@@ -96,7 +97,7 @@ class TransformerChampion:
         out = []
         for i in range(0, len(texts), batch_size):
             chunk = [t if isinstance(t, str) else "" for t in texts[i:i + batch_size]]
-            enc = self.tokenizer(chunk, truncation=True, max_length=MAX_LEN, padding=True,
+            enc = self.tokenizer(chunk, truncation=True, max_length=self.max_length, padding=True,
                                  return_tensors="pt").to(DEVICE)
             with torch.autocast("cuda", dtype=torch.float16, enabled=(DEVICE == "cuda")):
                 logits = self.model(**enc).logits

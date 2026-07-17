@@ -45,6 +45,15 @@ docs already short). So the legacy↔AI break is, for the d3_en→d2 half, large
 artifact — not purely distributional. 6 units = 145 min (~2× the 256 cost). See
 `notes/transformer_512_summary.md`, `results/results_512.csv`,
 `figures/models/transformer_512_cross_comparison.*`, decisions.md (2026-07-17 result).
+**Also done (Directive 9, pre-registered):** statistical inference + imbalance + Pipeline A ablation
+(`src/experiments/d9_*`; `results/stats|imbalance|preproc_ablation/`; `notes/d9_stats_robustness_summary.md`).
+12/12 scores reproduced == committed to 4 dp; canonical CSVs byte-identical. **7 paired comparisons**
+(bootstrap B=10k + Holm-McNemar): in-corpus **classical significantly beats RoBERTa on d3_en (C1c)**,
+tied at ceiling on d1_sb/d2; **512 recovery C2/C3 strongly significant** (Δ+0.113/+0.092, p≈0) and beats
+the classical cross champion; **C5 null held** (CI incl 0). Imbalance: **FP-per-1,000-legit @95% recall**
+balloons at 2% prevalence (d3_en 19.5→103.6), robust family is corpus-dependent. **Preproc (val-only):
+placeholders V2 help transfer (+0.034, 5/6; hypothesis HELD), stopword-removal V1 hurts**. All annotate,
+no reselection; review PASS 5/5.
 **Next:** STARD-AI checklist (supervisor item 5); Directive 10 (HITL + LLM plausibility validation,
 pre-registered first); dissertation writing.
 

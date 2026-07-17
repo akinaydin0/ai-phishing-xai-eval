@@ -633,3 +633,47 @@ test ROC-AUC is **asserted == its committed value to 4 dp (HARD-FAIL otherwise)*
 
 **Links.** `src/experiments/d9_*` (to be written); `results/stats/`, `results/imbalance/`,
 `results/preproc_ablation/`; `notes/d9_stats_robustness_summary.md`.
+
+---
+
+## 2026-07-17 · D9 result — statistics + imbalance + preprocessing (annotations, no reselection)
+
+Executed the binding pre-registration above. All 12 score vectors recomputed from stored artefacts and
+**asserted == committed test AUC to 4 dp (12/12 PASS)**. Canonical `results/results.csv` (124) and
+`results_512.csv` (8) **byte-identical**; all D9 output in `results/stats|imbalance|preproc_ablation/`.
+
+**Statistics (7 comparisons, paired stratified bootstrap B=10,000 + Holm-McNemar).**
+- Sign convention **Δ = classical − transformer** (pre-reg model_a=classical for C1a/b/c). **C1a d1_sb**:
+  Δ −0.0001, **CI [−0.0002,+0.0000] includes 0** — indistinguishable. **C1b d2**: Δ −0.0003, CI
+  [−0.0005,−0.0001] excludes 0 (a ~0.03 pp edge to the transformer; Holm-McNemar p=0.066). **C1c d3_en:
+  Δ +0.0017, CI [+0.0006,+0.0030] SEPARATED (Holm p=0.010) — the classical LinearSVC significantly *beats*
+  RoBERTa on the AI corpus.** So D6's "match but don't beat" is now precise: at the 0.999 ceiling the
+  in-corpus gaps are ≤0.0003 either way, and the only material significant one favours the classical model.
+- **C2** (512 vs 256, d3_en→d2): Δ **+0.1134** [+0.1042,+0.1229], Holm p≈0. **C3** (512 vs best classical
+  cross): Δ **+0.0917** [+0.0784,+0.1052], Holm p≈0. The Directive-8 H1 recovery **survives paired
+  inference** and significantly beats the classical cross champion.
+- **C4** (classical cross vs 256 transformer, d2→d3_en): Δ +0.0681 [+0.0534,+0.0832] separated (classical
+  wins). **C5** (512 vs 256, d2→d3_en): Δ −0.0106, **CI [−0.0223,+0.0009] includes 0 — the pre-registered
+  null held** (Holm-McNemar p=0.030 flags a 0.5-threshold difference but the AUC ranking is not separated).
+
+**Imbalance (eval-side 50 draws + train-side 9 single-use).** PR-AUC stays ≥0.93 but the operational
+**FP-per-1,000-legit @95% recall** balloons as phishing gets rarer (train-side d3_en 19.5→**103.6** from
+10%→2%). The more-robust family is **corpus-dependent**: transformer far cleaner on d2 (0.1 vs classical
+1.7 FP/1,000 @2%), classical cleaner on d3_en (8.3 vs 14.7) — consistent with C1c. The FP/1000 framing is
+the deployment signal ROC-AUC (prevalence-inflated) hides.
+
+**Preprocessing ablation (VALIDATION only, frozen champions — cannot change any champion).** In-corpus Δ
+vs V0 ≈ 0 (ceiling). Cross-corpus: **placeholders (V2) HELD the pre-registered hypothesis — mean Δ
++0.0343 over the 6 cross pairs, 5/6 improved** (up to +0.077 d2→d1_sb); **stopword removal (V1) HURTS
+transfer** (mean −0.039, e.g. d2→d1_sb −0.111); V3/V4 ~neutral; V5 mixed (dragged by V1). Placeholders
+normalise corpus-specific URL/email/number surface forms that don't transfer — a concrete,
+validation-supported lead for a future retrain (not done here; frozen-champion limitation stated).
+
+**Interpretation rule honoured:** every CI/p-value annotates a pre-committed comparison; no champion,
+threshold or claim direction was introduced or reversed. Scoped review (reviewer + confirmer) PASS on
+all 5 surfaces (no selection from test stats; pre-reg precedes results; Part E train+val only;
+results.csv/results_512.csv byte-identical; 12/12 reproduction asserts).
+
+**Links.** `notes/d9_stats_robustness_summary.md`; `results/stats/stats_summary.csv`;
+`results/imbalance/imbalance_{eval,train}.csv`; `results/preproc_ablation/preproc_ablation.csv`;
+`figures/stats/imbalance_curves.*`; `src/experiments/d9_{scores,stats,imbalance,preproc,report}.py`.
