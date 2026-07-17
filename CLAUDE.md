@@ -26,7 +26,9 @@ via `src/xai/` (`cue_lexicon.py` committed *before* results; `champions.py`, `ex
 `metrics.py`, `run_xai.py`, `report_xai.py`, `figures_xai.py`). Pre-registered protocol + fixed
 206-term lexicon in `notes/decisions.md`. Explanation docs are **TEST-split only** (n=200 in-corpus /
 100 cross, 100/class, all misclassified up to 30, seed 42; ids in `results/xai/explained_ids_*.json`).
-Log `results/xai_metrics.csv` (30 rows); figures `figures/xai/*`; report `notes/xai_summary.md`.
+Log `results/xai_metrics.csv` (30 rows, **independently verified PASS** 2026-07-17 — row accounting
+exact, 288/288 table cells consistent at 3 dp, means exact, comp@k monotone on SHAP/IG, suff@10 ≤ random
+30/30); figures `figures/xai/*`; report `notes/xai_summary.md`.
 Per-unit attribution JSONs git-ignored (18 MB, regenerable). Run: 30 (unit,method) in **306 min**.
 **Findings (RQ3):** **SHAP is the only demonstrably faithful method; LIME ≈ random** (in-corpus AOPC
 ensemble·SHAP 0.281 / tfidf·SHAP 0.161 / transformer·SHAP 0.107 ≈ IG 0.102 ≫ LIME ~0.02). **Faithfulness–
@@ -88,8 +90,11 @@ item 5); dissertation writing.
   `src/cleaning.py`): any drift hard-fails the pipeline and forces a conscious re-pin.
 - **Token-length medians:** modern phishing 62, modern legitimate 199, Enron ham 176,
   Enron spam 138, AI-generated phishing 232.
-- **Pairwise Jaccard (top-500 tokens):** legacy↔modern 0.351, legacy↔AI 0.250,
-  modern↔AI 0.263 — three distinct lexical clusters; substantiates dataset-aware evaluation.
+- **Pairwise Jaccard (top-500 tokens) — cleaned (primary):** legacy↔modern **0.353**,
+  legacy↔AI **0.248**, modern↔AI **0.256** (post-cleaning; matches `notes/decisions.md`).
+  Raw (pre-cleaning) values were legacy↔modern 0.351, legacy↔AI 0.250, modern↔AI 0.263.
+  Either way, three distinct lexical clusters (legacy↔AI lowest); substantiates dataset-aware
+  evaluation. **Always label which triple (cleaned vs raw) — never cite either unlabelled.**
 
 ## NON-NEGOTIABLE evaluation rules
 

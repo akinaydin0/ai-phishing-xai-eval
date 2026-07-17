@@ -442,3 +442,34 @@ words.
 
 **Links.** `notes/xai_summary.md`; `results/xai_metrics.csv`; `figures/xai/xai_deletion_curves.*`,
 `xai_method_family_bars.*`, `xai_qualitative_examples.*`; `src/xai/*`.
+
+---
+
+## 2026-07-17 · Independent XAI verification (PASS) + plausibility wording refinements
+
+**Verification (PASS).** `results/xai_metrics.csv` was independently re-verified against the summary
+tables and the raw log. Scope + results: **row accounting exact**; **288/288** summary-table cells
+consistent at 3 dp — the 11 flagged cells are all exact 0.0005 half-boundary roundings of the 4 dp CSV
+values; **all derived means exact**; **comp@k monotone** on every SHAP/IG row (only sub-0.009 wiggles on
+the no-signal LIME/random rows); **calibration lift over random**: SHAP comp@10 min **+0.058 on 9/9**
+units, IG min **+0.068 on 3/3**, LIME **−0.003 to +0.020**; **suff@10 ≤ random on 30/30** rows; runtime
+sum **299.5 min** vs **306 min** wall clock (difference = per-unit build/tokenisation overhead outside the
+timed metric blocks). No numeric defect found; the CSV stands.
+
+**Two prose statements over-stated their own tables and were refined at source** (in
+`src/xai/report_xai.py`, then `notes/xai_summary.md` regenerated; **tables unchanged**). These are now the
+**canonical Ch6 phrasing**:
+- **LIME plausibility is NOT "at or below random everywhere."** It is at/below random on d1_sb and d2, but
+  on the cue-dense **d3_en** corpus LIME's cue-hit@10 **exceeds** random (+0.085…+0.111, and transformer
+  LIME 0.253 even exceeds transformer SHAP 0.236) — while LIME stays **unfaithful** on d3_en (AOPC at the
+  random floor). Framed as **"plausibility without faithfulness"**: LIME surfaces cue words because
+  AI-generated text is saturated with them, but removing them does not move the model. This is the exact
+  failure mode the three-metric design is built to expose, so it **strengthens** the argument.
+- **"SHAP beats random on every family" holds at the family-mean level** (transformer 0.162 vs 0.121); the
+  single per-corpus exception is **d1_sb transformer·SHAP at 0.133, 0.027 below** its 0.159 random base rate.
+- **Cross-corpus d3_en→d2 collapse is two-layered:** absolute cue-hit falls to **0.059** largely because
+  legacy Enron's **random cue base rate is only 0.026**; independently, SHAP's **lift over random shrinks
+  from +0.094 in-corpus to +0.033 on transfer**. Both layers are reported together.
+
+**Links.** `notes/xai_summary.md` (RQ3 bullet, Observations 4–5); `src/xai/report_xai.py`;
+`results/xai_metrics.csv`.

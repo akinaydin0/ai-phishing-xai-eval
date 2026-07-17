@@ -143,6 +143,10 @@ def _observations(L, inc, cross, fam_summary):
         except KeyError:
             return float("nan")
 
+    def pcv(corpus, fam, meth, col):
+        r = inc[(inc.corpus == corpus) & (inc.family == fam) & (inc.method == meth)]
+        return float(r[col].iloc[0]) if len(r) else float("nan")
+
     # --- RQ3 ---
     L.append("## RQ3 — which family gives the best accuracy–explanation–cost balance?\n")
     L.append(f"Combining the modelling results (Directive 6: tuned linear TF-IDF has the top "
@@ -154,10 +158,13 @@ def _observations(L, inc, cross, fam_summary):
              f"≫ every LIME ({gv('tfidf','lime','aopc'):.3f}/{gv('ensemble','lime','aopc'):.3f}/"
              f"{gv('transformer','lime','aopc'):.3f}, at the random-baseline floor ~"
              f"{g['rnd'].mean():.3f}).")
-    L.append(f"- **Plausibility** (cue-hit@10): SHAP beats the random baseline on every family "
+    L.append(f"- **Plausibility** (cue-hit@10): SHAP beats the random baseline at the family-mean level "
              f"(tfidf {gv('tfidf','shap','plaus'):.3f} vs {gv('tfidf','shap','rplaus'):.3f}; ensemble "
-             f"{gv('ensemble','shap','plaus'):.3f} vs {gv('ensemble','shap','rplaus'):.3f}); LIME sits "
-             f"at or below random everywhere.")
+             f"{gv('ensemble','shap','plaus'):.3f} vs {gv('ensemble','shap','rplaus'):.3f}). LIME is at or "
+             f"below random on d1_sb and d2, but on the cue-dense d3_en corpus LIME *exceeds* random "
+             f"(+0.085…+0.111) — a case of **plausibility without faithfulness**: LIME surfaces cue words "
+             f"because AI-generated text is saturated with them, yet its d3_en AOPC stays at the random "
+             f"floor, so removing those words does not move the model.")
     L.append(f"- **Cost** to explain one 200-doc unit: tfidf·SHAP **{gv('tfidf','shap','rt'):.0f} s**, "
              f"ensemble·SHAP {gv('ensemble','shap','rt'):.0f} s, transformer·SHAP "
              f"{gv('transformer','shap','rt'):.0f} s, transformer·LIME "
@@ -197,27 +204,45 @@ def _observations(L, inc, cross, fam_summary):
              f"attribution is real but diffuse. Among transformer explainers **IG ≈ SHAP on faithfulness "
              f"at ~4× lower cost and higher stability**, so IG is the transformer method of choice.")
     L.append("")
-    L.append(f"4. **Plausibility tracks faithfulness: SHAP's top tokens are phishing cues above chance; "
-             f"LIME's are not.** SHAP plausibility@10 exceeds its random baseline by "
-             f"+{gv('tfidf','shap','plaus') - gv('tfidf','shap','rplaus'):.3f} (tfidf) and "
-             f"+{gv('ensemble','shap','plaus') - gv('ensemble','shap','rplaus'):.3f} (ensemble); LIME sits "
-             f"at or below random. Cue-hit is highest on d3_en (AI-generated phishing carries the densest "
-             f"recognisable cues). *This is a heuristic lexicon proxy, not human annotation* — but the "
-             f"SHAP-vs-random gap is consistent and sits alongside the qualitative panels (advance-fee "
-             f"terms 'International/Assets/beneficiaries/facilitate' boxed on a d3_en true positive).")
+    d1t_shap = pcv("d1_sb", "transformer", "shap", "plausibility@10")
+    d1t_rnd = pcv("d1_sb", "transformer", "shap", "rnd_plausibility@10")
+    L.append(f"4. **Plausibility tracks faithfulness — with two honest caveats.** At the **family-mean** "
+             f"level SHAP's top tokens are phishing cues above chance: SHAP plausibility@10 exceeds random "
+             f"by +{gv('tfidf','shap','plaus') - gv('tfidf','shap','rplaus'):.3f} (tfidf), "
+             f"+{gv('ensemble','shap','plaus') - gv('ensemble','shap','rplaus'):.3f} (ensemble) and "
+             f"+{gv('transformer','shap','plaus') - gv('transformer','shap','rplaus'):.3f} (transformer, "
+             f"{gv('transformer','shap','plaus'):.3f} vs {gv('transformer','shap','rplaus'):.3f}) — the "
+             f"one per-corpus exception being d1_sb transformer·SHAP at {d1t_shap:.3f}, "
+             f"{d1t_shap - d1t_rnd:+.3f} below its {d1t_rnd:.3f} random base rate. And LIME is at or below "
+             f"random on d1_sb and d2 but **exceeds it on the cue-dense d3_en corpus (+0.085…+0.111; "
+             f"transformer·LIME {pcv('d3_en','transformer','lime','plausibility@10'):.3f} even tops "
+             f"transformer·SHAP {pcv('d3_en','transformer','shap','plausibility@10'):.3f})** — yet LIME's "
+             f"d3_en AOPC ({gv('transformer','lime','aopc'):.3f}) stays at the random floor. This is "
+             f"**plausibility without faithfulness**: LIME surfaces the cue words AI-generated text is "
+             f"saturated with, but removing them does not move the model — exactly the failure mode the "
+             f"three-metric design exists to expose. *(Plausibility is a heuristic lexicon proxy, not human "
+             f"annotation.)* The qualitative panels show the faithful case (advance-fee terms "
+             f"'International/Assets/beneficiaries/facilitate' boxed on a d3_en true positive).")
     L.append("")
     if len(cross):
         cr = cross.groupby("method")["aopc"].mean()
         hard = cross[cross.unit == "xfer_d3_en__d2"]
+        hs = hard[hard.method == "shap"].iloc[0]
+        hard_abs, hard_rnd = float(hs["plausibility@10"]), float(hs["rnd_plausibility@10"])
+        inc_lift = pcv("d3_en", "transformer", "shap", "plausibility@10") - \
+            pcv("d3_en", "transformer", "shap", "rnd_plausibility@10")
         L.append(f"5. **Cross-corpus: apparent faithfulness *rises* on transfer (a low-confidence "
-                 f"artifact), while cue-plausibility falls on the hard legacy axis.** Transferred "
-                 f"transformer AOPC ({cr.get('shap', float('nan')):.3f} SHAP) is *higher* than in-corpus "
-                 f"({gv('transformer','shap','aopc'):.3f}) — not because explanations improve, but because "
-                 f"out-of-distribution predictions are less saturated, so token removal moves p more. The "
-                 f"telling metric is plausibility: on the hardest axis d3_en→d2 (AI→legacy-Enron) SHAP "
-                 f"cue-hit falls to {float(hard[hard.method=='shap']['plausibility@10'].iloc[0]):.3f} "
-                 f"(Enron carries few lexical phishing cues), mirroring the Directive-6 finding that the "
-                 f"legacy↔AI axis is where transfer genuinely breaks down.")
+                 f"artifact), while cue-plausibility falls on the hard legacy axis — in two layers.** "
+                 f"Transferred transformer AOPC ({cr.get('shap', float('nan')):.3f} SHAP) is *higher* than "
+                 f"in-corpus ({gv('transformer','shap','aopc'):.3f}) — not because explanations improve, "
+                 f"but because out-of-distribution predictions are less saturated, so token removal moves p "
+                 f"more. The telling metric is plausibility on the hardest axis d3_en→d2 (AI→legacy-Enron), "
+                 f"and it must be read two ways: (i) the **absolute** SHAP cue-hit falls to {hard_abs:.3f} "
+                 f"largely because legacy Enron's **random cue base rate is only {hard_rnd:.3f}** (Enron "
+                 f"carries few lexical phishing cues); (ii) SHAP's **lift over random** shrinks from "
+                 f"+{inc_lift:.3f} in-corpus to +{hard_abs - hard_rnd:.3f} on transfer. Both layers point "
+                 f"the same way — the legacy↔AI axis is where transfer genuinely breaks down, mirroring the "
+                 f"Directive-6 accuracy finding.")
         L.append("")
 
 
