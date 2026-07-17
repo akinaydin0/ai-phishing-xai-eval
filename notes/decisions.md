@@ -395,3 +395,50 @@ examples) PNG+PDF; `notes/xai_summary.md` with the RQ3 answer + 5 observations.
 
 **Links.** `src/xai/` (`cue_lexicon.py`, `champions.py`, `explainers.py`, `metrics.py`, `run_xai.py`,
 `report_xai.py`, `figures_xai.py`); `results/xai/`; `results/xai_metrics.csv`; `notes/xai_summary.md`.
+
+---
+
+## 2026-07-17 · XAI phase — results + headline findings (RQ3)
+
+**Executed** the pre-registered protocol above: 12 units × their methods = **30 (unit, method)** runs,
+n=200 in-corpus / 100 cross, on the RTX 3090 in **306 min** (5.1 h — within the ~6 h budget, so no
+trimming; the trim-checkpoint was not triggered). Log: `results/xai_metrics.csv` (30 rows); figures in
+`figures/xai/`; report `notes/xai_summary.md`. Per-unit attribution JSONs are **git-ignored** (18 MB,
+regenerable via `python -m src.xai.run_xai --all`); the CSV + `explained_ids_*.json` are the committed
+anchors.
+
+**Headline findings (evidence for Ch6 / RQ3).**
+- **SHAP is the only demonstrably faithful method; LIME ≈ the random baseline.** In-corpus AOPC:
+  ensemble·SHAP **0.281**, tfidf·SHAP 0.161, transformer·SHAP 0.107 ≈ transformer·IG 0.102 — while
+  every LIME (0.014–0.037) sits at the random-attribution floor (~0.017). The deletion curves show it:
+  SHAP climbs, LIME hugs random.
+- **Faithfulness–stability trade-off; no method wins both.** LIME is the *most stable* (top-10 Jaccard
+  ~0.99, seed-agreement 1.00) but only because its bag-of-words fit is insensitive to which tokens
+  matter; SHAP/IG are faithful but less stable (transformer·SHAP Jaccard 0.51). Report the two together.
+- **Transformers are the hardest to explain faithfully** (SHAP/IG AOPC ~0.11, half the linear
+  champions', a third of LightGBM's; SHAP Jaccard 0.51, the lowest). Diffuse contextual signal + softmax
+  saturation. Among transformer explainers **IG ≈ SHAP faithfulness at ~4× lower cost + higher
+  stability** → IG is the transformer method of choice.
+- **Plausibility tracks faithfulness** (heuristic cue-lexicon proxy, *not* human annotation): SHAP
+  cue-hit@10 beats random by +0.06…+0.16 on tfidf/ensemble; LIME sits at/below random. Densest cues on
+  d3_en (AI phishing).
+- **Cross-corpus:** apparent faithfulness *rises* on transfer (0.21 vs 0.11) — a low-confidence
+  artifact (OOD predictions are unsaturated, so removals move p more), not better explanations. The
+  honest signal is plausibility, which **collapses on the hard d3_en→d2 axis (0.059)** — legacy Enron
+  carries few lexical cues — mirroring the Directive-6 legacy↔AI transfer breakdown.
+- **RQ3 answer: linear TF-IDF + SHAP** — best (tied) in-corpus accuracy, second-most-faithful and
+  joint-most-plausible explanations, at the **lowest cost of any combination** (tfidf·SHAP 6 s/unit vs
+  transformer·SHAP 686 s, transformer·LIME 2408 s). LightGBM+SHAP is the most faithful but slightly less
+  accurate and ~15× costlier; transformers+IG only where cross-corpus robustness forces a contextual model.
+
+**Methodology notes.** (1) `p = p(predicted class)`; **LinearSVC uses sigmoid(decision_function)** (no
+`predict_proba`) — monotone, so comp/suff (differences of the same score) are unaffected. (2) **Negative
+sufficiency** for SHAP on tfidf/LightGBM is expected and *supports* faithfulness: keeping ONLY the top-10
+words drives p(pred) *above* the full-document value (the rest of the doc dilutes the concentrated cue
+signal). (3) Near-ceiling models saturate, compressing absolute comp — hence **comp-vs-random lift**, not
+absolute comp, is the discriminating quantity. (4) Word-level removal is identical across families; SHAP
+feature (uni/bigram) values distributed to constituent word positions, transformer sub-tokens summed to
+words.
+
+**Links.** `notes/xai_summary.md`; `results/xai_metrics.csv`; `figures/xai/xai_deletion_curves.*`,
+`xai_method_family_bars.*`, `xai_qualitative_examples.*`; `src/xai/*`.

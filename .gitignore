@@ -6,6 +6,9 @@ data/embeddings/
 results/hpo/*.log
 results/transformers/checkpoints/
 results/transformers/_partial/
+results/xai/*__shap.json
+results/xai/*__lime.json
+results/xai/*__ig.json
 __pycache__/
 .ipynb_checkpoints/
 *.pyc

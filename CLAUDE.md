@@ -19,25 +19,24 @@ integrates explainability as a first-class, quantitatively-evaluated component:
 
 ## Current Phase
 
-**Modelling — transformer fine-tuning complete (HPO + classical/ensemble + dense done earlier).**
-Fine-tuned **DistilBERT, BERT-base, RoBERTa-base** on the frozen 70/15/15 splits (subject+body,
-`max_length=256`) via `src/experiments/transformers_ft.py` (lr ∈ {2e-5,3e-5,5e-5}, ≤4 epochs,
-batch 32 + fp16, wd 0.01, warmup 0.1; **val-AUC early-stop patience 1, best-val checkpoint kept,
-best lr by val AUC, TEST evaluated once per finalist**). Cross-corpus champions (best val AUC per
-source; ties→smaller model) in `transformer_cross.py` → `figures/models/transformer_cross_*_heatmap.*`;
-reporting in `notes/transformer_summary.md`; per-run val curves in `results/transformers/*.json`;
-9 finalist checkpoints in `results/transformers/checkpoints/` (git-ignored, ~3.6 GB); log in
-`results/results.csv` (124 rows).
-**Findings:** in-corpus **at ceiling — transformers match but don't beat tuned linear TF-IDF**
-(best-T vs classical AUC: d1_sb 0.9999/0.9998, d2 0.9999/0.9996, d3_en 0.9979/0.9993). Cross-corpus
-**mixed**: transformers beat best classical on **4/6** pairs — every transfer touching modern-real
-d1_sb (d3_en→d1_sb 0.966 vs 0.889) — but **lose both legacy-Enron↔AI pairs**; the **AI→real
-(d3_en→d2) gap is NOT closed** (0.731 vs classical 0.752). Truncation@256 hardest on d3_en (76%,
-median 364 WordPiece). Full 9-grid **132.8 min** on the RTX 3090 (peak ≤5.2 GB); GPU fine-tuning is
-**not bit-exact** (SDPA attention has no deterministic CUDA kernel) — mitigated by fixed seeds,
-cudnn.deterministic, CUBLAS workspace pin, pinned versions, and saved checkpoints as the
-reproducibility anchor (see `notes/decisions.md` "Transformer fine-tuning").
-**Next:** XAI (SHAP/LIME/IG) — reuses the saved finalist checkpoints.
+**XAI complete — the framework is end-to-end (EDA → cleaning → HPO/classical/ensemble → transformers → XAI).**
+SHAP / LIME / Integrated Gradients on the 9 family champions + 3 transformer transfer units, evaluated
+quantitatively for **faithfulness / stability / plausibility** (each vs a random-attribution baseline)
+via `src/xai/` (`cue_lexicon.py` committed *before* results; `champions.py`, `explainers.py`,
+`metrics.py`, `run_xai.py`, `report_xai.py`, `figures_xai.py`). Pre-registered protocol + fixed
+206-term lexicon in `notes/decisions.md`. Explanation docs are **TEST-split only** (n=200 in-corpus /
+100 cross, 100/class, all misclassified up to 30, seed 42; ids in `results/xai/explained_ids_*.json`).
+Log `results/xai_metrics.csv` (30 rows); figures `figures/xai/*`; report `notes/xai_summary.md`.
+Per-unit attribution JSONs git-ignored (18 MB, regenerable). Run: 30 (unit,method) in **306 min**.
+**Findings (RQ3):** **SHAP is the only demonstrably faithful method; LIME ≈ random** (in-corpus AOPC
+ensemble·SHAP 0.281 / tfidf·SHAP 0.161 / transformer·SHAP 0.107 ≈ IG 0.102 ≫ LIME ~0.02). **Faithfulness–
+stability trade-off** (LIME most stable, least faithful). **Transformers hardest to explain** (IG is
+their best explainer). **RQ3 answer: linear TF-IDF + SHAP** — top accuracy, faithful+plausible, cheapest
+(6 s/unit vs transformer 686–2408 s). Prior transformer findings unchanged (in-corpus at ceiling;
+cross-corpus win 4/6, **AI→real d3_en→d2 NOT closed** 0.731 vs 0.752; results.csv 124 rows;
+`results/transformers/checkpoints/` git-ignored ~3.6 GB).
+**Next:** pre-registered `max_length=512` ablation (see decisions.md); STARD-AI checklist (supervisor
+item 5); dissertation writing.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
