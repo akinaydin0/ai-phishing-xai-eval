@@ -538,3 +538,98 @@ Checkpoints git-ignored (`results/transformers_512/checkpoints/`).
 **Links.** `notes/transformer_512_summary.md`; `results/results_512.csv`;
 `results/transformers_512/*.json`; `results/transformer_champions_512.json`;
 `figures/models/transformer_512_cross_comparison.*`; pre-registration entry above (2026-07-16).
+
+---
+
+## 2026-07-17 · PRE-REGISTERED Directive 9 — statistics + imbalance + preprocessing ablation
+
+**Status when written: NO D9 RESULT EXISTS.** Committed alone, before any statistic/metric, as the
+integrity anchor. Champion identities + expected test AUCs are **verbatim from the committed records**
+(`results/results.csv`, `results/results_512.csv`, this log) — **nothing is reselected**. CIs/p-values
+**annotate** the already-committed comparisons; **no champion, threshold, or claim direction may be
+introduced or reversed on their basis.**
+
+### A. The seven statistical comparisons (exact; no additions afterwards)
+
+Model-a vs model-b, paired on the stated TEST split. Committed champion identities/AUCs:
+
+| id | test split | model_a | AUC_a | model_b | AUC_b |
+|---|---|---|--:|---|--:|
+| C1a | d1_sb test | LinearSVC (tfidf, in-corpus classical champ) | 0.9998 | DistilBERT (256 in-corpus champ) | 0.9999 |
+| C1b | d2 test | MultinomialNB (tfidf, in-corpus classical champ) | 0.9996 | DistilBERT (256 in-corpus champ) | 0.9999 |
+| C1c | d3_en test | LinearSVC (tfidf, in-corpus classical champ) | 0.9993 | RoBERTa (256 in-corpus champ) | 0.9976 |
+| C2 | d2 test | RoBERTa 512 champ (d3_en→d2) | 0.8440 | RoBERTa 256 champ (d3_en→d2) | 0.7306 |
+| C3 | d2 test | RoBERTa 512 champ (d3_en→d2) | 0.8440 | LinearSVC tfidf classical cross champ | 0.7523 |
+| C4 | d3_en test | LogisticRegression tfidf classical cross champ (d2→d3_en) | 0.8429 | DistilBERT 256 champ (d2→d3_en) | 0.7748 |
+| C5 | d3_en test | DistilBERT 512 champ (d2→d3_en) | 0.7642 | DistilBERT 256 champ (d2→d3_en) | 0.7748 |
+
+The in-corpus classical champions are the committed in-corpus leaderboard #1 (LinearSVC / MultinomialNB /
+LinearSVC, test AUC 0.9998 / 0.9996 / 0.9993 — `notes/transformer_summary.md` §(a)); the 256 transformer
+in-corpus champions are the committed val-selected finalists (`transformer_champions.json`: d1_sb/d2
+DistilBERT, d3_en RoBERTa); cross champions are the committed rows in results(_512).csv. **C5's CI is
+expected to include 0** (512 is 0.011 *below* 256 in that direction).
+
+### B. Statistical methods (fixed)
+
+- **Paired stratified bootstrap** for AUC differences: **B=10,000**; test indices resampled **within class**
+  (positive and negative counts preserved), **percentile 95% CI** on Δ=AUC_a−AUC_b; base **seed 42**; the
+  **identical resampled index set** is used for both models of a pair (same cached score vectors).
+- **Single-AUC 95% CIs** (same bootstrap config) for the **12 headline numbers**: the 6 in-corpus finalists
+  (classical + transformer × {d1_sb, d2, d3_en}) and the 6 cross numbers (256/512 transformer × {d3_en→d2,
+  d2→d3_en} = 4, plus the 2 classical cross champions).
+- **McNemar exact binomial, two-sided**, at the fixed operating point: discordant counts **n01** (a wrong,
+  b correct) and **n10** (a right, b wrong); raw p = exact two-sided binomial(min(n01,n10); n01+n10, 0.5);
+  **Holm-adjusted** across the **7-test family** {C1a,C1b,C1c,C2,C3,C4,C5}.
+- **Operating point:** probability-like score **≥ 0.5**. Probabilistic models use `predict_proba[:,1]`;
+  margin models (LinearSVC) use `sigmoid(decision_function)` (≥0.5 ⇔ decision_function ≥ 0) — the identical
+  mapping pre-registered in the XAI phase.
+- **Interpretation rule (binding):** CIs and p-values **annotate**; they do not reselect champions,
+  thresholds, or claim directions.
+
+### C. Imbalance stress test
+
+- **Eval-side prevalence stress** on **cached test scores** (no new model runs). Ratios **1:9, 1:19, 1:49**
+  (phish:legit → 10% / 5% / 2% prevalence). Per draw: keep **ALL** legitimate test docs, subsample positives
+  **without replacement** to the ratio; **50 draws** per (corpus, ratio), **seeds 42..91**. Families: the
+  in-corpus **classical finalist** and the **256 transformer finalist** per corpus.
+- **Metrics per draw** (fixed list): PR-AUC (average precision), ROC-AUC (sanity), precision/recall/F1 at the
+  **0.5** operating point, **precision at 95% recall**, and **false positives per 1,000 legitimate emails** at
+  the per-draw threshold achieving ≥95% recall. Report **mean** and **2.5 / 97.5 percentiles** over the 50 draws.
+- **Train-side check, classical only:** retrain the classical finalist per corpus with **TRAIN positives
+  subsampled** to each ratio (champion **hyperparameters frozen — no re-tuning**, a stated limitation),
+  evaluate **ONCE** on the natural TEST split per (corpus, ratio) = **9 pre-registered single-use test
+  evaluations**, no selection among them. Transformers excluded from train-side (cost) — recorded as future work.
+
+### D. Pipeline A preprocessing ablation — VALIDATION ONLY (zero test contact)
+
+- **Universe:** the classical champion representation per corpus (LinearSVC/MNB/LinearSVC + their committed
+  tuned TF-IDF vectorizer params), **hyperparameters frozen** — the ablation cannot change any champion.
+- **Variants** (deterministic; pinned **symspellpy 6.10.0**, **wordninja 2.0.0**, **scikit-learn 1.8.0**):
+  - **V0** canonical cleaned text (baseline).
+  - **V1** = V0 + **stopword removal** (sklearn `ENGLISH_STOP_WORDS`; drop tokens whose lowercase ∈ the set).
+  - **V2** = V0 + **placeholders**, applied in order on the string: URL `https?://\S+|www\.\S+`→`urltoken`;
+    email `[\w.+-]+@[\w-]+\.[\w.-]+`→`emailtoken`; standalone number `\b\d+\b`→`numtoken`.
+  - **V3** = V0 + **spelling normalisation**: SymSpell `max_edit_distance=1`, pinned default frequency dict
+    `frequency_dictionary_en_82_765.txt`; only tokens that are **alphabetic and length ≥ 4** are looked up
+    (`lookup(..., Verbosity.TOP, max_edit_distance=1, include_unknown=True)`), replaced by the top suggestion.
+  - **V4** = V0 + **segmentation**: `wordninja.split` on tokens of **length ≥ 12**, rejoined with spaces;
+    shorter tokens unchanged.
+  - **V5** = combined, applied in the fixed order **V2 → V4 → V3 → V1** (placeholders on the string; then on
+    whitespace tokens: segment ≥12, spell ≥4, drop stopwords; rejoined with single spaces).
+- **Protocol:** train the frozen champion on the TRAIN split transformed by the variant; evaluate on **VAL
+  only** — own-corpus val **plus the other two corpora's val** — applying the **same** variant transform to the
+  eval text. **No test split is loaded anywhere in Part E.**
+- **Endpoint:** **val ROC-AUC Δ vs V0** per (train corpus, eval corpus, variant); descriptive, **no
+  significance testing**. **Directional hypothesis (recorded now): placeholders (V2) help cross-corpus transfer.**
+
+### Reproduction + isolation (Parts B/F)
+
+Per-doc TEST scores for every model in the 7 comparisons are recomputed from stored artefacts (classical:
+stored HPO params → deterministic CPU retrain; transformers: saved 256/512 checkpoints) and each recomputed
+test ROC-AUC is **asserted == its committed value to 4 dp (HARD-FAIL otherwise)**. Score vectors cached under
+`results/stats/scores/` (git-ignored); only aggregates committed. **Nothing is written to
+`results/results.csv` or `results/results_512.csv`.** All D9 outputs live in `results/stats/`,
+`results/imbalance/`, `results/preproc_ablation/`.
+
+**Links.** `src/experiments/d9_*` (to be written); `results/stats/`, `results/imbalance/`,
+`results/preproc_ablation/`; `notes/d9_stats_robustness_summary.md`.

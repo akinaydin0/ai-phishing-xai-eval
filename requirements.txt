@@ -127,6 +127,7 @@ soupsieve==2.8.3
 SQLAlchemy==2.0.51
 stack-data==0.6.3
 sympy==1.14.0
+symspellpy==6.10.0
 terminado==0.18.1
 threadpoolctl==3.6.0
 tifffile==2026.3.3
@@ -147,5 +148,6 @@ webencodings==0.5.1
 websocket-client==1.9.0
 widgetsnbextension==4.0.15
 wordcloud==1.9.6
+wordninja==2.0.0
 wrapt==2.2.2
 xgboost==3.2.0
