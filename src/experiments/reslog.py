@@ -24,20 +24,25 @@ FIELDNAMES = [
 ]
 
 
-def _read() -> list[dict]:
-    if not RESULTS_CSV.exists():
+def _read(csv_path: Path = RESULTS_CSV) -> list[dict]:
+    if not csv_path.exists():
         return []
-    with open(RESULTS_CSV, newline="", encoding="utf-8") as f:
+    with open(csv_path, newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
-def upsert(rows: list[dict]):
-    """Replace rows sharing a run_id with `rows`, keep everything else, rewrite."""
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+def upsert(rows: list[dict], csv_path: Path | None = None):
+    """Replace rows sharing a run_id with `rows`, keep everything else, rewrite.
+
+    `csv_path` defaults to the canonical results/results.csv; pass an alternative log
+    (e.g. results_512.csv) to keep an isolated experiment out of the canonical file.
+    """
+    csv_path = csv_path or RESULTS_CSV
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
     incoming_ids = {r["run_id"] for r in rows}
-    kept = [r for r in _read() if r["run_id"] not in incoming_ids]
+    kept = [r for r in _read(csv_path) if r["run_id"] not in incoming_ids]
     out = kept + rows
-    with open(RESULTS_CSV, "w", newline="", encoding="utf-8") as f:
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=FIELDNAMES)
         w.writeheader()
         for r in out:

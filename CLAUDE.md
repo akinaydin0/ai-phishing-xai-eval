@@ -37,10 +37,16 @@ their best explainer). **RQ3 answer: linear TF-IDF + SHAP** — top accuracy, fa
 (6 s/unit vs transformer 686–2408 s). Prior transformer findings unchanged (in-corpus at ceiling;
 cross-corpus win 4/6, **AI→real d3_en→d2 NOT closed** 0.731 vs 0.752; results.csv 124 rows;
 `results/transformers/checkpoints/` git-ignored ~3.6 GB).
-**Now running:** pre-registered `max_length=512` ablation (Directive 8; isolated namespace
-`results/transformers_512/`, canonical results untouched). **Next after:** STARD-AI checklist
-(supervisor item 5); Directive 10 (HITL + LLM plausibility validation, pre-registered first);
-dissertation writing.
+**Done:** pre-registered `max_length=512` ablation (Directive 8; isolated `results/transformers_512/`,
+canonical results byte-identical). **Verdict H1 (directional):** raising the window recovers
+**d3_en→d2 0.731→0.844** (above best classical 0.752 — reverses the D6 loss) because the d3_en
+champion now trains on fuller AI emails (train truncation 76%→22%); **d2→d3_en unmoved** (−0.011, d2
+docs already short). So the legacy↔AI break is, for the d3_en→d2 half, largely a 256-token truncation
+artifact — not purely distributional. 6 units = 145 min (~2× the 256 cost). See
+`notes/transformer_512_summary.md`, `results/results_512.csv`,
+`figures/models/transformer_512_cross_comparison.*`, decisions.md (2026-07-17 result).
+**Next:** STARD-AI checklist (supervisor item 5); Directive 10 (HITL + LLM plausibility validation,
+pre-registered first); dissertation writing.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 

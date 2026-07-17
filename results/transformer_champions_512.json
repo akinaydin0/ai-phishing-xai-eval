@@ -1,0 +1,14 @@
+{
+  "d2": {
+    "model": "DistilBERT",
+    "val_auc": 0.9999,
+    "selected_lr": 3e-05,
+    "checkpoint": "results\\transformers_512\\checkpoints\\distilbert-base-uncased__d2"
+  },
+  "d3_en": {
+    "model": "RoBERTa-base",
+    "val_auc": 0.9991,
+    "selected_lr": 3e-05,
+    "checkpoint": "results\\transformers_512\\checkpoints\\roberta-base__d3_en"
+  }
+}

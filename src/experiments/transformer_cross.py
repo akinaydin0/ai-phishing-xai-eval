@@ -51,6 +51,28 @@ FIG_DIR = _PROJECT_ROOT / "figures" / "models"
 CORPORA = ["d1_decontaminated_sb", "d2", "d3_en"]
 SHORT = {"d1_decontaminated_sb": "d1_sb", "d2": "d2", "d3_en": "d3_en"}
 MODELS = T.MODELS
+SUFFIX = "xcorpus_transformer"           # run_id suffix (canonical); +<N> for max_length N
+RESULTS_CSV = None                       # None → canonical results.csv
+CHAMPIONS_JSON = _PROJECT_ROOT / "results" / "transformer_champions.json"
+
+
+def configure(max_length: int, corpora):
+    """Redirect the finalist source, results log, champions file and run_id suffix into the
+    isolated max_length namespace (canonical when 256). Also configures transformers_ft so
+    T.encode tokenises the cross targets at max_length (leakage Surface 4: train/eval matched)."""
+    global OUT_DIR, CORPORA, SUFFIX, RESULTS_CSV, CHAMPIONS_JSON
+    CORPORA = corpora
+    T.configure(max_length)
+    if max_length == 256:  # reset to canonical (idempotent / reversible within a process)
+        OUT_DIR = _PROJECT_ROOT / "results" / "transformers"
+        SUFFIX = "xcorpus_transformer"
+        RESULTS_CSV = None
+        CHAMPIONS_JSON = _PROJECT_ROOT / "results" / "transformer_champions.json"
+    else:
+        OUT_DIR = _PROJECT_ROOT / "results" / f"transformers_{max_length}"
+        SUFFIX = f"xcorpus_transformer{max_length}"
+        RESULTS_CSV = _PROJECT_ROOT / "results" / f"results_{max_length}.csv"
+        CHAMPIONS_JSON = _PROJECT_ROOT / "results" / f"transformer_champions_{max_length}.json"
 
 
 def _finalist(model_name, corpus):
@@ -92,7 +114,7 @@ def _predict_on(ckpt_dir, texts, labels):
 
 
 def _row(display, src, tgt, n_train, n_test, auc, f1, notes):
-    return {"run_id": f"{display}__finetune__{src}__{tgt}__xcorpus_transformer",
+    return {"run_id": f"{display}__finetune__{src}__{tgt}__{SUFFIX}",
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "model": display, "features": "finetune", "text_field": TEXT_FIELD[src],
             "train_corpus": src, "test_corpus": tgt, "n_train": n_train, "n_test": n_test,
@@ -123,11 +145,20 @@ def _heatmap(M, labels, metric, stem, ns):
 
 
 def main(argv=None):
-    argparse.ArgumentParser(description="Transformer cross-corpus.").parse_args(argv)
+    ap = argparse.ArgumentParser(description="Transformer cross-corpus.")
+    ap.add_argument("--max-length", type=int, default=256)
+    ap.add_argument("--corpora", nargs="*", default=None)
+    args = ap.parse_args(argv)
+    configure(args.max_length, args.corpora or CORPORA)
+    if args.max_length != 256:
+        print(f"[max_length={args.max_length}] namespace {OUT_DIR.name}/, CSV={RESULTS_CSV.name}, "
+              f"suffix={SUFFIX}, corpora={CORPORA}", flush=True)
+
+    n = len(CORPORA)
     parts = {c: load_splits(c) for c in CORPORA}
     ns = {c: len(parts[c]["train"]) + len(parts[c]["val"]) + len(parts[c]["test"]) for c in CORPORA}
 
-    auc = np.zeros((3, 3)); f1 = np.zeros((3, 3))
+    auc = np.zeros((n, n)); f1 = np.zeros((n, n))
     labels, champions, rows = {}, {}, []
 
     for si, source in enumerate(CORPORA):
@@ -148,16 +179,17 @@ def main(argv=None):
                 a, f = m["roc_auc"], m["f1"]
                 rows.append(_row(display, source, tgt, len(parts[source]["train"]),
                                  len(parts[tgt]["test"]), a, f,
-                                 f"cross-corpus transformer champion ({display}, source val_auc={champ['best_val_auc']:.4f})"))
+                                 f"cross-corpus transformer champion ({display}, source val_auc={champ['best_val_auc']:.4f}, max_length={args.max_length})"))
                 print(f"      -> {SHORT[tgt]:6s} test auc={a:.4f} f1={f:.4f}", flush=True)
             auc[si, ti], f1[si, ti] = a, f
 
-    reslog.upsert(rows)
-    _heatmap(auc, labels, "ROC-AUC", "transformer_cross_auc_heatmap", ns)
-    _heatmap(f1, labels, "F1", "transformer_cross_f1_heatmap", ns)
-    (_PROJECT_ROOT / "results" / "transformer_champions.json").write_text(
-        json.dumps(champions, indent=2), encoding="utf-8")
-    print(f"\n{len(rows)} cross rows upserted; heatmaps + transformer_champions.json written")
+    reslog.upsert(rows, csv_path=RESULTS_CSV)
+    if n == 3:  # heatmap is the canonical 3-corpus deliverable; the 512 ablation uses grouped bars
+        _heatmap(auc, labels, "ROC-AUC", "transformer_cross_auc_heatmap", ns)
+        _heatmap(f1, labels, "F1", "transformer_cross_f1_heatmap", ns)
+    CHAMPIONS_JSON.write_text(json.dumps(champions, indent=2), encoding="utf-8")
+    print(f"\n{len(rows)} cross rows upserted -> {(RESULTS_CSV or reslog.RESULTS_CSV).name}; "
+          f"champions -> {CHAMPIONS_JSON.name}" + ("; heatmaps written" if n == 3 else " (no heatmap, n!=3)"))
 
 
 if __name__ == "__main__":

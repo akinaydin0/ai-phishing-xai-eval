@@ -501,3 +501,40 @@ Recorded from the first weekly supervisor report so the actions are tracked and 
 
 **Links.** Directive 10 (to be pre-registered before ratings); `CLAUDE.md` (Supervisor feedback);
 `results/xai/explained_ids_*.json` (source docs for the annotation subset).
+
+---
+
+## 2026-07-17 · 512 ablation result — verdict: **H1 (supported)**
+
+Executed the binding 2026-07-16 pre-registration (hypothesis, method, decision rule fixed there;
+no trimming, no reinterpretation). Six units {distilbert, bert-base, roberta-base} × {d2, d3_en} at
+`max_length=512`, isolated namespace `results/transformers_512/` (**canonical `results/results.csv`
+byte-identical, 124 rows unchanged**). Determinism policy identical to Directive 6. The script
+(`transformer_512_report.py`) applies the decision rule **mechanically** and prints the verdict.
+
+**Result (script-computed, verbatim rule).**
+
+| Direction | 256 | 512 | Δ | 50%-gap target | best classical | Δ≥+0.03 | ≥target | H1? |
+|---|--:|--:|--:|--:|--:|:--:|:--:|:--:|
+| d2→d3_en | 0.7748 | 0.7642 | −0.0106 | 0.809 | 0.8429 | no | no | no |
+| d3_en→d2 | 0.7306 | **0.8440** | **+0.1134** | 0.742 | 0.7523 | **yes** | **yes** | **YES** |
+
+Rule: H1 if EITHER direction has Δ ≥ +0.03 AND AUC_512 ≥ its target. **d3_en→d2 satisfies both →
+verdict = H1.** (H0 would need BOTH Δ < +0.01; not met. Secondary weak check: in-corpus d3_en test
+AUC 0.9984 @512 vs 0.9979 @256 — negligible, does not decide.)
+
+**Interpretation (the finding, not a rule override).** The recovery is **one-directional and keyed to
+the SOURCE corpus's truncation**: **d3_en→d2 jumps 0.731 → 0.844** — now **above the best classical
+champion (0.752)**, reversing the Directive-6 loss — because at 512 the d3_en champion trains on
+**fuller AI-phishing emails** (d3_en train truncation **76% → 22%**). **d2→d3_en does not move**
+(−0.011): d2's training docs are short (median 176 WP, already ~untruncated at 256), so 512 adds no
+training signal in that direction. So the Directive-6 "legacy↔AI transfer breaks down" is, for the
+d3_en→d2 half, **substantially a 256-token truncation artifact of the long AI corpus**, not purely
+distributional — a nuance the dissertation should state precisely (H1 holds, but directionally).
+
+**Cost.** 6 units = 145 min on the RTX 3090 (~2.0× the 73 min at 256), peak ≤ 8.7 GB, no OOM.
+Checkpoints git-ignored (`results/transformers_512/checkpoints/`).
+
+**Links.** `notes/transformer_512_summary.md`; `results/results_512.csv`;
+`results/transformers_512/*.json`; `results/transformer_champions_512.json`;
+`figures/models/transformer_512_cross_comparison.*`; pre-registration entry above (2026-07-16).

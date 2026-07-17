@@ -72,6 +72,8 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 OUT_DIR = _PROJECT_ROOT / "results" / "transformers"
 CKPT_DIR = OUT_DIR / "checkpoints"
 PARTIAL_DIR = OUT_DIR / "_partial"
+TAG = "finetune"                     # run_id suffix (canonical); becomes finetune<N> at max_length N
+RESULTS_CSV = None                   # None → reslog.RESULTS_CSV (canonical); redirected for ablations
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 MODELS = ["distilbert-base-uncased", "bert-base-uncased", "roberta-base"]
@@ -91,6 +93,27 @@ MAX_LEN = 256
 WEIGHT_DECAY = 0.01
 WARMUP_RATIO = 0.1
 OOM_LADDER = [(32, 1), (16, 2), (8, 4)]  # (per-device batch, grad-accum) — product = 32
+
+
+def configure(max_length: int):
+    """Set the sequence length and, for a non-canonical length, redirect ALL outputs into an
+    isolated namespace so the canonical results/results.csv + results/transformers/ are untouched.
+    With max_length == 256 (default) nothing is redirected — behaviour is byte-identical."""
+    global MAX_LEN, OUT_DIR, CKPT_DIR, PARTIAL_DIR, TAG, RESULTS_CSV
+    MAX_LEN = max_length
+    if max_length == 256:  # reset to canonical (idempotent / reversible within a process)
+        OUT_DIR = _PROJECT_ROOT / "results" / "transformers"
+        CKPT_DIR = OUT_DIR / "checkpoints"
+        PARTIAL_DIR = OUT_DIR / "_partial"
+        TAG = "finetune"
+        RESULTS_CSV = None
+        return
+    ns = _PROJECT_ROOT / "results" / f"transformers_{max_length}"
+    OUT_DIR = ns
+    CKPT_DIR = ns / "checkpoints"
+    PARTIAL_DIR = ns / "_partial"
+    TAG = f"finetune{max_length}"
+    RESULTS_CSV = _PROJECT_ROOT / "results" / f"results_{max_length}.csv"
 
 
 def safe(model_name: str) -> str:
@@ -312,7 +335,7 @@ def save_finalist(model_name, corpus, state, tokenizer):
 # Results row + partial/final persistence
 # --------------------------------------------------------------------------- #
 def _row(display, corpus, n_train, n_test, m, finalist_wall_s, notes):
-    return {"run_id": f"{display}__finetune__{corpus}__{corpus}__finetune",
+    return {"run_id": f"{display}__finetune__{corpus}__{corpus}__{TAG}",
             "timestamp": datetime.now().isoformat(timespec="seconds"),
             "model": display, "features": "finetune", "text_field": TEXT_FIELD[corpus],
             "train_corpus": corpus, "test_corpus": corpus, "n_train": n_train, "n_test": n_test,
@@ -426,7 +449,7 @@ def _finalize_unit(model_name, corpus, parts, enc, partial):
     _final_path(model_name, corpus).write_text(json.dumps(final, indent=2), encoding="utf-8")
 
     reslog.upsert([_row(display, corpus, len(parts["train"]), len(parts["test"]),
-                        m, lr_rec["wall_s"], notes)])
+                        m, lr_rec["wall_s"], notes)], csv_path=RESULTS_CSV)
     _partial_path(model_name, corpus).unlink(missing_ok=True)
     print(f"  [{display} / {corpus}] FINALIST lr={best_lr} val_auc={partial['best_val_auc']:.4f} "
           f"-> TEST auc={m['roc_auc']:.4f} f1={m['f1']:.4f} | unit_wall={unit_wall:.0f}s peak={peak_mb:.0f}MB",
@@ -443,28 +466,35 @@ def main(argv=None):
     parser.add_argument("--models", nargs="*", default=MODELS)
     parser.add_argument("--corpora", nargs="*", default=CORPORA)
     parser.add_argument("--lrs", nargs="*", type=float, default=LRS)
+    parser.add_argument("--max-length", type=int, default=256,
+                        help="sequence length; !=256 redirects ALL outputs to an isolated namespace")
     args = parser.parse_args(argv)
+    configure(args.max_length)  # redirect namespace when max_length != 256 (canonical otherwise)
 
     if DEVICE != "cuda":
         print("WARNING: CUDA not available — running on CPU (fp16 disabled, very slow).", flush=True)
+    if args.max_length != 256:
+        print(f"[max_length={args.max_length}] isolated namespace: {OUT_DIR.name}/, "
+              f"CSV={RESULTS_CSV.name}, tag={TAG}", flush=True)
 
+    results_csv = RESULTS_CSV or reslog.RESULTS_CSV
     done_ids = set()
-    if reslog.RESULTS_CSV.exists():
-        with open(reslog.RESULTS_CSV, encoding="utf-8", newline="") as f:
+    if results_csv.exists():
+        with open(results_csv, encoding="utf-8", newline="") as f:
             done_ids = {r["run_id"] for r in _csv.DictReader(f)}
 
     total_units = len(args.models) * len(args.corpora)
     already_done = sum(
         1 for corpus in args.corpora for model_name in args.models
         if _final_path(model_name, corpus).exists()
-        and f"{DISPLAY[model_name]}__finetune__{corpus}__{corpus}__finetune" in done_ids)
+        and f"{DISPLAY[model_name]}__finetune__{corpus}__{corpus}__{TAG}" in done_ids)
 
     grand_t0 = time.time()
     completed = []
     for corpus in args.corpora:
         for model_name in args.models:
             display = DISPLAY[model_name]
-            run_id = f"{display}__finetune__{corpus}__{corpus}__finetune"
+            run_id = f"{display}__finetune__{corpus}__{corpus}__{TAG}"
             if _final_path(model_name, corpus).exists() and run_id in done_ids:
                 print(f"[{display} / {corpus}] SKIP (already complete)", flush=True)
                 continue
