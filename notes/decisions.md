@@ -866,6 +866,32 @@ why the email is phishing?"*∈{0,1,2}.
   `human_ratings.csv` byte-identically; **S4** metrics/bands/expectations match this pre-registration
   verbatim.
 
+### Pre-flight amendment (2026-07-18, BEFORE any judge call) — information-parity fix
+Author-directed pre-flight: confirm the human (annotate.html) and the LLM judge rate under
+**identical information conditions** — the email subject+body plus the one blind token set — since
+the guide's cue definition is context-dependent.
+
+- **Judge prompt template CONTAINS the email text** (the named failure did NOT occur): the committed
+  template (§E) fills `{email_text}` from the same `text` field the human sees. Verified empirically
+  across all **60 docs / 260 sets**: 0 email-text mismatches, 0 token-set mismatches between the
+  judge source (`key.json`) and the human source (the `annotate.html` payload); a rendered sample
+  confirms subject+body + the blind set are both present. **No template change.**
+- **Conformance fix to annotate.html (applied before any call).** The check surfaced that
+  annotate.html additionally displayed a **ground-truth stratum badge ("true positive"/"false
+  positive") and a corpus badge** — information the isolated judge does NOT receive, which both
+  breaks identical-information-conditions and would **bias** the human on the 5 FPs/corpus (a human
+  told "false positive" would rate cues differently than a label-blind judge), corrupting P3. The
+  pre-registered spec (§D / Part B.3) says annotate.html shows only *"each email's subject+body and
+  its blind sets"*, so the badges were a deviation. **Fix:** `stratum`/`corpus` removed from the
+  annotate.html DATA and UI; the human now sees email text + blind sets only, ground-truth-blind
+  like the judge. `key.json` and `blind_sheets.csv` are **byte-identical** (the fix is isolated to
+  the human tool; sets/key/blinding/attributions untouched).
+- **Disclosed residual asymmetry (pre-registered, not a defect):** the judge rates **one isolated
+  set per call** (§E addition 2), whereas the human sees an email's sibling sets together in
+  annotate.html. A token's cue status depends on the token + email context (not on sibling sets), so
+  this does not change per-token judgments; recorded as a limitation.
+- No rating and no judge call existed at amendment time (git: this precedes any `judge_raw.jsonl`).
+
 **Links.** `notes/hitl_annotation_guide.md`; `results/hitl/selected_ids.json`;
-`src/experiments/d10_{anchor,select}.py`; (Part B, uncommitted at this point)
-`src/experiments/d10_{package,judge}.py`.
+`src/experiments/d10_{anchor,select}.py`; (Part B) `src/experiments/d10_{package,judge}.py`;
+`results/hitl/{annotate.html,key.json,blind_sheets.csv}`.

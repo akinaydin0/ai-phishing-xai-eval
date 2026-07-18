@@ -115,8 +115,10 @@ def build() -> dict:
                     n_sets += 1
                     n_tokens += len(toks)
                 groups.append({"group_idx": gi, "sets": ui_sets})
-            data_docs.append({"doc_uid": doc_uid, "corpus": corpus, "stratum": doc["stratum"],
-                              "text": text, "groups": groups})
+            # annotate.html DATA is ground-truth-BLIND and metadata-minimal: email text + blind
+            # sets ONLY (no corpus/stratum), so the human rates under the SAME information as the
+            # isolated judge (identical-information-conditions requirement; prevents FP-label bias).
+            data_docs.append({"doc_uid": doc_uid, "text": text, "groups": groups})
 
     HITL_DIR.mkdir(parents=True, exist_ok=True)
     (HITL_DIR / "key.json").write_text(json.dumps(key, indent=1), encoding="utf-8")
@@ -149,7 +151,7 @@ _HTML_TEMPLATE = r"""<!doctype html>
 <title>HITL Plausibility Annotation (Directive 10)</title>
 <style>
  :root{--bg:#f7f7f8;--card:#fff;--ink:#1a1a1a;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;
-       --tp:#065f46;--fp:#9a3412;--cue:#fef3c7;--done:#dcfce7;}
+       --cue:#fef3c7;--done:#dcfce7;}
  *{box-sizing:border-box}
  body{margin:0;font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       background:var(--bg);color:var(--ink)}
@@ -166,9 +168,6 @@ _HTML_TEMPLATE = r"""<!doctype html>
  main{max-width:960px;margin:0 auto;padding:16px}
  .doc{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:14px 0;padding:16px}
  .doc h2{font-size:14px;margin:0 0 8px}
- .badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-right:6px}
- .b-corpus{background:#eef2ff;color:#3730a3}
- .b-tp{background:#ecfdf5;color:var(--tp)} .b-fp{background:#fff7ed;color:var(--fp)}
  .email{white-space:pre-wrap;word-break:break-word;background:#fafafa;border:1px solid var(--line);
         border-radius:8px;padding:10px;max-height:260px;overflow:auto;font-size:13.5px;color:#111}
  .group{margin-top:12px}
@@ -228,10 +227,6 @@ function render(){
   DATA.docs.forEach((d,di)=>{
     const doc=document.createElement('section'); doc.className='doc';
     const h=document.createElement('h2');
-    const bc=document.createElement('span'); bc.className='badge b-corpus'; bc.textContent=d.corpus;
-    const bs=document.createElement('span'); bs.className='badge '+(d.stratum==='TP'?'b-tp':'b-fp');
-    bs.textContent=(d.stratum==='TP'?'true positive':'false positive');
-    h.appendChild(bc); h.appendChild(bs);
     h.appendChild(document.createTextNode('Email '+(di+1)+' of '+DATA.docs.length));
     doc.appendChild(h);
     const em=document.createElement('div'); em.className='email'; em.textContent=d.text; doc.appendChild(em);
