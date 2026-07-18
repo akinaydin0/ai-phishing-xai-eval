@@ -17,3 +17,7 @@ __pycache__/
 .ipynb_checkpoints/
 *.pyc
 .env
+
+# Directive 10 HITL: local API key (never committed)
+results/hitl/.env
+results/hitl/api_key.txt
