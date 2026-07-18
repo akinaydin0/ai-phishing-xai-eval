@@ -1,0 +1,815 @@
+{
+  "directive": "D10",
+  "seed": 42,
+  "selection_rule": "committed explained_ids TEST sets only; per corpus 15 TP + up to 5 FP (fill TP if <5 FP); candidates phishing-pred by every source unit and present in every source unit's explained_ids; sorted by sha1 body hash ascending, stratified first-N; seed 42 provenance",
+  "n_tp_target": 15,
+  "n_fp_target": 5,
+  "n_total_per_corpus": 20,
+  "corpora": {
+    "d1_sb": {
+      "source_units": [
+        "tfidf_d1_sb"
+      ],
+      "families": [
+        "tfidf"
+      ],
+      "explained_corpus": "d1_decontaminated_sb",
+      "n_tp": 15,
+      "n_fp": 5,
+      "n": 20,
+      "docs": [
+        {
+          "doc_uid": "d1_sb_017547c4cef2",
+          "corpus": "d1_sb",
+          "hash": "017547c4cef29333760a4c81bc099465696c888a",
+          "idx": 2339,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_02caaf957fc5",
+          "corpus": "d1_sb",
+          "hash": "02caaf957fc567b1e7cb8fd62f775613a7978e92",
+          "idx": 1151,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_054c64014f71",
+          "corpus": "d1_sb",
+          "hash": "054c64014f719a5f607523562adad8ee945d6751",
+          "idx": 1135,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_07a4688e463b",
+          "corpus": "d1_sb",
+          "hash": "07a4688e463be6aa0cdda0046eb9a5035166a504",
+          "idx": 4811,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_0c55e64c8f49",
+          "corpus": "d1_sb",
+          "hash": "0c55e64c8f49278d274f8aa1d6c9b0dfabe39a1c",
+          "idx": 4180,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_0fd335619b46",
+          "corpus": "d1_sb",
+          "hash": "0fd335619b464765a9d15ee6777a4eb318454784",
+          "idx": 4573,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_13d68b055945",
+          "corpus": "d1_sb",
+          "hash": "13d68b0559450ed014f48847a6a052961785d782",
+          "idx": 3979,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_1575814b5232",
+          "corpus": "d1_sb",
+          "hash": "1575814b52328abd080e3dc9f7e3f28c7d25f64c",
+          "idx": 5430,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_16da2d992da0",
+          "corpus": "d1_sb",
+          "hash": "16da2d992da0313abc4867fc04ac13e714f00690",
+          "idx": 6266,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_179f76bb653a",
+          "corpus": "d1_sb",
+          "hash": "179f76bb653a2a156b60779c23eeca913ed2ea82",
+          "idx": 6780,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_18d7de6a39cd",
+          "corpus": "d1_sb",
+          "hash": "18d7de6a39cd480312cab8d607a4f0226eee9ede",
+          "idx": 3202,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_1b7c9aed90de",
+          "corpus": "d1_sb",
+          "hash": "1b7c9aed90dec69102e61d32eaa3808605b593c6",
+          "idx": 1211,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_20d415687a7c",
+          "corpus": "d1_sb",
+          "hash": "20d415687a7c48da9ebb125eadb6500cff05e43e",
+          "idx": 1768,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_22009fb2fbbe",
+          "corpus": "d1_sb",
+          "hash": "22009fb2fbbec97111e9f0e60089be4b488f9eb7",
+          "idx": 3519,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_231f61037446",
+          "corpus": "d1_sb",
+          "hash": "231f61037446d0d2fc51d1c689d3ef5db92b5e95",
+          "idx": 5982,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_233a61ac9692",
+          "corpus": "d1_sb",
+          "hash": "233a61ac9692173f63b0dd31063f2ae50a53db7d",
+          "idx": 6695,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_29b2086ff4b1",
+          "corpus": "d1_sb",
+          "hash": "29b2086ff4b1b994f86609558c557f9d9148322f",
+          "idx": 5370,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_2aa305e1c356",
+          "corpus": "d1_sb",
+          "hash": "2aa305e1c3564026bd6e5ab218d5b75a9139fb82",
+          "idx": 3571,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_2d40e126004e",
+          "corpus": "d1_sb",
+          "hash": "2d40e126004e209e811a92149b1b4a9fa005ea8d",
+          "idx": 5871,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        },
+        {
+          "doc_uid": "d1_sb_2dcd4d3352ff",
+          "corpus": "d1_sb",
+          "hash": "2dcd4d3352ffb7aadfe90fbe7a2490bf6a042d04",
+          "idx": 3283,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d1_sb": 1
+        }
+      ]
+    },
+    "d2": {
+      "source_units": [
+        "tfidf_d2"
+      ],
+      "families": [
+        "tfidf"
+      ],
+      "explained_corpus": "d2",
+      "n_tp": 15,
+      "n_fp": 5,
+      "n": 20,
+      "docs": [
+        {
+          "doc_uid": "d2_07bdde7faf62",
+          "corpus": "d2",
+          "hash": "07bdde7faf621ba51bd16c9b4a744603a93e37fc",
+          "idx": 3798,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_0ab6b544ebac",
+          "corpus": "d2",
+          "hash": "0ab6b544ebac659f6527031e3862e2f2733dc75b",
+          "idx": 2254,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_0b48feee9474",
+          "corpus": "d2",
+          "hash": "0b48feee9474a892ca8b5343ded16c7249cb3039",
+          "idx": 2871,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_0b7f87b90663",
+          "corpus": "d2",
+          "hash": "0b7f87b906635a871f24d2b89e807395593912a5",
+          "idx": 3475,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_0db0b230244d",
+          "corpus": "d2",
+          "hash": "0db0b230244d873f81cbc4538328948fecfe4e0a",
+          "idx": 4192,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_13376a2370d1",
+          "corpus": "d2",
+          "hash": "13376a2370d11b1b993872ef77220b461946de8b",
+          "idx": 3625,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_135f52b5cc80",
+          "corpus": "d2",
+          "hash": "135f52b5cc803a1f0fa938a07689bbb4cadaf795",
+          "idx": 160,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_14caf6959c96",
+          "corpus": "d2",
+          "hash": "14caf6959c96605800a0e51719c78b3d23f5e472",
+          "idx": 4025,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_14f2115a96f2",
+          "corpus": "d2",
+          "hash": "14f2115a96f25e76ed51b712d3bb939998e8322a",
+          "idx": 4377,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_1768b410cffd",
+          "corpus": "d2",
+          "hash": "1768b410cffd164ea8cdc12a0dd55875a5d7bd6d",
+          "idx": 2591,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_18e99fa47926",
+          "corpus": "d2",
+          "hash": "18e99fa4792668e49e02e5d4f2511de2fd9995da",
+          "idx": 532,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_19509eacd95a",
+          "corpus": "d2",
+          "hash": "19509eacd95ad49320fb0a4a9d0cb4603687df63",
+          "idx": 3364,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_22f7325368b4",
+          "corpus": "d2",
+          "hash": "22f7325368b4423d0bf0d7ba49ab757f26f1a1e7",
+          "idx": 4022,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_2398050b3508",
+          "corpus": "d2",
+          "hash": "2398050b3508a02153f3cf39f51909e947f472d7",
+          "idx": 79,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_2bf8085d4661",
+          "corpus": "d2",
+          "hash": "2bf8085d466158d876460d8573801d0bf45baef7",
+          "idx": 2245,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_2e99cb2f3cfa",
+          "corpus": "d2",
+          "hash": "2e99cb2f3cfa58dc1d72c0b2e07b0b3e61952c61",
+          "idx": 2882,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_305b0ab75271",
+          "corpus": "d2",
+          "hash": "305b0ab7527154b7566661546bdc8cf5b8cd0a62",
+          "idx": 2209,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_31a1d8611c6c",
+          "corpus": "d2",
+          "hash": "31a1d8611c6c922aa2fe28dc7221fc6f00941f99",
+          "idx": 1494,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_3966b59f6b6d",
+          "corpus": "d2",
+          "hash": "3966b59f6b6d88eeab17bfa7d3f3ede54d9562b2",
+          "idx": 346,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        },
+        {
+          "doc_uid": "d2_3b3f2e9b18dd",
+          "corpus": "d2",
+          "hash": "3b3f2e9b18ddb6e1d391137bf09f5e995aee35fc",
+          "idx": 3727,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf"
+          ],
+          "pred__tfidf_d2": 1
+        }
+      ]
+    },
+    "d3_en": {
+      "source_units": [
+        "tfidf_d3_en",
+        "transformer_d3_en"
+      ],
+      "families": [
+        "tfidf",
+        "transformer"
+      ],
+      "explained_corpus": "d3_en",
+      "n_tp": 15,
+      "n_fp": 5,
+      "n": 20,
+      "docs": [
+        {
+          "doc_uid": "d3_en_06aff5a99282",
+          "corpus": "d3_en",
+          "hash": "06aff5a99282729af070ad0aad0f3c245bbae5dd",
+          "idx": 904,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_0acd3e705bba",
+          "corpus": "d3_en",
+          "hash": "0acd3e705bbac48e6a6215234add6b69b39154c4",
+          "idx": 360,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_139a683d42ff",
+          "corpus": "d3_en",
+          "hash": "139a683d42ff75f1cd856056eb399e6889d073f6",
+          "idx": 2224,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_156335de1394",
+          "corpus": "d3_en",
+          "hash": "156335de13944b4a8ff7d4bd13d9d11ad0b4e0cb",
+          "idx": 1641,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_22ec6a011e78",
+          "corpus": "d3_en",
+          "hash": "22ec6a011e787085efd6fbc535029474430b3a74",
+          "idx": 2639,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_3a2986cbac53",
+          "corpus": "d3_en",
+          "hash": "3a2986cbac5387696bc606e18fd8143c58d649bd",
+          "idx": 41,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_498f54a03ed4",
+          "corpus": "d3_en",
+          "hash": "498f54a03ed4ce10510d5f85eac97ae50b135fa2",
+          "idx": 2656,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_5250002913ac",
+          "corpus": "d3_en",
+          "hash": "5250002913ac3455abc92a5d9c6b942e59dc852d",
+          "idx": 85,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_525d0c39fc16",
+          "corpus": "d3_en",
+          "hash": "525d0c39fc16e53304c54950c9d577a3cb7cfa55",
+          "idx": 2641,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_563f6baeb492",
+          "corpus": "d3_en",
+          "hash": "563f6baeb49226cfe6a2177efded4c32461afded",
+          "idx": 2605,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_5c7635c0ac6a",
+          "corpus": "d3_en",
+          "hash": "5c7635c0ac6aa6240b831a165166126d2f095106",
+          "idx": 905,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_5d550721f9a2",
+          "corpus": "d3_en",
+          "hash": "5d550721f9a23914d2fb727f8f42519be5a73737",
+          "idx": 18,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_688dcff77345",
+          "corpus": "d3_en",
+          "hash": "688dcff7734526ba0ce54d4aba1ab32ecc5d8176",
+          "idx": 245,
+          "y_true": 0,
+          "stratum": "FP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_71ba49d3ceae",
+          "corpus": "d3_en",
+          "hash": "71ba49d3ceae8a624552e71e9fefa2c6851ecb51",
+          "idx": 344,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_a369051bdef8",
+          "corpus": "d3_en",
+          "hash": "a369051bdef89d9febba542c309aa7971cd36196",
+          "idx": 43,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_bacdb9c18288",
+          "corpus": "d3_en",
+          "hash": "bacdb9c18288c703cea83d246fedf09061ae3eda",
+          "idx": 1387,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_c0f96db26dfb",
+          "corpus": "d3_en",
+          "hash": "c0f96db26dfbfa57a38dbf791122fbb2b46322e9",
+          "idx": 36,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_c3cb1d395ff1",
+          "corpus": "d3_en",
+          "hash": "c3cb1d395ff10fb2359ce6cf120023a118d51e4e",
+          "idx": 269,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_d8937f6147ca",
+          "corpus": "d3_en",
+          "hash": "d8937f6147ca20795217b1d0dea8e9f0d2cff8ab",
+          "idx": 191,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        },
+        {
+          "doc_uid": "d3_en_e2b2eb614a71",
+          "corpus": "d3_en",
+          "hash": "e2b2eb614a71e08572c95981f31df5f66862306d",
+          "idx": 309,
+          "y_true": 1,
+          "stratum": "TP",
+          "families": [
+            "tfidf",
+            "transformer"
+          ],
+          "pred__tfidf_d3_en": 1,
+          "pred__transformer_d3_en": 1
+        }
+      ]
+    }
+  },
+  "n_docs_total": 60
+}

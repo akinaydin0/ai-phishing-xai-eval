@@ -722,3 +722,150 @@ the asymmetry is disclosed, and it only makes the transformer's near-parity **mo
 
 **Links.** `results/stats/stats_summary.csv` (6-dp CIs); `notes/d9_stats_robustness_summary.md` §(a)/(b)/obs
 1,3; `src/experiments/d9_{stats,report}.py`.
+
+---
+
+## 2026-07-18 · Directive 10 PRE-REGISTRATION — HITL + LLM-judge plausibility validation
+
+**Committed FIRST and ALONE (this entry + `notes/hitl_annotation_guide.md` + `results/hitl/selected_ids.json`
++ the Part-A scripts `src/experiments/d10_{anchor,select}.py`), before any rating exists and before any
+judge call.** Purpose: validate the cue-lexicon plausibility proxy — the XAI phase's one stated limitation —
+with (i) method-blind human annotation by the author and (ii) an LLM judge under the identical blind
+protocol. **Interpretation rule (binding): the bands and expectations below are REPORTING LANGUAGE ONLY —
+nothing in the committed XAI results (`results/xai_metrics.csv`, 30 rows) is reselected, reversed, or
+re-run by this phase.**
+
+**Guard (Part A.0, PASS 2026-07-18):** `fd274b9` ancestor of HEAD; tree clean; canonical row counts
+`results.csv`=124, `results_512.csv`=8, `xai_metrics.csv`=30.
+
+**Regeneration integrity anchor (Part A.1, PASS 2026-07-18) — `src/experiments/d10_anchor.py`.** The
+git-ignored attribution JSONs are regenerable; proven BEFORE any subset was extracted. Regenerated
+attributions with the committed XAI parameters (SHAP `max_evals=500`, LIME `num_samples=1000`, IG 32 steps,
+seed 42) for two anchor units on their FULL committed `explained_ids` sets and recomputed
+`plausibility@10`, asserting equality with `results/xai_metrics.csv` to 4 dp: **`tfidf_d1_sb·shap`
+0.2338==0.2338; `transformer_d3_en·shap` 0.2360==0.2360; `transformer_d3_en·ig` 0.2180==0.2180 — all
+PASS** (only attributions + plausibility are recomputed; the canonical JSONs/CSV are left untouched).
+
+### A. Sample (fixed) — `src/experiments/d10_select.py` → `results/hitl/selected_ids.json`
+From the committed `explained_ids` TEST sets only. **Per corpus (d1_sb, d2, d3_en): 20 phishing-PREDICTED
+docs = 15 true positives + up to 5 false positives (fill with TPs if fewer FPs exist). 60 docs.**
+Deterministic: candidates **sorted by doc id (sha1 body hash) ascending, stratified first-N**; the underlying
+`explained_ids` were built with the global **seed 42** (recorded for provenance — no further stochastic step).
+`doc_uid = "{corpus}_{hash[:12]}"`.
+- **d1_sb / d2:** source = the tfidf champion's `explained_ids` (`tfidf_d1_sb`, `tfidf_d2`); phishing-PRED =
+  tfidf pred==1. Only the **tfidf** family is annotated.
+- **d3_en:** source = the **INTERSECTION** of `tfidf_d3_en` and `transformer_d3_en` `explained_ids`,
+  restricted to docs **phishing-PRED by BOTH** champions. Both families (tfidf, transformer) are annotated,
+  so every d3_en doc is a committed-explained, phishing-predicted doc for BOTH families — keeping every
+  generated set a top-10-toward-phishing set on a committed-explained doc (surface S1). Realised counts:
+  every corpus 15 TP + 5 FP = 20; 60 globally-unique docs.
+
+### B. Sets per doc (fixed)
+- **tfidf family, all 3 corpora:** SHAP top-10, LIME top-10, RANDOM top-10 → **3 sets/doc, 180 sets.**
+- **transformer family, d3_en only** (AI corpus + the lexicon's LIME-above-random anomaly + IG coverage):
+  SHAP, LIME, IG, RANDOM → **4 sets/doc, 80 sets.**
+- **260 sets total, ≤2,600 token judgments.** A "top-10" set = the word tokens at
+  `textops.top_k_positions(attr, pred=1, min(10, n_word_tokens))` (predicted class is phishing for every
+  selected doc), in most-attributed-first order. **RANDOM** = `min(10, n)` distinct word positions drawn
+  **uniformly over the doc's `\w+` word tokens** via `numpy.random.default_rng([42, int(hash[:8],16),
+  FAMILY_CODE])` with `FAMILY_CODE`={tfidf:0, transformer:1} (a per-(doc,family) seed-42-anchored,
+  processing-order-independent draw). Set tokens = the raw-text word strings at those positions.
+
+### C. Blinding (fixed)
+Within each **(doc, family)** group the sets are shuffled via `numpy.random.default_rng([42,
+int(hash[:8],16), FAMILY_CODE, 99])` and labelled **Set A/B/C(/D)**. The method key is deterministic and
+committed at generation time in **`results/hitl/key.json`** (per `set_uid`: `doc_uid, corpus, family,
+method, label, positions[], tokens[]`); the annotator must **not** open it until `human_ratings.csv` is
+committed. **`set_uid = "{doc_uid}__{family}__{label}"`** (family is a grouping, not blinded; the METHOD is
+blinded). **Single-annotator (the author) + procedural-only blinding are DISCLOSED LIMITATIONS.**
+
+### D. Annotation guide
+`notes/hitl_annotation_guide.md` (committed with this entry). A "genuine cue" = a token that, in the context
+of this specific email, is plausible evidence of phishing intent (six **concept-level** families only —
+urgency/pressure, credentials/verification, money/lure, links/technical artifacts, impersonation/authority,
+secrecy). The guide **does NOT reproduce the 206 lexicon terms**, so human ratings are not a re-application
+of the lexicon. Ratings: per token `is_cue`∈{0,1}; per set one holistic score *"does this token set explain
+why the email is phishing?"*∈{0,1,2}.
+
+### E. LLM judge (fixed) — model pinned BEFORE any call
+- **Model id (pinned): `claude-opus-4-8`** (alias). Mechanism: Anthropic API, **temperature 0**, one call
+  per set, JSON output. Rationale: an independent, maximally-capable second annotator; ~260 short calls.
+- **Judge prompt (verbatim).** *System prompt* = the full text of `notes/hitl_annotation_guide.md`, verbatim.
+  *User message* (`{email_text}` = the same subject+body text the tokens were attributed from; tokens
+  presented 1..N in set order):
+  ```
+  EMAIL (subject and body):
+  <<<
+  {email_text}
+  >>>
+
+  TOKEN SET (rate each token in order):
+  1. {token_1}
+  2. {token_2}
+  ... (through N)
+
+  Return ONLY a JSON object, no prose, with exactly these keys:
+  {"tokens": [<is_cue for token 1>, ..., <is_cue for token N>], "holistic": <0, 1, or 2>}
+  where each is_cue is 0 or 1 and the "tokens" array has exactly N entries in the given order.
+  ```
+  (The directive's `{token: 0/1}` is realised as an index-aligned `tokens[]` array to disambiguate repeated
+  token strings; this is the faithful, more-precise form.)
+- **Additions baked in at the author's direction (2026-07-18), part of this pre-registration:**
+  1. **Determinism caveat (DISCLOSED):** temperature 0 is greedy decoding but the API does not guarantee
+     bit-exact reproducibility across calls/time. **All raw judge responses are committed verbatim**
+     (`results/hitl/judge_ratings.csv` + a raw JSONL `results/hitl/judge_raw.jsonl` of the full responses),
+     so every downstream number is exactly reproducible from committed artifacts; only re-querying the judge
+     is subject to residual nondeterminism / model-alias drift. **The resolved model id (from the API
+     response metadata) and call timestamps are recorded** in `judge_raw.jsonl`.
+  2. **Isolation:** each call contains ONLY the fixed system prompt (the guide verbatim) + one blind set — no
+     repo context, no lexicon, no `key.json`, no other sets. **Retry policy (fixed):** on invalid JSON, up to
+     **2 retries** with the identical prompt; if still invalid, the set is recorded as **`judge_missing`**
+     (excluded from P3, counted and disclosed).
+  3. **Provenance disclosure (DISCLOSED LIMITATION):** the judge shares a model family with the tooling that
+     authored the cue lexicon; **the human annotator is the independent reference and P2 (lexicon vs human)
+     is the primary validation metric.**
+  4. **Cost/PII:** ~260 calls on public research corpora (Kaggle/Enron/PhishFuzzer); no personal data beyond
+     what the public datasets already contain.
+- **Runtime rule (fixed):** if the API **rejects the pinned alias** `claude-opus-4-8` at runtime, **STOP and
+  checkpoint** — no other model id is substituted without the author's approval.
+- The annotator must not open `judge_ratings.csv` before his ratings are committed; the judge never sees
+  human ratings.
+
+### F. Metrics (computed only AFTER the ratings commit)
+- **P1 (primary)** — per (corpus, family, method): **human cue-rate@10** (mean over the set's tokens of
+  `is_cue`) with **paired bootstrap 95% CIs over docs** (B=10,000, seed 42); **ranking concordance vs the
+  lexicon** = sign agreement on **SHAP-vs-RANDOM, LIME-vs-RANDOM, SHAP-vs-LIME**, and the **IG pairs**
+  (IG-vs-RANDOM, IG-vs-SHAP, IG-vs-LIME on d3_en transformer).
+- **P2** — token-level **lexicon-vs-human** agreement: **percent agreement + Cohen's κ**, per corpus and
+  overall (lexicon label per token = `cue_lexicon.is_cue(word)` OR the token's char span overlaps a
+  URL/e-mail span, identical to the committed metric's `_cue_hits`).
+- **P3** — **human-vs-LLM:** token-level **κ**; **set-level Spearman** on cue-rates and on holistic scores.
+- **P4** — holistic means per method vs RANDOM.
+- **Interpretation bands (fixed now, Landis–Koch):** κ **≥ 0.4** → *"moderately validated proxy"*; **0.2–0.4**
+  → *"fair — proxy retained as a heuristic with the limitation restated"*; **< 0.2** → *"poor — proxy
+  reported as weak"*.
+- **Directional expectations (fixed):** **E1** human SHAP cue-rate > RANDOM on every (corpus, family);
+  **E2** lexicon–human κ ≥ 0.4.
+- **Exploratory (no gate):** does the d3_en LIME-above-random anomaly replicate in human ratings?
+
+### Package / gate / analysis / review (fixed plan)
+- **Part B:** `src/experiments/d10_package.py` builds `results/hitl/{annotate.html, blind_sheets.csv,
+  key.json}` (attributions regenerated from the anchored pipeline for the 60 selected docs; asserts every
+  `doc_uid` ⊂ committed TEST `explained_ids`). `src/experiments/d10_judge.py` runs the pinned judge →
+  `judge_ratings.csv` + `judge_raw.jsonl`.
+- **Part C (human gate, STOP):** the author reads the guide, annotates in `annotate.html` (~1.5–2 h; does
+  NOT open `key.json`/`judge_ratings.csv`/`cue_lexicon.py`), exports `human_ratings.csv` → schema
+  `(doc_uid, set_uid, token_idx, token, is_cue, holistic)`. On resume: verify completeness, **commit the
+  ratings file untouched BEFORE any analysis**.
+- **Part D:** join ratings + judge + key + lexicon labels; compute P1–P4 under the fixed bands; write
+  `notes/hitl_summary.md` + one figure `figures/hitl/hitl_cue_rates.(png+pdf)` (grouped bars: human vs
+  lexicon vs LLM cue-rate per (corpus, method)).
+- **Part E (review + commit):** scoped adversarial review (1 reviewer + 1 confirmer) on four surfaces —
+  **S1** every annotated doc ⊂ committed TEST `explained_ids`; **S2** this pre-registration commit precedes
+  the ratings commit and every judge call (git + timestamps); **S3** the analysis consumed the committed
+  `human_ratings.csv` byte-identically; **S4** metrics/bands/expectations match this pre-registration
+  verbatim.
+
+**Links.** `notes/hitl_annotation_guide.md`; `results/hitl/selected_ids.json`;
+`src/experiments/d10_{anchor,select}.py`; (Part B, uncommitted at this point)
+`src/experiments/d10_{package,judge}.py`.
