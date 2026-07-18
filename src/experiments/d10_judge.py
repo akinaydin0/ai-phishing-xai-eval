@@ -146,7 +146,12 @@ def main(argv=None) -> int:
     if args.limit is not None:
         order = order[:args.limit]
     done = _done_ok()
-    client = anthropic.Anthropic()             # reads ANTHROPIC_API_KEY from env
+    try:
+        client = anthropic.Anthropic()         # reads ANTHROPIC_API_KEY from env
+    except Exception as e:                      # malformed key etc.
+        print(f"STOP: could not initialise the Anthropic client ({type(e).__name__}). "
+              "Check the ANTHROPIC_API_KEY value. No call was made.", flush=True)
+        return 2
 
     n_ok = n_missing = n_skip = 0
     resolved_ids = set()
@@ -178,6 +183,10 @@ def main(argv=None) -> int:
                               "No substitution without approval.", flush=True)
                         return 3
                     raise
+                except anthropic.AuthenticationError as e:
+                    print(f"STOP: authentication failed ({e}). Check the ANTHROPIC_API_KEY value in "
+                          "results/hitl/.env. No further call was made.", flush=True)
+                    return 2
                 resp_ts = _now()
                 text = "".join(getattr(b, "text", "") for b in resp.content)
                 resolved_ids.add(resp.model)
