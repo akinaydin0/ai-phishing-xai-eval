@@ -3,8 +3,11 @@ Directive 10 - Part B.4: LLM judge (pinned, blind, deterministic order).
 
 Runs the pre-registered LLM judge over the committed blind sets in results/hitl/key.json. Per the
 pre-registration (notes/decisions.md, 2026-07-18):
-  - Model id PINNED: claude-opus-4-8 (alias). Mechanism: Anthropic API, temperature 0, ONE call
-    per set, JSON output. If the API rejects the pinned alias -> STOP (exit 3), do NOT substitute.
+  - Model id PINNED: claude-opus-4-8 (alias). Mechanism: Anthropic API, ONE call per set, JSON
+    output. NO sampling parameters are sent -- temperature is deprecated for this model (see the
+    2026-07-18 pre-data amendment 2 in notes/decisions.md); the model default is used. If the API
+    rejects the pinned alias -> STOP (exit 3), do NOT substitute. The constant system block (the
+    guide) carries cache_control so it is cached across the 260 sequential calls.
   - Isolation: each call = the annotation guide verbatim (system) + ONE blind set (user). No repo
     context, no lexicon, no key.json, no other sets.
   - Retry: on invalid JSON, up to 2 retries with the identical prompt; then record judge_missing
@@ -39,7 +42,9 @@ RAW_PATH = HITL_DIR / "judge_raw.jsonl"
 CSV_PATH = HITL_DIR / "judge_ratings.csv"
 
 MODEL_ID = "claude-opus-4-8"   # PINNED in the pre-registration; do NOT substitute if rejected.
-TEMPERATURE = 0
+# NO sampling parameters are sent: temperature is deprecated for claude-opus-4-8 (pre-data
+# amendment 2, 2026-07-18). The model default is used; reproducibility is anchored by committing
+# every raw response verbatim (Addition 1), so downstream numbers reproduce from artifacts.
 MAX_TOKENS = 1024
 MAX_ATTEMPTS = 3               # 1 + up to 2 retries
 
@@ -170,23 +175,43 @@ def main(argv=None) -> int:
                 req_ts = _now()
                 try:
                     resp = client.messages.create(
-                        model=MODEL_ID, max_tokens=MAX_TOKENS, temperature=TEMPERATURE,
-                        system=guide, messages=[{"role": "user", "content": user}])
+                        model=MODEL_ID, max_tokens=MAX_TOKENS,   # no sampling params (see amendment 2)
+                        system=[{"type": "text", "text": guide,
+                                 "cache_control": {"type": "ephemeral"}}],  # cache the constant guide
+                        messages=[{"role": "user", "content": user}])
                 except anthropic.NotFoundError as e:      # unknown model alias -> STOP, do not substitute
                     print(f"STOP: API rejected pinned model id '{MODEL_ID}' (NotFoundError: {e}). "
                           "Per the pre-registration, no other model is substituted without approval.",
                           flush=True)
                     return 3
                 except anthropic.BadRequestError as e:
-                    if "model" in str(e).lower():
+                    msg = str(e).lower()
+                    if any(w in msg for w in ("credit", "balance", "billing", "quota", "insufficient")):
+                        print(f"STOP: the API reports the account is out of credit/quota ({e}). "
+                              "RESUMABLE: top up, then re-run `python -m src.experiments.d10_judge` to "
+                              "continue from where it stopped (progress is saved).", flush=True)
+                        return 4
+                    if "model" in msg and any(k in msg for k in (
+                            "not found", "not_found", "does not exist", "invalid", "unknown",
+                            "unsupported")):
                         print(f"STOP: API rejected pinned model id '{MODEL_ID}' (BadRequestError: {e}). "
                               "No substitution without approval.", flush=True)
                         return 3
-                    raise
+                    print(f"STOP: unexpected BadRequestError ({e}). RESUMABLE: re-run to continue "
+                          "from where it stopped (progress is saved).", flush=True)
+                    return 5
                 except anthropic.AuthenticationError as e:
                     print(f"STOP: authentication failed ({e}). Check the ANTHROPIC_API_KEY value in "
                           "results/hitl/.env. No further call was made.", flush=True)
                     return 2
+                except anthropic.PermissionDeniedError as e:
+                    print(f"STOP: permission denied ({e}) - often a billing/credit or access issue. "
+                          "RESUMABLE: resolve, then re-run to continue from where it stopped.", flush=True)
+                    return 4
+                except anthropic.APIStatusError as e:                 # 5xx/overloaded after SDK retries
+                    print(f"STOP: unexpected API status error ({type(e).__name__}: {e}). RESUMABLE: "
+                          "re-run to continue from where it stopped (progress is saved).", flush=True)
+                    return 5
                 resp_ts = _now()
                 text = "".join(getattr(b, "text", "") for b in resp.content)
                 resolved_ids.add(resp.model)
