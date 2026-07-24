@@ -872,14 +872,18 @@ why the email is phishing?"*∈{0,1,2}.
 
 ---
 
-## 2026-07-18 · Directive 10 — pre-data amendments (BEFORE any judge call)
+## 2026-07-24 · Directive 10 — pre-data amendments (BEFORE any judge call)
 
 Disclose-don't-rewrite: the pre-registration entry above (§A–F + fixed plan) is **untouched**. Both
 amendments below were committed **before any successful judge call and before any rating exists**
 (git order: these precede the first `judge_raw.jsonl` line and `human_ratings.csv`). Deviations are
-recorded as separate dated notes, never edited into the protocol.
+recorded as separate dated notes, never edited into the protocol. Timeline: Parts A + B.3 and
+Amendment 1 were done **2026-07-18**; the session then paused at the API-key handover and resumed
+**2026-07-24**, when Amendment 2 and the judge run occurred (git commit timestamps confirm the
+6-day gap; the first successful judge call `req_ts` 2026-07-24T12:20:53Z follows the Amendment 2
+commit `3f6edc8` at 12:20:37Z).
 
-### Amendment 1 — information-parity / blinding fix (committed `9a32bb7`)
+### Amendment 1 — information-parity / blinding fix (2026-07-18, committed `9a32bb7`)
 Author-directed pre-flight: confirm the human (annotate.html) and the LLM judge rate under
 **identical information conditions** — the email subject+body plus the one blind token set (the
 guide's cue definition is context-dependent).
@@ -901,13 +905,13 @@ guide's cue definition is context-dependent).
   per call** (§E addition 2); the human sees an email's sibling sets together. A token's cue status
   depends on the token + email context (not sibling sets); recorded as a limitation.
 
-### Amendment 2 — pinned model retained; temperature parameter deprecated (this commit)
+### Amendment 2 — pinned model retained; temperature parameter deprecated (2026-07-24, committed `3f6edc8`)
 At the first call the Anthropic API **accepted** the pinned model **`claude-opus-4-8`** but
 **rejected the pre-registered `temperature 0`**, returning verbatim:
 ```
 HTTP 400  invalid_request_error  —  message: "`temperature` is deprecated for this model."
 ```
-Per the author's decision (2026-07-18) the pinned model is **retained — do NOT substitute** (a
+Per the author's decision (2026-07-24) the pinned model is **retained — do NOT substitute** (a
 harness/sub-agent judge is also rejected: only direct API calls satisfy the §E isolation clause with
 a pinnable model id), and the judge is called with **NO sampling parameters sent at all**, one call
 per set exactly as pre-registered.
