@@ -925,3 +925,37 @@ per set exactly as pre-registered.
   draw at the model default; re-querying could differ, but all reported analyses reproduce exactly
   from the committed `judge_ratings.csv` + `judge_raw.jsonl`.*
 - No rating and no successful judge call existed at amendment time.
+
+---
+
+## 2026-07-24 · Directive 10 — Amendment 3: annotation-integrity disclosure (post-judge, BEFORE annotation)
+
+Original pre-registration (§A–F) and Amendments 1–2 untouched. Disclosed by the author before any
+human annotation exists (`human_ratings.csv` not yet created).
+
+**What happened.** During the Part B.4 judge run, the orchestrator's (Claude's) progress reports to
+the single annotator (the author) inadvertently disclosed, **before any human annotation**, for **one
+document — `d1_sb_017547c4cef2`** (the "CNN.com Daily Top 10" newsletter; d1_sb, stratum TP): (a) the
+**method identity of all three of its tfidf sets** (Set A = RANDOM, Set B = LIME, Set C = SHAP), and
+(b) the **LLM judge's all-zero verdict** on two of its sets. This **procedurally broke the
+single-annotator method-blinding for that one document** (1 of 60). It was a reporting slip during a
+sanity-check of the judge output, **not** a protocol change; the other **59/60 documents retain intact
+method-blinding**.
+
+**Also disclosed (lesser; no method leak).** The content type (obfuscated pharma/adult spam) of the
+**3 fully-refused documents** (`d1_sb_0c55e64c8f49`, `d2_0b48feee9474`, `d2_22f7325368b4`) was
+described. Their **methods were NOT revealed**, and they carry **no LLM-judge ratings** (`judge_missing`),
+so they are already outside P3.
+
+**Handling (fixed now, before annotation — no committed result is reselected):**
+1. **This note** (the disclosure; identifies the doc uid).
+2. **Part D sensitivity analysis** (`d10_analyze.py` → `sensitivity_exclude_compromised`): **P1–P3
+   recomputed with AND without `d1_sb_017547c4cef2`**, both reported. No other change.
+3. **Limitations lines (to appear in `notes/hitl_summary.md`):** *(i) method-blinding was procedurally
+   broken for 1 of 60 documents (`d1_sb_017547c4cef2`) by the orchestrator's progress reporting; a
+   sensitivity analysis excluding it is reported alongside the primary result. (ii) The 9 LLM-judge
+   refusals are content-correlated (3 obfuscated-spam documents), so P3 coverage is slightly biased
+   away from that content type.*
+
+The single-annotator + procedural-only-blinding limitations were already disclosed in §C; this note
+records the concrete break and its bounded, pre-annotation mitigation.
