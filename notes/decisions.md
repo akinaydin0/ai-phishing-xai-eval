@@ -1206,3 +1206,90 @@ through **all three explainers on a champion of every family** (`tfidf_d1_sb`, `
 `LEGACY_VOID_SPLIT_EXPRESSION`); `src/xai/run_lime_fix.py` (Part B, uncommitted at this point);
 `results/xai_metrics_limefix.csv` + `results/xai_lime_fix/` (to be produced);
 `notes/lime_fix_summary.md` (to be written).
+
+---
+
+## 2026-07-26 · Directive 11 RESULT — corrected LIME: **Amendment 4 defect RESOLVED**
+
+12/12 units re-run in the isolated namespace in **2.75 h** (projection 3.8 h). Canonical
+`results/xai_metrics.csv` (30 rows), `results/xai/*`, `results.csv` (124), `results_512.csv` (8),
+`figures/xai/*` and every D9/D10 artifact are **byte-untouched** (verified). Full report:
+`notes/lime_fix_summary.md`; log `results/xai_metrics_limefix.csv`; figures `figures/xai_lime_fix/*`.
+
+**Headline: the void arm had inverted the LIME finding on BOTH axes.**
+- **Faithfulness restored.** Corrected LIME AOPC **0.071–0.295** vs its random baseline 0.0001–0.073 —
+  **above random on 12/12 units, by at least 4×** (per-unit ratios 4.0×–2357×; the top end is an
+  artifact of `ensemble_d1_sb`'s 0.0001 denominator, so the floor is the meaningful figure). The void
+  arm was **−0.0016 to 0.0753** ≈ random. "**LIME ≈ random**" is **withdrawn**, and so is "**SHAP is
+  the only demonstrably faithful method**".
+- **The stability claim is inverted.** Corrected LIME is the **least stable** method on **11/12 units**
+  (per-unit Jaccard 0.355–0.700; seed-agreement 0.354–0.711; the exception is `xfer_d3_en__d2`, where
+  IG 0.4907 < LIME 0.5019) — the committed "LIME most stable" (Jaccard 0.99, seed-agreement **1.000**,
+  Spearman **nan** on all 12 rows) was purely the signature of a constant vector. A
+  faithfulness–stability trade-off **does** exist, but with LIME at the **faithful-but-unstable** end,
+  the exact opposite of the committed wording.
+- **5 of 12 units flip** to corrected LIME as most faithful: `transformer_d1_sb` (0.1233 vs SHAP
+  0.0931), `transformer_d2` (0.1753 vs 0.1372) and **all three cross-corpus transfer units**
+  (0.2180/0.2818/0.2945 vs SHAP 0.1844/0.2125/0.2227). The six sklearn units do **not** flip — SHAP
+  stays most faithful there. On `transformer_d3_en` IG still edges LIME (0.1288 vs 0.1265).
+- **RQ2 revision (transformers).** Corrected LIME is the most faithful (0.1417 vs SHAP 0.1069, IG
+  0.1024) **and** most plausible (0.1845 vs 0.1615, 0.1476) transformer explainer; IG keeps the best
+  stability (0.7028 vs 0.4091) and is ~8× cheaper, so **IG remains the pragmatic transformer default**
+  while LIME is the faithfulness-first choice. "Transformers are hardest to explain" still holds in
+  absolute terms.
+- **RQ3 answer HOLDS — on replaced grounds.** For linear TF-IDF (family means), SHAP beats corrected
+  LIME on AOPC 0.1613 vs 0.1462, stability 0.9091 vs 0.6508, plausibility 0.2183 vs 0.1781 (though
+  **not** on `tfidf_d1_sb`: LIME 0.2357 vs 0.2338), and on **attribution cost 0.6 s vs 39.6 s per 200
+  documents (64.5×)**. **Cost basis corrected:** the `runtime_s` column is the whole metric pipeline
+  and includes a **LIME-only** seed-agreement step, so it must not be quoted as explanation cost;
+  attribution time (`timing.attr`) is the like-for-like measure and makes the tfidf gap *larger*
+  (64.5×) and the transformer gaps *smaller* (LIME 181.1 s vs IG 27.4 s = 6.6×; vs SHAP 115.9 s =
+  1.6×). The old justification ("LIME ≈ random") was false and is replaced by "SHAP edges LIME on
+  faithfulness, is markedly more stable, is more plausible on average, and is ~64× cheaper to compute".
+  LIME is **viable, not broken** — merely dominated for this family. The 0.0151 AOPC margin is a point
+  estimate; **no significance test was run**.
+- **Residual failure mode disclosed.** On **84/2,100 documents (4.0%)** corrected LIME returns
+  numerically negligible attributions (max |attr| ≈ 1e-6, stored as 0 at 5-dp) — `transformer_d3_en`
+  22.5%, `xfer_d3_en__d1_sb` 21.0%, `transformer_d1_sb` 9.0%, **zero on all six sklearn units**. These
+  are near-saturated predictions where 1,000 perturbations do not move the output, so the surrogate has
+  no signal; **SHAP and IG are unaffected on the same documents**. **80/84 (95%) are ham-predicted**, so
+  **plausibility@10 (phishing-predicted docs only) is essentially unaffected**; **faithfulness and
+  stability iterate over all explained docs and are affected** — biasing those units' AOPC down and
+  stability up (conservative for the claims above) but leaving the closest ordering,
+  `transformer_d3_en` IG 0.1288 vs LIME 0.1265, **unresolved**. Not ham-exclusive: a fresh sample of
+  phishing-predicted transformer docs showed 2/5 below a 1e-5 floor. **The positive control was
+  strengthened in response** (magnitude floor instead of exact zero, a <50% rate gate since the D7
+  defect was 100% degenerate, phishing-predicted sampling, plus a non-gating `T2b` saturation
+  diagnostic); re-run **41 checks PASS**.
+
+**Positive control now permanent.** `src/xai/test_known_answer.py` (**41 checks, PASS** over
+tfidf/ensemble/transformer champions): T0 predicted-phishing precondition, T1 planted-cue in the top-10
+distinct words, T1b attribution-mass localisation (gating SHAP/LIME, diagnostic for IG), T2
+non-degeneracy on real docs, T3 the legacy value still reproduces the void arm, **T4 a ZERO vector must
+fail T1** — i.e. the suite provably detects the original defect. Every future explainer must pass it.
+
+**Interpretation rule honoured:** corrected numbers are reported **beside** the void arm (relabelled
+FIRST10) and the committed SHAP/IG numbers; the RQ3 answer was re-examined with LIME's cost re-measured
+and **no conclusion protected** — one committed claim was withdrawn, one inverted, one revised, one
+upheld on new grounds. Nothing was reselected, and no SHAP/IG/cue-lexicon code path was touched.
+
+**Limitations.** No human validation of the corrected arm (D10's ratings were collected on FIRST10† and
+cannot be reused; re-annotation deferred, out of scope) ⇒ corrected plausibility is the lexicon proxy
+only, which D10 showed is "fair" (κ=0.396) and conservative ⇒ ordinal, not absolute. The canonical
+`xai_metrics.csv` LIME rows are deliberately no longer reproducible from current code (reproducible via
+`explainers.LEGACY_VOID_SPLIT_EXPRESSION`). Single seed (42); part of LIME's measured instability is its
+own Monte-Carlo variance at the inherited `num_samples=1000`. **No significance testing** (point
+estimates only, despite the D9 bootstrap machinery). **The stored corrected-LIME JSONs are a lossy
+record**: `attrs` are rounded to 5 dp, which re-orders LIME's tied bag-of-words weights, so
+`plausibility@10` re-derived from the stored files matches the CSV on only 7/12 units (30/30 for the
+canonical SHAP/IG/void rows) — **the CSV is authoritative** (a full-precision live re-run reproduces it
+exactly), but D10's regeneration-anchor property does not hold for this arm from the stored files.
+**Positive-control caveat:** reviewers showed by Monte Carlo that **T1 alone is weak** (the objectively
+derived planted set spans 53–60% of each document's vocabulary, so a random attribution passes at
+p≈0.9998); T1's power is against *degenerate* vectors (T4), and **T1b is the discriminating gate**
+(random passes at p≈0.5) — from which IG is exempt. The suite is a degeneracy detector, not a proof of
+attribution quality, and should be strengthened (magnitude floor instead of exact zero, tighter planted
+set) before further reliance.
+
+**Links.** `notes/lime_fix_summary.md`; `results/xai_metrics_limefix.csv`; `figures/xai_lime_fix/*`;
+`src/xai/{test_known_answer,run_lime_fix,report_lime_fix,figures_lime_fix}.py`.

@@ -21,3 +21,6 @@ __pycache__/
 # Directive 10 HITL: local API key (never committed)
 results/hitl/.env
 results/hitl/api_key.txt
+
+# Directive 11 corrected-LIME attributions (heavy, regenerable via src.xai.run_lime_fix)
+results/xai_lime_fix/*__lime.json

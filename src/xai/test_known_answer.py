@@ -13,10 +13,16 @@ WHAT IT ASSERTS (deterministic, seed 42):
       explain the phishing prediction?" is ill-posed otherwise — on a confidently-ham document the
       class-1 ranking is small-magnitude noise, and the committed pipeline only ever explains
       phishing-predicted documents (`metrics.plausibility` filters on `pred==1`). Fails loudly.
-  T1  planted-cue localisation: on synthetic docs where a phishing cue sentence is planted inside
-      cue-free filler, every explainer ranks a PLANTED token among its top-3 DISTINCT words by
-      class-1 ("phishing") attribution — for every family (tfidf, ensemble, transformer) and every
-      applicable method (SHAP, LIME, and IG on the transformer).
+  T1  planted-cue localisation: on synthetic docs where a phishing cue paragraph is planted after
+      cue-free neutral text, every explainer ranks a PLANTED token among its top-TOP_K (=10) DISTINCT
+      words by class-1 ("phishing") attribution — for every family (tfidf, ensemble, transformer) and
+      every applicable method (SHAP, LIME, and IG on the transformer).
+      POWER CAVEAT (measured by review, Monte Carlo): because the objectively derived planted set
+      spans 53-60% of each document's vocabulary, a RANDOM attribution passes T1 with p~0.9998. T1 is
+      therefore a *degeneracy* detector (its real target is the zero/constant vector of the D7 defect,
+      which T4 pins down) and NOT evidence of attribution quality. T1b is the discriminating gate
+      (random passes at p~0.5). Strengthening this suite -- a tighter planted set, and gating the
+      curated content-cue criterion that is currently only printed -- is outstanding work.
       The planted set is defined OBJECTIVELY as the tokens of the planted sentence that do not occur
       in the filler (so it cannot be tuned to make a method pass), and the filler is deliberately
       free of phishing-cue vocabulary. DISTINCT words (not raw positions) are scored because LIME is
@@ -26,8 +32,19 @@ WHAT IT ASSERTS (deterministic, seed 42):
       exceed the mean over non-planted tokens. GATING for SHAP and LIME; recorded as a DIAGNOSTIC for
       IG (see T1B_GATED for the measured justification). A zero or constant vector yields equal means
       and fails, so this is also defect-sensitive.
-  T2  non-degeneracy on real data: corrected LIME returns NON-CONSTANT attributions on 5 real TEST
-      documents per family (the exact property the D7 defect violated).
+  T2  non-degeneracy on real data: on 5 real, PHISHING-PREDICTED TEST documents per family, fewer
+      than `MAX_DEGENERATE_RATE` of corrected LIME's attributions may fall below a MAGNITUDE FLOOR
+      (`MIN_ATTR_MAG`) — the property the D7 defect violated (it was degenerate on 100%). An exact
+      `== 0.0` test is deliberately NOT used (Directive 11 found LIME returning max|attr| ~ 1e-6,
+      which an exact-zero test passes but which is degenerate in practice), and a RATE rather than an
+      all-or-nothing gate is used because saturation degeneracy is a real minority phenomenon
+      (measured 4.0% overall, up to 22.5% on one unit) that must not make this test permanently red.
+      The sample is restricted to phishing-predicted documents for the same well-posedness reason
+      as T0.
+  T2b saturation diagnostic (NON-GATING): the same magnitude check on confidently-HAM documents,
+      where Directive 11 measured LIME collapsing to ~1e-6 on 84/2,100 documents (up to 22.5% of one
+      unit) while SHAP and IG stay normal. Recorded, not gated: it is a real property of perturbation
+      explanation under prediction saturation, not a code defect.
   T3  defect reproduction: with the legacy value `LEGACY_VOID_SPLIT_EXPRESSION` LIME attributions ARE
       identically zero — i.e. the documented defect model is correct.
   T4  self-validation (model-free): a ZERO attribution vector must FAIL T1. This proves the suite
@@ -76,6 +93,13 @@ TOP_K = 10
 # short, high-magnitude neutral region. IG remains fully gated by T0, T1 and T4.
 T1B_GATED = {"shap", "lime"}
 N_REAL_DOCS = 5      # T2: real documents per family
+# T2 magnitude floor. The D7 defect produced EXACTLY zero, but Directive 11 found a softer degeneracy:
+# LIME returns max|attr| ~ 1e-6 on near-saturated predictions (84/2,100 docs), which an exact-zero test
+# would pass. 1e-5 also matches the pipeline's 5-dp attribution rounding: anything below it is stored
+# as zero anyway, so a vector under this floor is degenerate by construction.
+MIN_ATTR_MAG = 1e-5
+POOL_SIZE = 40       # real-document candidate pool, filtered by predicted class for T2 / T2b
+MAX_DEGENERATE_RATE = 0.5   # T2 fires only when degeneracy is the rule (the D7 defect was 100%)
 # Neutral text, deliberately free of phishing-cue vocabulary. It is placed FIRST in every document so
 # that a first-k-position baseline (exactly what the D7 void arm degenerated into) lands on NEUTRAL
 # tokens -- this is what gives T1 its power to detect the defect (asserted directly by T4).
@@ -150,11 +174,23 @@ def _top_distinct_words(text: str, attr: np.ndarray, k: int) -> list[str]:
     return ranked[:k]
 
 
-def _real_texts(corpus: str, n: int) -> list[str]:
+def _real_texts(corpus: str, n: int, champ=None, want_phishing: bool | None = None) -> list[str]:
+    """n real TEST documents, deterministic (seed 42).
+
+    With `champ` + `want_phishing`, the pool is first scored and filtered to documents the champion
+    predicts phishing (True) or ham (False). T2 gates on phishing-PREDICTED documents for the same
+    reason T0 exists: an explanation is only ever consumed for a phishing prediction, and asking for
+    one on a confidently-ham document is not a well-posed request (see T2b).
+    """
     te = load_splits(corpus)["test"].reset_index(drop=True)
     rng = np.random.default_rng(SEED)
-    idx = sorted(rng.choice(len(te), size=min(n, len(te)), replace=False).tolist())
-    return [te["text"].iloc[i] for i in idx]
+    pool = sorted(rng.choice(len(te), size=min(POOL_SIZE, len(te)), replace=False).tolist())
+    texts = [te["text"].iloc[i] for i in pool]
+    if champ is None or want_phishing is None:
+        return texts[:n]
+    p1 = champ.proba(texts)
+    keep = [t for t, p in zip(texts, p1) if (float(p) >= 0.5) == want_phishing]
+    return keep[:n]
 
 
 def run(families: list[str]) -> int:
@@ -216,19 +252,43 @@ def run(families: list[str]) -> int:
                 print(f"  T1b {tag:10s} {method:5s} doc{di} planted_mean={np.mean(pm):+.5f} vs "
                       f"non_planted_mean={np.mean(nm):+.5f}", flush=True)
 
-        # ---- T2: corrected LIME non-degenerate on real documents ----
-        n_const = 0
-        for text in _real_texts(meta["explained_corpus"], N_REAL_DOCS):
+        # ---- T2: corrected LIME non-degenerate on real PHISHING-PREDICTED docs (magnitude floor) --
+        n_const, mags = 0, []
+        for text in _real_texts(meta["explained_corpus"], N_REAL_DOCS, champ, want_phishing=True):
             a = explainers.lime_attr(champ, text)
-            if a.size and float(np.max(np.abs(a))) == 0.0:
+            m = float(np.max(np.abs(a))) if a.size else 0.0
+            mags.append(m)
+            if m < MIN_ATTR_MAG:
                 n_const += 1
         checks += 1
-        ok = n_const == 0
+        # RATE gate, not all-or-nothing. The D7 defect made 100% of documents degenerate; a working
+        # explainer shows a minority (Directive 11 measured 4.0% overall, up to 22.5% on one unit,
+        # from prediction saturation -- a real property, not a bug). Failing on a single degenerate
+        # document would make this test permanently red and useless as a regression guard, so it
+        # fires only when degeneracy is the RULE rather than the exception.
+        rate = n_const / len(mags) if mags else 1.0
+        ok = rate < MAX_DEGENERATE_RATE
         if not ok:
-            failures.append(f"T2 {family}: corrected LIME returned all-zero attributions on "
-                            f"{n_const}/{N_REAL_DOCS} real documents")
-        print(f"  T2 {'PASS' if ok else 'FAIL'} corrected LIME non-constant on "
-              f"{N_REAL_DOCS - n_const}/{N_REAL_DOCS} real docs", flush=True)
+            failures.append(f"T2 {family}: corrected LIME below the magnitude floor {MIN_ATTR_MAG:g} "
+                            f"on {n_const}/{len(mags)} real phishing-predicted documents "
+                            f"(rate {rate:.0%} >= {MAX_DEGENERATE_RATE:.0%}) "
+                            f"(max|attr| = {[f'{m:.2g}' for m in mags]})")
+        print(f"  T2 {'PASS' if ok else 'FAIL'} corrected LIME above magnitude floor on "
+              f"{len(mags) - n_const}/{len(mags)} real phishing-predicted docs "
+              f"(degenerate rate {rate:.0%} < {MAX_DEGENERATE_RATE:.0%}; "
+              f"min max|attr| = {min(mags):.3g})", flush=True)
+
+        # ---- T2b: saturation diagnostic (NON-GATING) ----
+        # Directive 11 measured that LIME collapses to ~1e-6 attributions on near-saturated
+        # predictions (84/2,100 docs; up to 22.5% of a unit) while SHAP/IG are unaffected. This
+        # records the rate on confidently-HAM documents so the phenomenon stays visible and tracked.
+        ham_mags = []
+        for text in _real_texts(meta["explained_corpus"], N_REAL_DOCS, champ, want_phishing=False):
+            a = explainers.lime_attr(champ, text)
+            ham_mags.append(float(np.max(np.abs(a))) if a.size else 0.0)
+        n_deg = sum(1 for m in ham_mags if m < MIN_ATTR_MAG)
+        print(f"  T2b DIAG   LIME below floor on {n_deg}/{len(ham_mags)} ham-predicted docs "
+              f"(min max|attr| = {min(ham_mags):.3g} — saturation degeneracy, non-gating)", flush=True)
 
         # ---- T3: the legacy value really does produce the void arm (suite discriminates) ----
         legacy_zero = 0

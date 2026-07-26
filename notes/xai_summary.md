@@ -13,9 +13,15 @@
 > stability — `stability_spearman = nan` and `lime_seed_agreement = 1.000` on all 12 LIME rows are
 > the signature of a **constant** attribution vector, not of a stable explainer.
 > **UNAFFECTED:** every SHAP and IG number, the RQ3 answer (**linear TF-IDF + SHAP**), and all
-> non-XAI results. Nothing has been re-run or altered — the numbers below are exactly what the
-> committed pipeline produced; only this erratum and a defect comment at the call site were added.
-> Author decision pending on whether to re-run the LIME arm with `r"\W+"` (Amendment 4, options a/b).
+> non-XAI results. Nothing below has been re-run or altered — the numbers are exactly what the
+> committed pipeline produced.
+> **RESOLVED by Directive 11 (2026-07-26):** the LIME arm was re-run correctly in an isolated
+> namespace — see **`notes/lime_fix_summary.md`** and `results/xai_metrics_limefix.csv`. Corrected
+> LIME is **above its random baseline on 12/12 units (by at least 4×)**, so "LIME ≈ random" is
+> withdrawn, and it is the **least stable** method on 11/12 units, so the "LIME most stable" trade-off
+> is inverted; **5/12 units flip** to LIME as most faithful. **Cite the corrected numbers, not the LIME
+> rows below.** The RQ3 answer still holds on revised grounds (for the linear model SHAP is ~64×
+> cheaper to attribute and leads on faithfulness and stability).
 
 SHAP / LIME / Integrated Gradients on the family champions (tfidf-linear, LightGBM, transformer) per corpus, evaluated for **faithfulness** (token-removal comprehensiveness / sufficiency / AOPC), **stability** (perturbation Jaccard + Spearman, LIME seed-agreement) and **plausibility** (cue-hit@10). Explanation docs are drawn from each corpus's TEST split only (n=200 in-corpus, 100/class, all misclassified up to 30). Every faithfulness and plausibility number is reported beside a **random-attribution baseline** through the identical pipeline. **Plausibility is a heuristic cue-lexicon proxy, not human annotation.** Pre-registration + fixed lexicon: `notes/decisions.md`, `src/xai/cue_lexicon.py`. Full log: `results/xai_metrics.csv`.
 

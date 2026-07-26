@@ -74,31 +74,44 @@ ordinary jitter) — **primary 60-doc result governs**. Nothing reselected; `xai
 See `notes/hitl_summary.md`, `figures/hitl/hitl_cue_rates.*`, `results/hitl/`, decisions.md
 (2026-07-26 result). Review PASS 4/4 (S1–S4).
 
-> ### ⚠ OPEN DEFECT (D10 Amendment 4, 2026-07-26) — **the LIME arm is void project-wide**
-> `src/xai/explainers.py:152` passes `split_expression=r"\w+"` to `LimeTextExplainer`, but that
-> argument is LIME's **separator** pattern (default `r"\W+"`) used as the *non-word* test — so every
-> real word was discarded and **all 2,100 committed LIME attribution vectors are identically zero**
-> (SHAP 0/2,100 zero, IG 0/900 zero). A zero vector's "top-k" is `[0…k−1]`, so every committed "LIME
-> top-10" is just the document's **first k word tokens**. Signature visible in the committed log: all
-> 12 LIME rows have `stability_spearman=nan`, `lime_seed_agreement=1.000`, Jaccard 0.99 (highest of
-> any method).
-> **DO NOT CITE as properties of LIME:** "LIME ≈ random"; "faithfulness–stability trade-off (LIME most
-> stable, least faithful)"; the 12 LIME rows of `results/xai_metrics.csv`; LIME series in
-> `figures/xai/*`; LIME passages of `notes/xai_summary.md`. In D10 the arm is relabelled **`FIRST10†`**
-> and its LIME conclusions are withdrawn.
-> **UNAFFECTED:** SHAP + IG everywhere, the RQ3 answer **linear TF-IDF + SHAP**, E1/P2/P3/P4,
-> `results.csv` (124), `results_512.csv` (8), all D9 statistics, all transformer results.
-> **NOT fixed and nothing re-run** (a behavioural fix would silently invalidate the committed
-> `xai_metrics.csv` that line produced; only an explanatory comment was added). **Author decision
-> pending:** (a) re-run Directive 7's LIME arm with `r"\W+"` as a new pre-registered isolated ablation
-> (+ fresh human annotation if it is to be validated — the FIRST10† ratings cannot be reused), or
-> (b) keep results as-is and confine LIME to a documented explainer-harness defect limitation.
-> **Lesson (now a thesis argument):** a random baseline is not a sufficient control — explainer
-> pipelines need a **positive control** (non-zero, non-degenerate attributions; planted-token recovery)
-> and the integrity anchor must cover **every** method, not a subset.
+**Also done (Directive 11, pre-registered): corrected-LIME isolated re-run — Amendment 4 defect RESOLVED**
+(option (a)). Pre-reg `f3d5e3a` (committed ALONE with the fix + a permanent **positive-control suite**
+`src/xai/test_known_answer.py`, **41 checks PASS**: T0 predicted-phishing precondition, T1 planted cue in
+top-10 distinct words, T1b mass localisation (gates SHAP/LIME, diagnostic for IG), T2 non-degeneracy on
+real docs, T3 legacy value still reproduces the void arm, **T4 a ZERO vector must fail T1** ⇒ the suite
+provably detects the original defect). Fix = `split_expression` omitted (LIME default `r"\W+"`); the
+defective value kept as `explainers.LEGACY_VOID_SPLIT_EXPRESSION` for audit reproduction. **12/12 units
+re-run in 2.75 h** on the SAME committed `explained_ids`, committed D7 params verbatim; isolated
+`results/xai_metrics_limefix.csv` + `results/xai_lime_fix/` (git-ignored); **canonical `xai_metrics.csv`
+(30), `results.csv` (124), `results_512.csv` (8), `figures/xai/*` byte-untouched**.
+**Findings — the void arm had inverted LIME on BOTH axes.** Corrected LIME AOPC **0.071–0.295, above its
+random baseline on 12/12 units by at least 4×** (ratios 4.0×–2357×; top end is a 0.0001-denominator
+artifact) ⇒ "**LIME ≈ random**" and "**SHAP is the only faithful method**" are **WITHDRAWN**; corrected
+LIME is the **LEAST stable** method on **11/12** units (per-unit Jaccard 0.355–0.700, seed-agree
+0.354–0.711; exception `xfer_d3_en__d2` where IG 0.4907 < LIME 0.5019) ⇒ the "faithfulness–stability
+trade-off" is **INVERTED** (LIME = faithful-but-unstable; the committed Jaccard 0.99 / seed-agree 1.000 /
+Spearman nan were constant-vector artifacts). **5/12 units flip** to LIME as most faithful
+(`transformer_d1_sb` 0.1233 vs SHAP 0.0931, `transformer_d2` 0.1753 vs 0.1372, **all 3 cross units**
+0.218/0.282/0.295 vs 0.184/0.213/0.223); the 6 sklearn units do not flip. **RQ2 revised:** on family
+means corrected LIME is the most faithful + most plausible transformer explainer (0.1417 / 0.1845 vs SHAP
+0.1069 / 0.1615, IG 0.1024 / 0.1476) — not universal per unit — but **IG stays the pragmatic transformer
+default** (best stability 0.7028, 6.6× cheaper to attribute). **RQ3 answer HOLDS on replaced grounds:**
+for linear TF-IDF, SHAP beats corrected LIME on AOPC 0.1613 vs 0.1462, stability 0.9091 vs 0.6508,
+plausibility 0.2183 vs 0.1781 (not on `tfidf_d1_sb`), and **attribution cost 0.6 s vs 39.6 s (64.5×)**.
+**Cost basis matters:** `runtime_s` is the whole pipeline incl. a LIME-only seed-agreement step — quote
+`timing.attr`, not `runtime_s`. LIME is **viable, not broken** — just dominated for that family.
+**Disclosed residual:** on **84/2,100 docs (4.0%)** corrected LIME returns numerically negligible
+attributions (max|attr|≈1e-6) on near-saturated predictions — `transformer_d3_en` 22.5%,
+`xfer_d3_en__d1_sb` 21%, `transformer_d1_sb` 9%, none on sklearn units; SHAP/IG unaffected on the same
+docs. Biases those units' AOPC down / stability up (conservative), but leaves `transformer_d3_en`
+IG 0.1288 vs LIME 0.1265 **unresolved**. **Not done (stated):** human re-annotation of corrected-LIME
+sets (deferred) ⇒ plausibility is the lexicon proxy only; **no significance testing**; stored fix JSONs
+are lossy at 5 dp (CSV authoritative). The canonical `xai_metrics.csv` LIME rows are deliberately no
+longer reproducible from current code (use `LEGACY_VOID_SPLIT_EXPRESSION`); `notes/xai_summary.md` keeps
+its erratum. Review PASS 5/5 (S1–S5) with corrections applied. See `notes/lime_fix_summary.md`,
+decisions.md (2026-07-26 pre-reg + result).
 
-**Next:** author decision on Amendment 4 (a) vs (b); STARD-AI checklist (supervisor item 5);
-dissertation writing; DeSE 2026 paper (15/09).
+**Next:** STARD-AI checklist (supervisor item 5); dissertation writing; DeSE 2026 paper (15/09).
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
