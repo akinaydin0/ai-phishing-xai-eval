@@ -207,7 +207,9 @@ the best explanations were rarely judged to *clearly* explain the prediction.
    (human–judge κ 0.702 vs lexicon–human κ 0.396), and the proxy's misses are structural — it has no
    **impersonation/authority** or **secrecy** category, so brand-spoofing tokens (`payguard`, `fedex`,
    `digitalcoin`) and "action required" phrasing are invisible to it, while its `greeting` category
-   generates 18% of its false positives (`dear`+`hello`+`greetings` = 38/209) on a construct the guide
+   generates **29.2% of its false positives** (61/209 tokens whose lowercase form is in the lexicon's
+   `greeting` category — `dear` 18, `hello` 15, `valued` 7, `customer` 7, `greetings` 5, `friend` 3,
+   `user` 3, `welcome` 2, `client` 1) on a construct the guide
    explicitly negates ("greetings that carry no manipulative force"). A future revision should add the
    two missing categories and context-gate greetings; **the committed lexicon is not changed here** (it
    was pre-registered before results; editing it now would be outcome-tuned).

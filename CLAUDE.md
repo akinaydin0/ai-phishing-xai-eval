@@ -68,7 +68,7 @@ refusals. **Verdict: the cue-lexicon proxy is directionally validated, "fair" in
 **P3 human–judge κ=0.702 (moderate, 93.1%)**, ρ 0.818/0.734. **The proxy is CONSERVATIVE: human
 separation > lexicon in 9/9 method-vs-random contrasts** → the committed plausibility column
 **understates** the effect and is **ordinal, not absolute**. Lexicon gap (not acted on): no
-impersonation/secrecy category; `greeting` drives 18% of its false positives. Sensitivity excl. the
+impersonation/secrecy category; `greeting` drives 29.2% of its false positives. Sensitivity excl. the
 1 blinding-compromised doc: κ→0.409 (band flips, but 10/60 leave-one-out exclusions do the same ⇒
 ordinary jitter) — **primary 60-doc result governs**. Nothing reselected; `xai_metrics.csv` untouched.
 See `notes/hitl_summary.md`, `figures/hitl/hitl_cue_rates.*`, `results/hitl/`, decisions.md

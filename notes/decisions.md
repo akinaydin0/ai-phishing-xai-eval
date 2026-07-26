@@ -1293,3 +1293,18 @@ set) before further reliance.
 
 **Links.** `notes/lime_fix_summary.md`; `results/xai_metrics_limefix.csv`; `figures/xai_lime_fix/*`;
 `src/xai/{test_known_answer,run_lime_fix,report_lime_fix,figures_lime_fix}.py`.
+
+---
+
+## 2026-07-26 · D10 one-line correction — the `greeting` false-positive share
+
+`notes/hitl_summary.md` observation 3 said the lexicon's `greeting` category "generates 18% of its
+false positives (`dear`+`hello`+`greetings` = 38/209)". That 18.2% was an **ad-hoc subset**: only the
+three greeting tokens that happened to appear in the truncated top-15 false-positive list, silently
+omitting `valued` 7, `customer` 7, `friend` 3, `user` 3, `welcome` 2, `client` 1. **Corrected to simple
+membership: 61/209 = 29.2%** of proxy false positives are tokens whose lowercase form is in the
+`greeting` set (definition now stated in the observation). Recomputed from the committed
+`results/hitl/hitl_token_level.csv`; no re-run, no other D10 number affected (the qualitative point —
+that the guide negates non-manipulative greetings while the lexicon counts them — is unchanged and
+strengthened). Flagged by independent verification as the only number in the D10 package that failed
+to reproduce.
