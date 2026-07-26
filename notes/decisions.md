@@ -1108,3 +1108,101 @@ a **positive control** — assert attributions are non-zero and non-degenerate, 
 decisive token is recovered — and the regeneration/integrity anchor must cover **every** method, not a
 subset. This is now the thesis's strongest concrete argument for treating XAI tooling as code under
 test rather than trusted library output.
+
+---
+
+## 2026-07-26 · Directive 11 PRE-REGISTRATION — corrected-LIME isolated re-run (resolves Amendment 4)
+
+**Committed FIRST and ALONE** (this entry + the known-answer suite + the one-argument fix), before any
+corrected-LIME result exists. Resolves the D10 Amendment 4 open defect by option **(a)**: re-run the
+LIME arm properly in an isolated namespace.
+
+**Guard (Part A.0, PASS 2026-07-26):** `12d60e6` ancestor of HEAD; tree clean; `results.csv` 124,
+`results_512.csv` 8, `xai_metrics.csv` 30 rows **including the 12 void LIME rows** (all carrying the
+void signature `stability_spearman=nan`, `lime_seed_agreement=1.0`); erratum present in
+`notes/xai_summary.md`.
+
+### Scope and the fix
+- **Scope: LIME only.** No SHAP/IG re-run, no metric redefinition, no re-selection of any unit or doc.
+- **Fix:** `src/xai/explainers.py` `lime_attr` no longer passes `split_expression`, so LIME applies its
+  documented default separator semantics (`r"\W+"`). This is the single behavioural change. The
+  defective value is retained as the module constant `LEGACY_VOID_SPLIT_EXPRESSION` and reachable via
+  `lime_attr(..., split_expression=...)` / `attribute(..., lime_split_expression=...)` **for audit
+  reproduction only**.
+- **Consequences recorded deliberately (not side effects):** (i) the 12 LIME rows of the canonical
+  `results/xai_metrics.csv` are **no longer reproducible from current code** — they are the void arm's
+  output, retained as the **FIRST10 position-baseline** record and superseded by the fix namespace;
+  (ii) re-running `src/experiments/d10_package.py` would now build corrected-LIME sets, so the
+  **committed** D10 `key.json` / `blind_sheets.csv` / `human_ratings.csv` remain the artifacts of
+  record for D10's FIRST10† arm; (iii) `run_xai.run_unit_method` now also returns its `payload`
+  (purely additive, no behaviour change) so the isolated runner can persist elsewhere while provably
+  sharing the identical computation path.
+
+### Units and parameters (committed D7 configuration verbatim, except the fixed argument)
+- **12 units:** 9 in-corpus (`tfidf|ensemble|transformer` × `d1_sb|d2|d3_en`) + 3 transformer cross
+  (`xfer_d3_en__d1_sb`, `xfer_d2__d3_en`, `xfer_d3_en__d2`).
+- `num_samples=1000`, **seed 42**, n=**200** in-corpus / **100** cross, and the **SAME committed
+  `explained_ids` sets** loaded from `results/xai/` — identical documents, so corrected vs void is a
+  paired comparison.
+- **Identical metric pipeline:** comp@k / suff@k (k=1,5,10,20), AOPC over k=1..20, stability (top-10
+  Jaccard **and** the now-meaningful Spearman), LIME seed-agreement (seeds 42/43), plausibility@10,
+  runtime — each with the **identical random-attribution baseline** through the same pipeline. Same CSV
+  schema as the canonical log for direct comparison.
+- **Isolation:** results written ONLY to `results/xai_lime_fix/<unit>__lime.json` and
+  `results/xai_metrics_limefix.csv`. The canonical `results/xai/*`, `results/xai_metrics.csv`,
+  `figures/xai/*`, `results.csv`, `results_512.csv` and all D9/D10 artifacts stay **byte-untouched**.
+  Note the isolation is of *results*: the corrected explainer code is shared (that is the point of a
+  fix), so the void arm is reproducible only via the legacy constant above.
+
+### Known-answer harness (Part A.1) — `src/xai/test_known_answer.py`, **PASSED (41 checks)**
+A permanent positive-control regression test; the control whose absence let the D7 defect survive. Two
+deterministic synthetic documents (neutral lead → planted phishing paragraph → neutral tail) are run
+through **all three explainers on a champion of every family** (`tfidf_d1_sb`, `ensemble_d1_sb`,
+`transformer_d1_sb`; IG transformer-only):
+- **T0 precondition** — the champion must actually *predict* phishing on each planted doc (p≥0.5);
+  realised p = 0.999/0.989 (tfidf), 0.999/0.976 (ensemble), 0.998/0.661 (transformer).
+- **T1 planted-cue localisation** — a planted token must appear in the top-**10** *distinct* words by
+  class-1 attribution. Top-10 is the project's native granularity (plausibility@10, comp@10, suff@10);
+  distinct words because LIME is bag-of-words. The planted set is derived **objectively** (cue-paragraph
+  tokens minus neutral tokens), so it cannot be tuned per method.
+- **T1b attribution-mass localisation** — planted-region mean signed attribution > non-planted mean.
+  **Gating for SHAP and LIME; diagnostic-only for IG**, with the measured justification recorded in the
+  code: IG's signed attributions are diffuse and net-negative, so on the lower-confidence doc
+  (p=0.661) IG's planted mean (−0.031) sits just under the non-planted mean (−0.025) while it still
+  satisfies T1. The `|attr|` "relevance-mass" variant was tested and **rejected** (it fails SHAP and
+  LIME too, being diluted by the long planted paragraph). IG stays fully gated by T0/T1/T4.
+- **T2 non-degeneracy on real data** — corrected LIME is non-constant on 5 real TEST docs per family
+  (5/5 for all three).
+- **T3 defect reproduction** — the legacy value still yields identically-zero LIME (2/2 per family),
+  confirming the documented defect model.
+- **T4 self-validation** — a **zero** attribution vector must FAIL T1 (2/2 per family), proving the
+  suite detects the D7 defect; the neutral lead is placed first precisely so a first-k baseline lands
+  on neutral tokens.
+- **Honest disclosure:** the suite was iterated *during construction, before any corrected-LIME result
+  existed*. Two earlier drafts were rejected on diagnosis, not convenience: (1) scoring raw positions
+  (bag-of-words repetition filled the top-k) and hand-curated cue lists; (2) filler-dominated documents
+  the champions classified as **ham** (p=0.0004), which made the class-1 question ill-posed and produced
+  a *spurious* IG failure — this is why T0 exists. IG's word-level output was checked against its raw
+  sub-token attributions and matches, so **IG has no code defect**; only its per-token sharpness is
+  weaker than the perturbation methods'.
+
+### Expectation, interpretation rule, out of scope
+- **Descriptive expectation (no gate):** corrected LIME should show **non-trivial faithfulness** (a
+  standalone probe ranked `verify` first at 0.756 where the defective call returned only separator
+  features at ~1e-31). Nothing is gated on the outcome; the numbers stand as measured.
+- **Interpretation rule:** corrected-LIME numbers are reported **beside** the void arm's numbers
+  (relabelled **FIRST10**, a position baseline) and beside the committed SHAP/IG numbers. The committed
+  **RQ3 answer is re-examined honestly** — LIME's cost is re-measured and **no conclusion is
+  protected**. If corrected LIME changes the RQ2/RQ3 picture, that is reported as the finding.
+- **Cost:** projected **~3.8 h** for all 12 units from the committed void runtimes (the void arm still
+  executed 1000 perturbation queries per call, so those timings are a valid basis). Part B.3 confirms
+  by probe from the most expensive unit; if the projection exceeds ~6 h, checkpoint the author with
+  **scheduling options only** — the design is never trimmed.
+- **Out of scope, stated:** human re-annotation of corrected-LIME sets (**deferred** — not required for
+  RQ2; the D10 FIRST10† ratings cannot be reused for corrected LIME); any edit to
+  `src/xai/cue_lexicon.py`; any change to the SHAP or IG code paths.
+
+**Links.** `src/xai/test_known_answer.py`; `src/xai/explainers.py` (`lime_attr`,
+`LEGACY_VOID_SPLIT_EXPRESSION`); `src/xai/run_lime_fix.py` (Part B, uncommitted at this point);
+`results/xai_metrics_limefix.csv` + `results/xai_lime_fix/` (to be produced);
+`notes/lime_fix_summary.md` (to be written).

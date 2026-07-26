@@ -27,6 +27,11 @@ from . import textops
 MAX_EVALS = 500      # SHAP transformer Partition explainer
 NUM_SAMPLES = 1000   # LIME
 N_STEPS = 32         # Integrated Gradients
+
+# The D7 defect value (Directive 10 Amendment 4): passed as LIME's `split_expression` it inverts the
+# non-word test and yields identically-zero attributions. Kept ONLY so the historical (void) numbers
+# in the canonical results/xai_metrics.csv can be reproduced for audit; never use it for new results.
+LEGACY_VOID_SPLIT_EXPRESSION = r"\w+"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -138,7 +143,14 @@ def shap_transformer(champ, text, max_evals: int = MAX_EVALS) -> np.ndarray:
 # --------------------------------------------------------------------------- #
 # LIME (all families)
 # --------------------------------------------------------------------------- #
-def lime_attr(champ, text, seed: int = 42, num_samples: int = NUM_SAMPLES) -> np.ndarray:
+def lime_attr(champ, text, seed: int = 42, num_samples: int = NUM_SAMPLES,
+              split_expression: str | None = None) -> np.ndarray:
+    """LIME word attribution (class 1).
+
+    `split_expression=None` (the default) OMITS the argument so LIME applies its documented default
+    separator semantics (r"\\W+"). Pass `LEGACY_VOID_SPLIT_EXPRESSION` only to reproduce the D7
+    defect for audit (see the module note and notes/decisions.md Amendments 4 / Directive 11).
+    """
     wlow = textops.words_lower(text)
     if not wlow:
         return np.zeros(0)
@@ -148,21 +160,23 @@ def lime_attr(champ, text, seed: int = 42, num_samples: int = NUM_SAMPLES) -> np
         p1 = np.clip(np.asarray(p1, dtype=float), 0.0, 1.0)
         return np.column_stack([1.0 - p1, p1])
 
-    # ####################################################################################### #
-    # KNOWN DEFECT (found 2026-07-26, Directive 10 Part E; see notes/decisions.md Amendment 4). #
-    # `split_expression` is LIME's SEPARATOR pattern (default r"\W+") and is used as the        #
-    # non-word test (`non_word = splitter.match` in lime.lime_text.IndexedString), so passing   #
-    # r"\w+" INVERTS it: every real word is treated as a non-word and dropped from the          #
-    # perturbation vocabulary, leaving only whitespace/punctuation. Result: `attr` is           #
-    # identically ZERO for every document (verified 2100/2100 in results/xai/*__lime.json), and #
-    # `top_k_positions` on a zero vector returns the first k positions. Every committed "LIME"  #
-    # result is therefore a first-k-tokens baseline, NOT LIME.                                  #
-    # DELIBERATELY NOT FIXED HERE: changing it would silently invalidate the committed          #
-    # results/xai_metrics.csv (30 rows) that this line produced. Fixing it requires re-running  #
-    # the LIME arm of the XAI phase as an explicit, pre-registered decision -- see Amendment 4. #
-    # ####################################################################################### #
+    # ######################################################################################### #
+    # DEFECT FIXED 2026-07-26 (Directive 11; found by the Directive 10 Part E review, Amendment 4).#
+    # `split_expression` is LIME's SEPARATOR pattern (default r"\W+"), used as the non-word test  #
+    # (`non_word = splitter.match` in lime.lime_text.IndexedString). The original code passed     #
+    # r"\w+", INVERTING it: every real word was treated as a non-word and dropped from the        #
+    # perturbation vocabulary, so `attr` was identically ZERO for all 2,100 explained documents   #
+    # and "LIME top-k" degenerated to the first k word positions.                                #
+    # The argument is now OMITTED (LIME's default). CONSEQUENCE, recorded deliberately: the 12    #
+    # LIME rows of the canonical results/xai_metrics.csv are NO LONGER reproducible from this     #
+    # code -- they are the void arm's output and are superseded by results/xai_metrics_limefix.csv#
+    # (Directive 11, isolated namespace). To reproduce the historical void numbers for audit,     #
+    # pass split_expression=LEGACY_VOID_SPLIT_EXPRESSION explicitly.                             #
+    # Regression test that would have caught this: src/xai/test_known_answer.py.                 #
+    # ######################################################################################### #
+    kwargs = {} if split_expression is None else {"split_expression": split_expression}
     explainer = LimeTextExplainer(class_names=["ham", "phish"], bow=True,
-                                  split_expression=r"\w+", random_state=seed)
+                                  random_state=seed, **kwargs)
     n_unique = len(set(wlow))
     exp = explainer.explain_instance(text, predict, num_features=max(20, n_unique),
                                      num_samples=num_samples, labels=(1,))
@@ -226,7 +240,11 @@ def ig_attr(champ, text, n_steps: int = N_STEPS) -> np.ndarray:
 # --------------------------------------------------------------------------- #
 # Dispatch
 # --------------------------------------------------------------------------- #
-def attribute(champ, family: str, method: str, text: str) -> np.ndarray:
+def attribute(champ, family: str, method: str, text: str,
+              lime_split_expression: str | None = None) -> np.ndarray:
+    """Dispatch to an explainer. `lime_split_expression` is an audit-only escape hatch: leave it None
+    (LIME's default separator semantics); pass LEGACY_VOID_SPLIT_EXPRESSION to reproduce the D7 void
+    LIME numbers."""
     if method == "shap":
         if family == "tfidf":
             return shap_linear(champ, text)
@@ -234,7 +252,7 @@ def attribute(champ, family: str, method: str, text: str) -> np.ndarray:
             return shap_tree(champ, text)
         return shap_transformer(champ, text)
     if method == "lime":
-        return lime_attr(champ, text)
+        return lime_attr(champ, text, split_expression=lime_split_expression)
     if method == "ig":
         return ig_attr(champ, text)
     raise ValueError(f"{family}/{method}")

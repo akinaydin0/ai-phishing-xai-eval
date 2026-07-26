@@ -126,7 +126,10 @@ def run_unit_method(unit_id: str, method: str, champ=None, es=None, limit: int |
         XAI_DIR.mkdir(parents=True, exist_ok=True)
         (XAI_DIR / f"{unit_id}__{method}.json").write_text(json.dumps(payload, indent=1), encoding="utf-8")
         _upsert(row)
-    return {"row": row, "timing": t, "runtime": runtime}
+    # `payload` is returned as well (purely additive, no behaviour change) so an isolated re-run such
+    # as Directive 11's corrected-LIME arm can persist into its OWN namespace while provably sharing
+    # this exact computation path -- see src/xai/run_lime_fix.py.
+    return {"row": row, "timing": t, "runtime": runtime, "payload": payload}
 
 
 def main(argv=None):
