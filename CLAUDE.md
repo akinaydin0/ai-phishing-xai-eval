@@ -105,8 +105,13 @@ attributions (max|attr|≈1e-6) on near-saturated predictions — `transformer_d
 `xfer_d3_en__d1_sb` 21%, `transformer_d1_sb` 9%, none on sklearn units; SHAP/IG unaffected on the same
 docs. Biases those units' AOPC down / stability up (conservative), but leaves `transformer_d3_en`
 IG 0.1288 vs LIME 0.1265 **unresolved**. **Not done (stated):** human re-annotation of corrected-LIME
-sets (deferred) ⇒ plausibility is the lexicon proxy only; **no significance testing**; stored fix JSONs
-are lossy at 5 dp (CSV authoritative). The canonical `xai_metrics.csv` LIME rows are deliberately no
+sets (deferred) ⇒ plausibility is the lexicon proxy only; stored fix JSONs are lossy at 5 dp (CSV
+authoritative). **D11b added paired CIs (D9 bootstrap verbatim, B=10k, seed 42) for the two knife-edge
+orderings: K1 the RQ3 margin is SEPARATED** (pooled tfidf SHAP−LIME +0.0151, CI [+0.0123, +0.0180];
+excludes 0 on 3/3 corpora too) — the RQ3 faithfulness leg is now inferentially supported; **K2
+`transformer_d3_en` IG−LIME is NOT separated** (+0.0023, CI [−0.0211, +0.0243]) ⇒ that ordering is
+formally unresolved, so "5/12 flip" = 5 flips + 1 unresolved. All 8 recomputed AOPC aggregates
+reproduced the committed values to 4 dp. Other comparisons remain point estimates. The canonical `xai_metrics.csv` LIME rows are deliberately no
 longer reproducible from current code (use `LEGACY_VOID_SPLIT_EXPRESSION`); `notes/xai_summary.md` keeps
 its erratum. Review PASS 5/5 (S1–S5) with corrections applied. See `notes/lime_fix_summary.md`,
 decisions.md (2026-07-26 pre-reg + result).

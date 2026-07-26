@@ -1,0 +1,66 @@
+{
+  "directive": "D11b",
+  "B": 10000,
+  "seed": 42,
+  "method": "paired within-class bootstrap over documents (d9_stats._resamples verbatim); statistic = mean per-document AOPC difference; CI = 2.5/97.5 percentiles; identical resample indices for both arms",
+  "note": "CIs annotate only; no committed number is changed or reselected.",
+  "K1": {
+    "tfidf_d1_sb": {
+      "delta_mean": 0.012432,
+      "ci95": [
+        0.006597,
+        0.018744
+      ],
+      "excludes_zero": true,
+      "n_docs": 200,
+      "B": 10000,
+      "seed": 42
+    },
+    "tfidf_d2": {
+      "delta_mean": 0.010138,
+      "ci95": [
+        0.004997,
+        0.015628
+      ],
+      "excludes_zero": true,
+      "n_docs": 200,
+      "B": 10000,
+      "seed": 42
+    },
+    "tfidf_d3_en": {
+      "delta_mean": 0.022802,
+      "ci95": [
+        0.020257,
+        0.025366
+      ],
+      "excludes_zero": true,
+      "n_docs": 200,
+      "B": 10000,
+      "seed": 42
+    },
+    "pooled": {
+      "delta_mean": 0.015124,
+      "ci95": [
+        0.012288,
+        0.017951
+      ],
+      "excludes_zero": true,
+      "n_docs": 600,
+      "B": 10000,
+      "seed": 42
+    }
+  },
+  "K2": {
+    "transformer_d3_en": {
+      "delta_mean": 0.002261,
+      "ci95": [
+        -0.021086,
+        0.024304
+      ],
+      "excludes_zero": false,
+      "n_docs": 200,
+      "B": 10000,
+      "seed": 42
+    }
+  }
+}

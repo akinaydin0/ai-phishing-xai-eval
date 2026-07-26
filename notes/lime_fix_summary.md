@@ -141,6 +141,11 @@ picture changes: on attribution cost LIME (181.1 s) is **6.6×** IG (27.4 s) and
 transformer default**, with LIME the choice when faithfulness is the priority and its instability and
 cost are acceptable.
 
+**Addendum (Directive 11b, paired bootstrap).** The RQ3 faithfulness margin **is** statistically
+separated: pooled tfidf SHAP − corrected LIME = **+0.0151, 95% CI [+0.0123, +0.0180], excludes 0**, and
+it excludes 0 on all three corpora individually (d1_sb +0.0124 [+0.0066, +0.0187]; d2 +0.0101
+[+0.0050, +0.0156]; d3_en +0.0228 [+0.0203, +0.0254]) — B=10,000 within-class paired resamples, seed 42.
+
 ---
 
 ## (d) Figures
@@ -199,6 +204,10 @@ governs them.
    The positive control has been strengthened in response (magnitude floor instead of exact zero, a
    rate gate, and a `T2b` saturation diagnostic that reports the rate on every run).
 
+**Addendum (Directive 11b, paired bootstrap).** The `transformer_d3_en` IG-vs-LIME ordering is
+**formally unresolved**: IG − corrected LIME = **+0.0023, 95% CI [−0.0211, +0.0243], includes 0** — so
+IG's nominal lead on that unit must not be reported as a difference (same protocol as above).
+
 ---
 
 ## Limitations
@@ -236,7 +245,10 @@ governs them.
    AOPC **down** and its stability **up**. The direction is conservative for this report's headline
    claims, but it makes the single closest ordering — `transformer_d3_en` IG 0.1288 vs LIME 0.1265 —
    **unresolved**.
-7. **No significance testing.** All comparisons here are point estimates. The project already has
+7. **Significance testing covers only the two knife-edge orderings** (Directive 11b: K1 the RQ3
+   margin, K2 the d3_en IG-vs-LIME ordering — see the addenda in §(c) and §(e)). Every other
+   comparison in this report remains a point estimate. Originally stated as "no significance
+   testing"; that gap is now partly closed. The project already has
    paired-bootstrap machinery (Directive 9), and the RQ3 margin (0.0151 AOPC) and the d3_en ordering
    (0.0023) are small enough that CIs are warranted before either is asserted in the dissertation.
 8. **Stored corrected-LIME attributions are a lossy record.** The per-unit JSONs round `attrs` to 5 dp

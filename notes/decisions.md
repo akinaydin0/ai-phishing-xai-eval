@@ -1278,8 +1278,9 @@ cannot be reused; re-annotation deferred, out of scope) ⇒ corrected plausibili
 only, which D10 showed is "fair" (κ=0.396) and conservative ⇒ ordinal, not absolute. The canonical
 `xai_metrics.csv` LIME rows are deliberately no longer reproducible from current code (reproducible via
 `explainers.LEGACY_VOID_SPLIT_EXPRESSION`). Single seed (42); part of LIME's measured instability is its
-own Monte-Carlo variance at the inherited `num_samples=1000`. **No significance testing** (point
-estimates only, despite the D9 bootstrap machinery). **The stored corrected-LIME JSONs are a lossy
+own Monte-Carlo variance at the inherited `num_samples=1000`. **Significance testing was initially
+absent**; Directive 11b (below) subsequently added paired bootstrap CIs for the two knife-edge
+orderings — all other comparisons here remain point estimates. **The stored corrected-LIME JSONs are a lossy
 record**: `attrs` are rounded to 5 dp, which re-orders LIME's tied bag-of-words weights, so
 `plausibility@10` re-derived from the stored files matches the CSV on only 7/12 units (30/30 for the
 canonical SHAP/IG/void rows) — **the CSV is authoritative** (a full-precision live re-run reproduces it
@@ -1308,3 +1309,48 @@ membership: 61/209 = 29.2%** of proxy false positives are tokens whose lowercase
 that the guide negates non-manipulative greetings while the lexicon counts them — is unchanged and
 strengthened). Flagged by independent verification as the only number in the D10 package that failed
 to reproduce.
+
+---
+
+## 2026-07-26 · Directive 11b — paired CIs for the two knife-edge AOPC orderings
+
+Guard PASS (`9d63505` ancestor of HEAD; tree clean; `xai_metrics.csv` 30 rows, `xai_metrics_limefix.csv`
+12 rows, `results.csv` 124, `results_512.csv` 8 all byte-identical to `9d63505`). Two pre-stated
+comparisons only; **CIs annotate, nothing is reselected**. `src/experiments/d11b_ci.py` →
+`results/xai_lime_fix/knife_edge_ci.json`.
+
+**Method.** Directive 9's paired stratified bootstrap reused verbatim (`d9_stats._resamples`):
+**B=10,000** within-class resamples over documents (positive/negative counts preserved), **seed 42**,
+the **same resample indices applied to both arms** so the difference is paired; CI = 2.5/97.5
+percentiles of the bootstrap mean-delta. The statistic is the **per-document AOPC**, recomputed here
+because only the aggregate was stored: per document, the deletion curve `p_pred(orig) − p_pred(top-k
+removed)` averaged over k=1..20. SHAP/IG attributions were read from the committed
+`results/xai/*.json`; **corrected LIME was regenerated live at full precision** because the stored fix
+JSONs are 5-dp lossy (D11 limitation 8). **Validation: all 8 recomputed aggregates reproduce the
+committed AOPC to 4 dp** (tfidf d1_sb 0.1989/0.1865, d2 0.1913/0.1812, d3_en 0.0936/0.0708;
+transformer_d3_en IG 0.1288 / LIME 0.1265), confirming both the per-document decomposition and the
+determinism of the live LIME regeneration.
+
+**K1 — tfidf family, SHAP − corrected LIME (the RQ3 margin): SEPARATED, 4/4.**
+
+| universe | Δ AOPC | 95% CI | excludes 0 |
+|---|---|---|---|
+| d1_sb | +0.0124 | [+0.006597, +0.018744] | **yes** |
+| d2 | +0.0101 | [+0.004997, +0.015628] | **yes** |
+| d3_en | +0.0228 | [+0.020257, +0.025366] | **yes** |
+| **pooled (n=600)** | **+0.0151** | **[+0.012288, +0.017951]** | **yes** |
+
+So SHAP's faithfulness edge over corrected LIME on the linear TF-IDF family is **statistically
+separated**, per corpus and pooled — the 0.0151 point estimate is not noise, and the **RQ3 answer's
+faithfulness leg is now inferentially supported** (it already held on stability and the 64.5×
+attribution-cost gap).
+
+**K2 — `transformer_d3_en`, IG − corrected LIME: NOT SEPARATED.** Δ = **+0.0023**, 95% CI
+**[−0.021086, +0.024304]** — **includes 0**. This confirms the D11 disclosure: IG's nominal lead on the
+one non-flipping transformer unit is **formally unresolved** and must not be reported as a difference.
+It also means the count "5/12 units flip to corrected LIME" is best stated as *5 flips plus one unit
+where the ordering cannot be resolved*.
+
+**Supersedes** the D11 limitation "no significance testing" for these two comparisons only; every other
+D11 comparison remains a point estimate. `notes/lime_fix_summary.md` §(c)/§(e) carry the two-line
+addenda.
