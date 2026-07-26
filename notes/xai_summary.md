@@ -1,5 +1,22 @@
 # XAI Phase — Attribution Methods + Quantitative Evaluation
 
+> ## ⚠ ERRATUM (added 2026-07-26) — **every LIME number in this report is void**
+> Found by the Directive 10 Part E review; full disclosure in `notes/decisions.md` **Amendment 4**.
+> `src/xai/explainers.py:152` passed `split_expression=r"\w+"` to `LimeTextExplainer`, but that
+> argument is LIME's **separator** pattern (default `r"\W+"`) and is used as the *non-word* test, so
+> every real word was discarded from the perturbation vocabulary. Consequence, verified directly:
+> **all 2,100 LIME attribution vectors in `results/xai/*__lime.json` are identically zero** (global
+> max |attr| = 0.0; SHAP 0/2,100 zero, IG 0/900 zero), and because a zero vector's "top-k" is
+> `[0…k−1]`, **every "LIME top-k" below is really the document's first k word tokens**.
+> **Do NOT cite as properties of LIME:** any LIME row in the tables below, "LIME ≈ random", the
+> "faithfulness–stability trade-off (LIME most stable, least faithful)", or LIME's apparent
+> stability — `stability_spearman = nan` and `lime_seed_agreement = 1.000` on all 12 LIME rows are
+> the signature of a **constant** attribution vector, not of a stable explainer.
+> **UNAFFECTED:** every SHAP and IG number, the RQ3 answer (**linear TF-IDF + SHAP**), and all
+> non-XAI results. Nothing has been re-run or altered — the numbers below are exactly what the
+> committed pipeline produced; only this erratum and a defect comment at the call site were added.
+> Author decision pending on whether to re-run the LIME arm with `r"\W+"` (Amendment 4, options a/b).
+
 SHAP / LIME / Integrated Gradients on the family champions (tfidf-linear, LightGBM, transformer) per corpus, evaluated for **faithfulness** (token-removal comprehensiveness / sufficiency / AOPC), **stability** (perturbation Jaccard + Spearman, LIME seed-agreement) and **plausibility** (cue-hit@10). Explanation docs are drawn from each corpus's TEST split only (n=200 in-corpus, 100/class, all misclassified up to 30). Every faithfulness and plausibility number is reported beside a **random-attribution baseline** through the identical pipeline. **Plausibility is a heuristic cue-lexicon proxy, not human annotation.** Pre-registration + fixed lexicon: `notes/decisions.md`, `src/xai/cue_lexicon.py`. Full log: `results/xai_metrics.csv`.
 
 ## (a) Faithfulness — comprehensiveness / sufficiency / AOPC (test set)

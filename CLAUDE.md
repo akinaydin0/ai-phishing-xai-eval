@@ -54,8 +54,51 @@ the classical cross champion; **C5 null held** (CI incl 0). Imbalance: **FP-per-
 balloons at 2% prevalence (d3_en 19.5→103.6), robust family is corpus-dependent. **Preproc (val-only):
 placeholders V2 help transfer (+0.034, 5/6; hypothesis HELD), stopword-removal V1 hurts**. All annotate,
 no reselection; review PASS 5/5.
-**Next:** STARD-AI checklist (supervisor item 5); Directive 10 (HITL + LLM plausibility validation,
-pre-registered first); dissertation writing.
+**Also done (Directive 10, pre-registered): HITL + LLM-judge plausibility validation** — the response to
+supervisor item 6 (plausibility over-reading). Pre-registration `8ef0937` (committed ALONE; guard +
+regeneration anchor PASS: plaus@10 reproduced to 4 dp on `tfidf_d1_sb·shap` 0.2338 /
+`transformer_d3_en·shap` 0.2360 / `·ig` 0.2180, proving the git-ignored attribution JSONs regenerable);
+3 dated pre-data amendments (`9a32bb7` info-parity/blinding fix, `3f6edc8` temperature deprecated for
+`claude-opus-4-8` → no sampling params, `3b2a155` 1-doc blinding break + pre-committed sensitivity);
+ratings committed untouched `51c30b6` before analysis. **60 TEST docs** (20/corpus, 15 TP + 5 FP,
+phishing-predicted), **260 blind sets / 2,558 token judgments**; judge `claude-opus-4-8` 251 ok / 9
+refusals. **Verdict: the cue-lexicon proxy is directionally validated, "fair" in calibration** —
+**P2 lexicon–human κ=0.396 (fair, on the 0.4 boundary; E2 FAILS by 0.004)**, per corpus 0.434/0.421
+(moderate) / 0.368; **E1 holds 4/4** (separated 3/4); **concordance 6/6 valid (LIME-free) contrasts**;
+**P3 human–judge κ=0.702 (moderate, 93.1%)**, ρ 0.818/0.734. **The proxy is CONSERVATIVE: human
+separation > lexicon in 9/9 method-vs-random contrasts** → the committed plausibility column
+**understates** the effect and is **ordinal, not absolute**. Lexicon gap (not acted on): no
+impersonation/secrecy category; `greeting` drives 18% of its false positives. Sensitivity excl. the
+1 blinding-compromised doc: κ→0.409 (band flips, but 10/60 leave-one-out exclusions do the same ⇒
+ordinary jitter) — **primary 60-doc result governs**. Nothing reselected; `xai_metrics.csv` untouched.
+See `notes/hitl_summary.md`, `figures/hitl/hitl_cue_rates.*`, `results/hitl/`, decisions.md
+(2026-07-26 result). Review PASS 4/4 (S1–S4).
+
+> ### ⚠ OPEN DEFECT (D10 Amendment 4, 2026-07-26) — **the LIME arm is void project-wide**
+> `src/xai/explainers.py:152` passes `split_expression=r"\w+"` to `LimeTextExplainer`, but that
+> argument is LIME's **separator** pattern (default `r"\W+"`) used as the *non-word* test — so every
+> real word was discarded and **all 2,100 committed LIME attribution vectors are identically zero**
+> (SHAP 0/2,100 zero, IG 0/900 zero). A zero vector's "top-k" is `[0…k−1]`, so every committed "LIME
+> top-10" is just the document's **first k word tokens**. Signature visible in the committed log: all
+> 12 LIME rows have `stability_spearman=nan`, `lime_seed_agreement=1.000`, Jaccard 0.99 (highest of
+> any method).
+> **DO NOT CITE as properties of LIME:** "LIME ≈ random"; "faithfulness–stability trade-off (LIME most
+> stable, least faithful)"; the 12 LIME rows of `results/xai_metrics.csv`; LIME series in
+> `figures/xai/*`; LIME passages of `notes/xai_summary.md`. In D10 the arm is relabelled **`FIRST10†`**
+> and its LIME conclusions are withdrawn.
+> **UNAFFECTED:** SHAP + IG everywhere, the RQ3 answer **linear TF-IDF + SHAP**, E1/P2/P3/P4,
+> `results.csv` (124), `results_512.csv` (8), all D9 statistics, all transformer results.
+> **NOT fixed and nothing re-run** (a behavioural fix would silently invalidate the committed
+> `xai_metrics.csv` that line produced; only an explanatory comment was added). **Author decision
+> pending:** (a) re-run Directive 7's LIME arm with `r"\W+"` as a new pre-registered isolated ablation
+> (+ fresh human annotation if it is to be validated — the FIRST10† ratings cannot be reused), or
+> (b) keep results as-is and confine LIME to a documented explainer-harness defect limitation.
+> **Lesson (now a thesis argument):** a random baseline is not a sufficient control — explainer
+> pipelines need a **positive control** (non-zero, non-degenerate attributions; planted-token recovery)
+> and the integrity anchor must cover **every** method, not a subset.
+
+**Next:** author decision on Amendment 4 (a) vs (b); STARD-AI checklist (supervisor item 5);
+dissertation writing; DeSE 2026 paper (15/09).
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 

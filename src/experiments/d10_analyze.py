@@ -199,10 +199,15 @@ def _p1(set_rows):
             hb = [hum_by[b][d] for d in docs_order]
             hd, hlo, hhi = _boot_diff_ci(ha, hb)
             ld = float(np.mean([lex_by[a][d] for d in docs_order]) - np.mean([lex_by[b][d] for d in docs_order]))
+            # exact-zero difference makes sign agreement ill-defined; treat |d| < 1e-12 as zero so a
+            # true tie is not decided by IEEE residue (a tie agrees only with a tie).
+            zt = 1e-12
+            hz, lz = abs(hd) < zt, abs(ld) < zt
+            sign_agree = (hz and lz) if (hz or lz) else bool(np.sign(hd) == np.sign(ld))
             out["concordance"][key][f"{a}_vs_{b}"] = {
                 "human_diff": round(hd, 4), "human_diff_ci95": [round(hlo, 4), round(hhi, 4)],
-                "lexicon_diff": round(ld, 4),
-                "sign_agree": bool(np.sign(hd) == np.sign(ld)) if (hd != 0 and ld != 0) else (hd == 0 and ld == 0)}
+                "lexicon_diff": round(ld, 4), "sign_agree": sign_agree,
+                "involves_void_lime_arm": bool("lime" in (a, b))}
     return out
 
 

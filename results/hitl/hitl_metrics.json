@@ -1,0 +1,754 @@
+{
+  "accounting": {
+    "n_sets": 260,
+    "n_judge_ok": 251,
+    "n_judge_missing": 9,
+    "n_tokens": 2558
+  },
+  "P1": {
+    "cue_rates": {
+      "d1_sb|tfidf": {
+        "shap": {
+          "human_mean": 0.2193,
+          "ci95": [
+            0.1111,
+            0.3438
+          ],
+          "lexicon_mean": 0.2925
+        },
+        "lime": {
+          "human_mean": 0.0793,
+          "ci95": [
+            0.02,
+            0.1511
+          ],
+          "lexicon_mean": 0.1375
+        },
+        "random": {
+          "human_mean": 0.0693,
+          "ci95": [
+            0.03,
+            0.1174
+          ],
+          "lexicon_mean": 0.1675
+        }
+      },
+      "d2|tfidf": {
+        "shap": {
+          "human_mean": 0.14,
+          "ci95": [
+            0.0583,
+            0.24
+          ],
+          "lexicon_mean": 0.0983
+        },
+        "lime": {
+          "human_mean": 0.095,
+          "ci95": [
+            0.0333,
+            0.18
+          ],
+          "lexicon_mean": 0.0533
+        },
+        "random": {
+          "human_mean": 0.08,
+          "ci95": [
+            0.0367,
+            0.13
+          ],
+          "lexicon_mean": 0.0583
+        }
+      },
+      "d3_en|tfidf": {
+        "shap": {
+          "human_mean": 0.21,
+          "ci95": [
+            0.1,
+            0.335
+          ],
+          "lexicon_mean": 0.185
+        },
+        "lime": {
+          "human_mean": 0.225,
+          "ci95": [
+            0.12,
+            0.335
+          ],
+          "lexicon_mean": 0.215
+        },
+        "random": {
+          "human_mean": 0.1,
+          "ci95": [
+            0.035,
+            0.175
+          ],
+          "lexicon_mean": 0.14
+        }
+      },
+      "d3_en|transformer": {
+        "shap": {
+          "human_mean": 0.185,
+          "ci95": [
+            0.09,
+            0.29
+          ],
+          "lexicon_mean": 0.16
+        },
+        "lime": {
+          "human_mean": 0.225,
+          "ci95": [
+            0.12,
+            0.335
+          ],
+          "lexicon_mean": 0.215
+        },
+        "ig": {
+          "human_mean": 0.245,
+          "ci95": [
+            0.125,
+            0.375
+          ],
+          "lexicon_mean": 0.17
+        },
+        "random": {
+          "human_mean": 0.06,
+          "ci95": [
+            0.03,
+            0.095
+          ],
+          "lexicon_mean": 0.11
+        }
+      }
+    },
+    "concordance": {
+      "d1_sb|tfidf": {
+        "shap_vs_random": {
+          "human_diff": 0.15,
+          "human_diff_ci95": [
+            0.045,
+            0.275
+          ],
+          "lexicon_diff": 0.125,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "lime_vs_random": {
+          "human_diff": 0.01,
+          "human_diff_ci95": [
+            -0.055,
+            0.085
+          ],
+          "lexicon_diff": -0.03,
+          "sign_agree": false,
+          "involves_void_lime_arm": true
+        },
+        "shap_vs_lime": {
+          "human_diff": 0.14,
+          "human_diff_ci95": [
+            0.065,
+            0.225
+          ],
+          "lexicon_diff": 0.155,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        }
+      },
+      "d2|tfidf": {
+        "shap_vs_random": {
+          "human_diff": 0.06,
+          "human_diff_ci95": [
+            -0.005,
+            0.14
+          ],
+          "lexicon_diff": 0.04,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "lime_vs_random": {
+          "human_diff": 0.015,
+          "human_diff_ci95": [
+            -0.02,
+            0.065
+          ],
+          "lexicon_diff": -0.005,
+          "sign_agree": false,
+          "involves_void_lime_arm": true
+        },
+        "shap_vs_lime": {
+          "human_diff": 0.045,
+          "human_diff_ci95": [
+            -0.015,
+            0.125
+          ],
+          "lexicon_diff": 0.045,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        }
+      },
+      "d3_en|tfidf": {
+        "shap_vs_random": {
+          "human_diff": 0.11,
+          "human_diff_ci95": [
+            0.03,
+            0.195
+          ],
+          "lexicon_diff": 0.045,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "lime_vs_random": {
+          "human_diff": 0.125,
+          "human_diff_ci95": [
+            0.0699,
+            0.19
+          ],
+          "lexicon_diff": 0.075,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        },
+        "shap_vs_lime": {
+          "human_diff": -0.015,
+          "human_diff_ci95": [
+            -0.095,
+            0.07
+          ],
+          "lexicon_diff": -0.03,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        }
+      },
+      "d3_en|transformer": {
+        "shap_vs_random": {
+          "human_diff": 0.125,
+          "human_diff_ci95": [
+            0.0599,
+            0.205
+          ],
+          "lexicon_diff": 0.05,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "lime_vs_random": {
+          "human_diff": 0.165,
+          "human_diff_ci95": [
+            0.09,
+            0.25
+          ],
+          "lexicon_diff": 0.105,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        },
+        "shap_vs_lime": {
+          "human_diff": -0.04,
+          "human_diff_ci95": [
+            -0.105,
+            0.035
+          ],
+          "lexicon_diff": -0.055,
+          "sign_agree": true,
+          "involves_void_lime_arm": true
+        },
+        "ig_vs_random": {
+          "human_diff": 0.185,
+          "human_diff_ci95": [
+            0.085,
+            0.295
+          ],
+          "lexicon_diff": 0.06,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "ig_vs_shap": {
+          "human_diff": 0.06,
+          "human_diff_ci95": [
+            -0.01,
+            0.135
+          ],
+          "lexicon_diff": 0.01,
+          "sign_agree": true,
+          "involves_void_lime_arm": false
+        },
+        "ig_vs_lime": {
+          "human_diff": 0.02,
+          "human_diff_ci95": [
+            -0.045,
+            0.09
+          ],
+          "lexicon_diff": -0.045,
+          "sign_agree": false,
+          "involves_void_lime_arm": true
+        }
+      }
+    }
+  },
+  "P2": {
+    "overall": {
+      "n": 2558,
+      "pct_agree": 0.8452,
+      "kappa": 0.396,
+      "band": "fair"
+    },
+    "d1_sb": {
+      "n": 591,
+      "pct_agree": 0.846,
+      "kappa": 0.4335,
+      "band": "moderate"
+    },
+    "d2": {
+      "n": 567,
+      "pct_agree": 0.9118,
+      "kappa": 0.4212,
+      "band": "moderate"
+    },
+    "d3_en": {
+      "n": 1400,
+      "pct_agree": 0.8179,
+      "kappa": 0.3683,
+      "band": "fair"
+    }
+  },
+  "P3": {
+    "token_kappa": {
+      "n": 2468,
+      "pct_agree": 0.9311,
+      "kappa": 0.7018,
+      "band": "moderate"
+    },
+    "set_cuerate_spearman": {
+      "rho": 0.8175,
+      "n": 251
+    },
+    "set_holistic_spearman": {
+      "rho": 0.7339,
+      "n": 251
+    }
+  },
+  "P4": {
+    "d1_sb|tfidf": {
+      "shap": {
+        "human_holistic_mean": 0.6,
+        "judge_holistic_mean": 0.3684
+      },
+      "lime": {
+        "human_holistic_mean": 0.3,
+        "judge_holistic_mean": 0.1579
+      },
+      "random": {
+        "human_holistic_mean": 0.2,
+        "judge_holistic_mean": 0.1579
+      }
+    },
+    "d2|tfidf": {
+      "shap": {
+        "human_holistic_mean": 0.5,
+        "judge_holistic_mean": 0.1667
+      },
+      "lime": {
+        "human_holistic_mean": 0.3,
+        "judge_holistic_mean": 0.2778
+      },
+      "random": {
+        "human_holistic_mean": 0.25,
+        "judge_holistic_mean": 0.1111
+      }
+    },
+    "d3_en|tfidf": {
+      "shap": {
+        "human_holistic_mean": 0.7,
+        "judge_holistic_mean": 0.45
+      },
+      "lime": {
+        "human_holistic_mean": 0.85,
+        "judge_holistic_mean": 0.55
+      },
+      "random": {
+        "human_holistic_mean": 0.4,
+        "judge_holistic_mean": 0.25
+      }
+    },
+    "d3_en|transformer": {
+      "shap": {
+        "human_holistic_mean": 0.7,
+        "judge_holistic_mean": 0.3
+      },
+      "lime": {
+        "human_holistic_mean": 0.85,
+        "judge_holistic_mean": 0.55
+      },
+      "ig": {
+        "human_holistic_mean": 0.8,
+        "judge_holistic_mean": 0.4
+      },
+      "random": {
+        "human_holistic_mean": 0.1,
+        "judge_holistic_mean": 0.05
+      }
+    }
+  },
+  "expectations": {
+    "E1_shap_gt_random": {
+      "per_cell": {
+        "d1_sb|tfidf": true,
+        "d2|tfidf": true,
+        "d3_en|tfidf": true,
+        "d3_en|transformer": true
+      },
+      "holds_all": true
+    },
+    "E2_lexicon_human_kappa": {
+      "kappa": 0.396,
+      "band": "fair",
+      "holds": false
+    }
+  },
+  "exploratory": {
+    "d3_en_transformer_lime_vs_random": {
+      "human_lime": 0.225,
+      "human_random": 0.06,
+      "human_lime_gt_random": true,
+      "judge_lime": 0.2,
+      "judge_random": 0.045,
+      "lexicon_lime": 0.215,
+      "lexicon_random": 0.11
+    }
+  },
+  "sensitivity_exclude_compromised": {
+    "excluded_doc": "d1_sb_017547c4cef2",
+    "reason": "method-blinding broken by orchestrator progress reporting (amendment 3)",
+    "n_docs_excluded": 1,
+    "P1": {
+      "cue_rates": {
+        "d1_sb|tfidf": {
+          "shap": {
+            "human_mean": 0.2308,
+            "ci95": [
+              0.1164,
+              0.3618
+            ],
+            "lexicon_mean": 0.2658
+          },
+          "lime": {
+            "human_mean": 0.0835,
+            "ci95": [
+              0.0211,
+              0.1598
+            ],
+            "lexicon_mean": 0.1395
+          },
+          "random": {
+            "human_mean": 0.073,
+            "ci95": [
+              0.0316,
+              0.1243
+            ],
+            "lexicon_mean": 0.1395
+          }
+        },
+        "d2|tfidf": {
+          "shap": {
+            "human_mean": 0.14,
+            "ci95": [
+              0.0583,
+              0.24
+            ],
+            "lexicon_mean": 0.0983
+          },
+          "lime": {
+            "human_mean": 0.095,
+            "ci95": [
+              0.0333,
+              0.18
+            ],
+            "lexicon_mean": 0.0533
+          },
+          "random": {
+            "human_mean": 0.08,
+            "ci95": [
+              0.0367,
+              0.13
+            ],
+            "lexicon_mean": 0.0583
+          }
+        },
+        "d3_en|tfidf": {
+          "shap": {
+            "human_mean": 0.21,
+            "ci95": [
+              0.1,
+              0.335
+            ],
+            "lexicon_mean": 0.185
+          },
+          "lime": {
+            "human_mean": 0.225,
+            "ci95": [
+              0.12,
+              0.335
+            ],
+            "lexicon_mean": 0.215
+          },
+          "random": {
+            "human_mean": 0.1,
+            "ci95": [
+              0.035,
+              0.175
+            ],
+            "lexicon_mean": 0.14
+          }
+        },
+        "d3_en|transformer": {
+          "shap": {
+            "human_mean": 0.185,
+            "ci95": [
+              0.09,
+              0.29
+            ],
+            "lexicon_mean": 0.16
+          },
+          "lime": {
+            "human_mean": 0.225,
+            "ci95": [
+              0.12,
+              0.335
+            ],
+            "lexicon_mean": 0.215
+          },
+          "ig": {
+            "human_mean": 0.245,
+            "ci95": [
+              0.125,
+              0.375
+            ],
+            "lexicon_mean": 0.17
+          },
+          "random": {
+            "human_mean": 0.06,
+            "ci95": [
+              0.03,
+              0.095
+            ],
+            "lexicon_mean": 0.11
+          }
+        }
+      },
+      "concordance": {
+        "d1_sb|tfidf": {
+          "shap_vs_random": {
+            "human_diff": 0.1579,
+            "human_diff_ci95": [
+              0.0474,
+              0.2895
+            ],
+            "lexicon_diff": 0.1263,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "lime_vs_random": {
+            "human_diff": 0.0105,
+            "human_diff_ci95": [
+              -0.0579,
+              0.0947
+            ],
+            "lexicon_diff": 0.0,
+            "sign_agree": false,
+            "involves_void_lime_arm": true
+          },
+          "shap_vs_lime": {
+            "human_diff": 0.1474,
+            "human_diff_ci95": [
+              0.0684,
+              0.2421
+            ],
+            "lexicon_diff": 0.1263,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          }
+        },
+        "d2|tfidf": {
+          "shap_vs_random": {
+            "human_diff": 0.06,
+            "human_diff_ci95": [
+              -0.005,
+              0.14
+            ],
+            "lexicon_diff": 0.04,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "lime_vs_random": {
+            "human_diff": 0.015,
+            "human_diff_ci95": [
+              -0.02,
+              0.065
+            ],
+            "lexicon_diff": -0.005,
+            "sign_agree": false,
+            "involves_void_lime_arm": true
+          },
+          "shap_vs_lime": {
+            "human_diff": 0.045,
+            "human_diff_ci95": [
+              -0.015,
+              0.125
+            ],
+            "lexicon_diff": 0.045,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          }
+        },
+        "d3_en|tfidf": {
+          "shap_vs_random": {
+            "human_diff": 0.11,
+            "human_diff_ci95": [
+              0.03,
+              0.195
+            ],
+            "lexicon_diff": 0.045,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "lime_vs_random": {
+            "human_diff": 0.125,
+            "human_diff_ci95": [
+              0.0699,
+              0.19
+            ],
+            "lexicon_diff": 0.075,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          },
+          "shap_vs_lime": {
+            "human_diff": -0.015,
+            "human_diff_ci95": [
+              -0.095,
+              0.07
+            ],
+            "lexicon_diff": -0.03,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          }
+        },
+        "d3_en|transformer": {
+          "shap_vs_random": {
+            "human_diff": 0.125,
+            "human_diff_ci95": [
+              0.0599,
+              0.205
+            ],
+            "lexicon_diff": 0.05,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "lime_vs_random": {
+            "human_diff": 0.165,
+            "human_diff_ci95": [
+              0.09,
+              0.25
+            ],
+            "lexicon_diff": 0.105,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          },
+          "shap_vs_lime": {
+            "human_diff": -0.04,
+            "human_diff_ci95": [
+              -0.105,
+              0.035
+            ],
+            "lexicon_diff": -0.055,
+            "sign_agree": true,
+            "involves_void_lime_arm": true
+          },
+          "ig_vs_random": {
+            "human_diff": 0.185,
+            "human_diff_ci95": [
+              0.085,
+              0.295
+            ],
+            "lexicon_diff": 0.06,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "ig_vs_shap": {
+            "human_diff": 0.06,
+            "human_diff_ci95": [
+              -0.01,
+              0.135
+            ],
+            "lexicon_diff": 0.01,
+            "sign_agree": true,
+            "involves_void_lime_arm": false
+          },
+          "ig_vs_lime": {
+            "human_diff": 0.02,
+            "human_diff_ci95": [
+              -0.045,
+              0.09
+            ],
+            "lexicon_diff": -0.045,
+            "sign_agree": false,
+            "involves_void_lime_arm": true
+          }
+        }
+      }
+    },
+    "P2": {
+      "overall": {
+        "n": 2528,
+        "pct_agree": 0.8497,
+        "kappa": 0.409,
+        "band": "moderate"
+      },
+      "d1_sb": {
+        "n": 561,
+        "pct_agree": 0.8663,
+        "kappa": 0.4904,
+        "band": "moderate"
+      },
+      "d2": {
+        "n": 567,
+        "pct_agree": 0.9118,
+        "kappa": 0.4212,
+        "band": "moderate"
+      },
+      "d3_en": {
+        "n": 1400,
+        "pct_agree": 0.8179,
+        "kappa": 0.3683,
+        "band": "fair"
+      }
+    },
+    "P3": {
+      "token_kappa": {
+        "n": 2438,
+        "pct_agree": 0.9303,
+        "kappa": 0.7012,
+        "band": "moderate"
+      },
+      "set_cuerate_spearman": {
+        "rho": 0.8161,
+        "n": 248
+      },
+      "set_holistic_spearman": {
+        "rho": 0.7327,
+        "n": 248
+      }
+    },
+    "expectations": {
+      "E1_shap_gt_random": {
+        "per_cell": {
+          "d1_sb|tfidf": true,
+          "d2|tfidf": true,
+          "d3_en|tfidf": true,
+          "d3_en|transformer": true
+        },
+        "holds_all": true
+      },
+      "E2_lexicon_human_kappa": {
+        "kappa": 0.409,
+        "band": "moderate",
+        "holds": true
+      }
+    }
+  }
+}

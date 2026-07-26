@@ -877,7 +877,12 @@ why the email is phishing?"*∈{0,1,2}.
 Disclose-don't-rewrite: the pre-registration entry above (§A–F + fixed plan) is **untouched**. Both
 amendments below were committed **before any successful judge call and before any rating exists**
 (git order: these precede the first `judge_raw.jsonl` line and `human_ratings.csv`). Deviations are
-recorded as separate dated notes, never edited into the protocol. Timeline: Parts A + B.3 and
+recorded as separate dated notes, never edited into the protocol. **Bookkeeping disclosure (Part E
+review finding):** the pre-registration entry's trailing `**Links.**` file-pointer line *was* edited
+in place at `9a32bb7` (dropping the then-stale parenthetical "(Part B, uncommitted at this point)" and
+adding the new artifact paths). Verified scope: that line and the section separator are the **only**
+differences in §A–F between `8ef0937` and HEAD — no sample rule, set definition, blinding rule, judge
+prompt, metric, band or expectation was touched. Future amendments append only. Timeline: Parts A + B.3 and
 Amendment 1 were done **2026-07-18**; the session then paused at the API-key handover and resumed
 **2026-07-24**, when Amendment 2 and the judge run occurred (git commit timestamps confirm the
 6-day gap; the first successful judge call `req_ts` 2026-07-24T12:20:53Z follows the Amendment 2
@@ -928,7 +933,7 @@ per set exactly as pre-registered.
 
 ---
 
-## 2026-07-24 · Directive 10 — Amendment 3: annotation-integrity disclosure (post-judge, BEFORE annotation)
+## 2026-07-25 · Directive 10 — Amendment 3: annotation-integrity disclosure (post-judge, BEFORE annotation)
 
 Original pre-registration (§A–F) and Amendments 1–2 untouched. Disclosed by the author before any
 human annotation exists (`human_ratings.csv` not yet created).
@@ -959,3 +964,147 @@ so they are already outside P3.
 
 The single-annotator + procedural-only-blinding limitations were already disclosed in §C; this note
 records the concrete break and its bounded, pre-annotation mitigation.
+
+---
+
+## 2026-07-26 · Directive 10 RESULT — HITL + LLM-judge plausibility validation
+
+Human ratings committed **untouched** (`51c30b6`, sha256 `4568450…33d0e`) **before** any analysis ran;
+completeness verified against `key.json` (2,558/2,558 rows, 260/260 sets, 0 missing/extra/duplicate,
+0 token-string or doc_uid edits). Judge: `claude-opus-4-8`, **251 ok / 9 refusals** (260 sets).
+Full report: `notes/hitl_summary.md`; figure `figures/hitl/hitl_cue_rates.(png|pdf)`.
+
+> **⚠ Read with Amendment 4 (below).** The Part E review found that **every LIME attribution in the
+> XAI phase is identically zero** (upstream inverted `split_expression`), so the arm annotated as
+> "LIME" is actually the document's **first 10 word tokens** (`FIRST10†`). All LIME-specific
+> conclusions are **withdrawn**; SHAP/IG/RANDOM, E1, P2 and P3 are unaffected.
+
+**Headline verdict — the plausibility proxy is directionally validated but only "fair" in calibration.**
+- **P2 (primary) lexicon–human token κ = 0.396 → band "fair — proxy retained as a heuristic with the
+  limitation restated"** (84.5% agreement; per corpus d1_sb 0.434 / d2 0.421 *moderate*, d3_en 0.368
+  *fair*). **E2 (κ ≥ 0.4) does NOT hold** — short by 0.004, i.e. **on the fair/moderate boundary**;
+  reported as "fair", not rounded up.
+- **E1 (human SHAP > RANDOM in every cell) HOLDS 4/4**, statistically separated in **3/4** (d2
+  +0.060 [−0.005, 0.140] directional only). **Ranking concordance: 6/6 of the contrasts that do not
+  involve the void arm agree in sign** (raw all-contrast count 12/15, and **all three disagreements
+  involve the void `FIRST10†` arm**, each a near-zero human difference with a CI spanning 0). **No
+  statistically separated human contrast contradicts the lexicon's sign.**
+- **P3 human–judge κ = 0.702 (moderate, 93.1% agreement)**, set-level ρ 0.818 (cue-rate) / 0.734
+  (holistic) — two independent raters on the same concept guide agree far better than either agrees
+  with the term list, locating the gap in the lexicon's operationalisation, not the cue construct.
+- **P4:** every method **matches or beats** RANDOM in every cell for both raters, with **one exact tie**
+  (d1_sb·tfidf judge: FIRST10† = RANDOM = 0.158); SHAP beats RANDOM 4/4 for both raters. Absolute
+  holistic levels are low (max 0.85 / 2.0).
+
+**The proxy is CONSERVATIVE, not inflationary — this answers supervisor item 6 (plausibility
+over-reading) directly.** In **9/9** method-vs-random contrasts the **human** separation exceeds the
+lexicon's (e.g. d3_en·transformer IG−RANDOM human **+0.185** vs lexicon +0.060). The lexicon's random
+baseline is inflated by context-free matches, compressing the gap; the committed plausibility column
+therefore **understates** the human-visible separation. Correct usage: **ordinal, not absolute** — it
+ranks explainers reliably and must not be quoted as "the fraction of tokens a human would call a cue".
+
+**Exploratory question — VOID as posed (see Amendment 4).** The pre-registered question ("does the
+d3_en LIME-above-random anomaly replicate in human ratings?") **cannot be answered**: the committed
+d3_en "LIME" plausibility was computed from zero attributions, so the anomaly was never a property of
+LIME. Withdrawn. What the data *does* show, under its correct name: on the AI corpus the **first 10
+word tokens** are markedly cue-dense (human 0.225 vs RANDOM 0.060, +0.165 [0.090, 0.250], separated;
+judge 0.200 vs 0.045) because those tokens are the LLM-generated **subject line** — a property of
+AI-generated phishing text, not of an explainer. Notably a trivial "read the subject line" baseline is
+**competitive with SHAP on d3_en** (0.225 vs 0.210), so d3_en plausibility discriminates weakly between
+methods. (One observation, not two: the tfidf and transformer FIRST10† sets are identical in 20/20 docs.)
+
+**Structural finding (not acted on).** The proxy's misses concentrate on **impersonation/authority**
+and call-to-action phrasing (`payguard`, `fedex`, `digitalcoin`, `attached`, `action`, `required`):
+the annotation guide's six concept families include impersonation and secrecy, but the committed
+lexicon's six categories (urgency, credential, financial, imperative, greeting, url_email) contain
+neither. A future revision should add them; **the committed 206-term lexicon is NOT changed here** —
+it was pre-registered before results and any edit now would be outcome-tuned.
+
+**Sensitivity (Amendment 3, pre-committed).** Excluding the one blinding-compromised document
+(`d1_sb_017547c4cef2`): P2 κ 0.396 → **0.409** (band flips fair → moderate, E2 would hold); d2/d3_en κ
+unchanged; P3 κ 0.702 → 0.701; E1 still 4/4. **The primary 60-document result governs** (κ = 0.396,
+"fair", E2 fails); the sensitivity shows the *band assignment*, not the substance, is knife-edge
+across the 0.4 boundary. Removing a document compromised *toward* the annotator is not the headline.
+
+**Interpretation rule honoured:** every number here annotates a pre-committed metric; **no committed
+XAI result was reselected, re-run or reversed** (`results/xai_metrics.csv` untouched, 30 rows), and no
+champion, threshold or claim direction changed. Limitations disclosed in `notes/hitl_summary.md`:
+single annotator + procedural blinding; **1/60 docs' method-blinding broken** (with sensitivity);
+**9 refusals content-correlated** (3 obfuscated-spam docs ⇒ P3 coverage biased away from that content
+type); judge = single stochastic draw at model default (Amendment 2) but fully reproducible from
+committed artifacts; judge shares a model family with the lexicon's authoring tooling ⇒ **human is the
+independent reference, P2 primary**; 60 docs / phishing-predicted / top-10 only.
+
+**Links.** `notes/hitl_summary.md`; `figures/hitl/hitl_cue_rates.(png|pdf)`;
+`results/hitl/{human_ratings,judge_ratings,hitl_token_level,hitl_set_level}.csv`,
+`results/hitl/{hitl_metrics.json,judge_raw.jsonl,key.json,selected_ids.json,annotate.html}`;
+`src/experiments/d10_{anchor,select,package,judge,analyze,figures}.py`.
+
+---
+
+## 2026-07-26 · Directive 10 — Amendment 4: **the LIME arm is void project-wide** (found in Part E review)
+
+Found by the Part E scoped review (reviewer + independent confirmer, converging independently) and
+then **verified directly**. Disclosed, not silently corrected.
+
+**Defect.** `src/xai/explainers.py:152` passes `split_expression=r"\w+"` to `LimeTextExplainer`. In
+LIME's API `split_expression` is the **separator** pattern (default `r"\W+"`) and is used as the
+*non-word* test — `lime.lime_text.IndexedString` does `splitter = re.compile(r'(%s)|$' % split_expression)`
+then `non_word = splitter.match`. Passing `\w+` therefore **inverts** the contract: every real word
+matches and is discarded as a "non-word", leaving only whitespace/punctuation in the perturbation
+vocabulary.
+
+**Verified consequences (own checks, this repo):**
+- **2,100 / 2,100** committed LIME attribution vectors are **identically zero** across **all 12 LIME
+  units** (`results/xai/*__lime.json`, global max |attr| = **0.0**). SHAP 0/2,100 zero; IG 0/900 zero.
+- Standalone reproduction: `IndexedString(text, split_expression=r"\w+").num_words()` = **2** (`' '`,
+  `'.'`) vs **10** with `r"\W+"`; with `\w+` LIME returns only separator features (~1e-31), with
+  `\W+` it correctly ranks `verify` first (0.756).
+- `textops.top_k_positions` stable-argsorts a zero vector ⇒ the "top-k" is `[0…k−1]`. Hence **all
+  80/80 D10 "LIME" sets are the document's first 10 word tokens** (SHAP 1/80 coincidentally, IG 0/20,
+  RANDOM 0/80), and the d3_en tfidf-"LIME" and transformer-"LIME" sets are **identical in 20/20 docs**
+  (SHAP: 0/20) because the void arm cannot depend on the model.
+- The defect's signature was already visible in the committed, previously "verified PASS" log: **all 12
+  LIME rows** of `results/xai_metrics.csv` carry `stability_spearman = nan` (Spearman of a constant
+  vector), `lime_seed_agreement = 1.000`, and `stability_jaccard` 0.990–0.998 — the highest "stability"
+  of any method, which is what a constant vector looks like.
+
+**Provenance.** **Pre-existing, not introduced by D10**: `explainers.py` is byte-identical to pre-D10
+`fd274b9` (behaviourally — only an explanatory comment has now been added). The `\w+` value was itself
+pre-registered in the Directive 7 entry, which is likely why it was never re-examined. D10's own
+protocol executed correctly against its pre-registered set definition; the **regeneration anchor (§A.1)
+covered SHAP and IG only**, so it structurally could not catch a LIME-only failure.
+
+**Effect on D10 (handled in `notes/hitl_summary.md`, no numbers changed):** 80/260 sets (30.8%) and
+786/2,558 token judgments (30.7%) are **mislabelled** — they measure a first-10-tokens positional
+baseline, now written **`FIRST10†`** throughout. **Withdrawn:** the exploratory d3_en "LIME anomaly
+replicates" answer and the "LIME is plausible yet unfaithful" conclusion. **Unaffected:** E1, all
+SHAP/IG/RANDOM cells, P2, P3, P4 (agreement statistics over the tokens actually shown are valid
+regardless of which procedure selected them); ranking concordance is now reported as **6/6 valid
+(LIME-free) contrasts**, with all three raw disagreements traced to the void arm.
+
+**Effect on the committed XAI phase (NOT corrected here — explicit decision required).** The following
+committed claims are artifacts of a constant attribution vector and must not be cited as properties of
+LIME: **"LIME ≈ random"**, **"faithfulness–stability trade-off (LIME most stable, least faithful)"**,
+and the **12 LIME rows** of `results/xai_metrics.csv` (plus the LIME series in `figures/xai/*` and the
+LIME passages of `notes/xai_summary.md`). The **SHAP and IG** results, the RQ3 answer **"linear TF-IDF +
+SHAP"**, and every non-XAI result (`results.csv`, `results_512.csv`, D9 statistics) are **unaffected** —
+no LIME quantity enters them.
+
+**Deliberately NOT done (and why).** `explainers.py` is **not** behaviourally fixed and nothing is
+re-run: changing that line would silently invalidate the committed `xai_metrics.csv` that this exact
+line produced, which the project's integrity rules forbid doing implicitly. A defect banner has been
+added at the call site pointing here (comment only — verified as a comment-only diff, so every committed
+number remains exactly reproducible). **Open decision for the author:** either (a) re-run the LIME arm
+of Directive 7 with `split_expression=r"\W+"` as a new, pre-registered, isolated-namespace ablation
+(and, if the corrected LIME sets are to be validated by humans, a fresh annotation round — the existing
+FIRST10† ratings cannot be reused), or (b) report the corpus-level finding as-is and confine LIME to a
+documented "explainer harness defect" limitation. Both are legitimate; (a) restores an RQ3 comparison,
+(b) costs no compute. Not chosen unilaterally.
+
+**Methodological lesson (for the dissertation).** A random baseline is not a sufficient control: the
+void arm's metrics looked like a *publishable trade-off* rather than a bug. An explainer pipeline needs
+a **positive control** — assert attributions are non-zero and non-degenerate, and that a planted
+decisive token is recovered — and the regeneration/integrity anchor must cover **every** method, not a
+subset. This is now the thesis's strongest concrete argument for treating XAI tooling as code under
+test rather than trusted library output.

@@ -5,7 +5,7 @@ Runs the pre-registered LLM judge over the committed blind sets in results/hitl/
 pre-registration (notes/decisions.md, 2026-07-18):
   - Model id PINNED: claude-opus-4-8 (alias). Mechanism: Anthropic API, ONE call per set, JSON
     output. NO sampling parameters are sent -- temperature is deprecated for this model (see the
-    2026-07-18 pre-data amendment 2 in notes/decisions.md); the model default is used. If the API
+    2026-07-24 pre-data amendment 2 in notes/decisions.md); the model default is used. If the API
     rejects the pinned alias -> STOP (exit 3), do NOT substitute. The constant system block (the
     guide) carries cache_control so it is cached across the 260 sequential calls.
   - Isolation: each call = the annotation guide verbatim (system) + ONE blind set (user). No repo
@@ -43,7 +43,7 @@ CSV_PATH = HITL_DIR / "judge_ratings.csv"
 
 MODEL_ID = "claude-opus-4-8"   # PINNED in the pre-registration; do NOT substitute if rejected.
 # NO sampling parameters are sent: temperature is deprecated for claude-opus-4-8 (pre-data
-# amendment 2, 2026-07-18). The model default is used; reproducibility is anchored by committing
+# amendment 2, 2026-07-24). The model default is used; reproducibility is anchored by committing
 # every raw response verbatim (Addition 1), so downstream numbers reproduce from artifacts.
 MAX_TOKENS = 1024
 MAX_ATTEMPTS = 3               # 1 + up to 2 retries

@@ -148,6 +148,19 @@ def lime_attr(champ, text, seed: int = 42, num_samples: int = NUM_SAMPLES) -> np
         p1 = np.clip(np.asarray(p1, dtype=float), 0.0, 1.0)
         return np.column_stack([1.0 - p1, p1])
 
+    # ####################################################################################### #
+    # KNOWN DEFECT (found 2026-07-26, Directive 10 Part E; see notes/decisions.md Amendment 4). #
+    # `split_expression` is LIME's SEPARATOR pattern (default r"\W+") and is used as the        #
+    # non-word test (`non_word = splitter.match` in lime.lime_text.IndexedString), so passing   #
+    # r"\w+" INVERTS it: every real word is treated as a non-word and dropped from the          #
+    # perturbation vocabulary, leaving only whitespace/punctuation. Result: `attr` is           #
+    # identically ZERO for every document (verified 2100/2100 in results/xai/*__lime.json), and #
+    # `top_k_positions` on a zero vector returns the first k positions. Every committed "LIME"  #
+    # result is therefore a first-k-tokens baseline, NOT LIME.                                  #
+    # DELIBERATELY NOT FIXED HERE: changing it would silently invalidate the committed          #
+    # results/xai_metrics.csv (30 rows) that this line produced. Fixing it requires re-running  #
+    # the LIME arm of the XAI phase as an explicit, pre-registered decision -- see Amendment 4. #
+    # ####################################################################################### #
     explainer = LimeTextExplainer(class_names=["ham", "phish"], bow=True,
                                   split_expression=r"\w+", random_state=seed)
     n_unique = len(set(wlow))
