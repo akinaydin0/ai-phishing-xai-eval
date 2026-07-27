@@ -10,6 +10,8 @@ Supporting document for §4.2 of the interim report. Numbers reproducible from a
 
 **D3 — PhishFuzzer (Tóth et al. 2025).** 23,100 emails: 3,300 seeds (300 private "Manual" + 3,000 from Kaggle/SpamAssassin) and 19,800 LLM-paraphrased variants (Gemini family per the README; precise model version — likely Gemini-2.5-Flash based on the Label Enrichment step that used it for URL/filename completion — needs paper-level verification before the final dissertation). <!-- TODO(dissertation): confirm exact Gemini version used for variant generation against the arXiv paper. --> Three-class labels (Phishing / Spam / Valid) collapsed to binary `Phishing + Spam = 1, Valid = 0` per Decision C2 (both retained in the loader). The variant grid is an exact 2 × 3 (`entity_type × length_type`), 3,300 emails per cell.
 
+**TODO CLOSED (2026-07-26) — D3 variant-generation model is `gemini-2.5-flash`:** the expansion script pins it directly — `data/raw/phishfuzzer/DataSet_Creation/5_RePhrase/expand.py:25` reads `MODEL_ID = "google/gemini-2.5-flash"`, passed to the request payload at L86 (`"model": MODEL_ID`) with `TEMPERATURE = 0.7` (L27) via OpenRouter (L19), reading `emails_normalized.json` and writing `emails_expanded_2026_Gemini.json` (L15–16) — i.e. exactly the §1.5 RePhrase stage that produced the 19,800 variants; per the upstream creation scripts, paper-level cross-check optional. (The README itself names no model for this stage; its explicit `Gemini-2.5-Flash` line belongs to §3 Label Enrichment, so the earlier "likely" inference was right but was resting on the wrong stage. `prompts.md` and `5_RePhrase/prompts.py` name no model.)
+
 ## 2. Cross-dataset comparison (fig 3)
 
 The three-way token-length figure shows three distinct profiles:
