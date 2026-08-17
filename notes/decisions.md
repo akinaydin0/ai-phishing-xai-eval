@@ -1432,3 +1432,122 @@ borderline sample flipped at the 0.5 cut.
 **Isolation.** `results.csv` (124), `results_512.csv` (8), `xai_metrics.csv` (30),
 `xai_metrics_limefix.csv` (12) and `results/transformers/*.json` are **byte-untouched**; only the new
 artifact and script were added. `CLAUDE.md` deliberately unchanged (no phase change).
+
+---
+
+## 2026-08-17 · AUDIT-D3 — external-review response (POST-HOC DIAGNOSTICS; committed results unchanged)
+
+Read-only audit answering three external-review concerns. **No retraining, no tuning, no reselection**;
+every committed number stands as published. All figures below are **post-hoc diagnostics**. Analysis
+script was run from the scratchpad and is not committed; every input is a committed artifact or the
+git-ignored raw corpus.
+
+### A. d3_en seed-family leakage — CONFIRMED, and it is total
+
+**A1. The split is keyed PER DOCUMENT, not grouped by seed family.** `src/splits.py:108-113` verbatim:
+`train_idx, temp_idx = train_test_split(idx, test_size=0.30, random_state=seed, stratify=y)` then
+`val_idx, test_idx = train_test_split(temp_idx, test_size=0.50, random_state=seed, stratify=y[temp_idx])`,
+with the key documented at `src/splits.py:8` as *"keyed by the **sha1 hash of the cleaned body text**"*.
+Stratification is on the binary label only. There is **no `groups=` argument, no `GroupShuffleSplit`, and
+no `Original_ID` reference anywhere in `src/splits.py`** — the sole `Original_ID` mention in `src/` is
+`data_loader.py:339` (`"original_id": raw["Original_ID"].astype(int)`). PhishFuzzer emits **6 variants per
+seed template**, so variant siblings are free to land in different splits.
+
+**A2. Join is exact and needs no reconstruction.** `data/cache/clean_d3.pkl` already carries
+`original_id` (int64, 0 nulls): **19,164/19,164 d3_en documents mapped, 100% coverage**.
+
+**A3. Family overlap (2,875 test documents, 3,194 families).** Families per split: train 3,191 / val
+1,963 / test 2,004.
+- TEST documents sharing a family with ≥1 **TRAIN** document: **2,865 / 2,875 = 99.65%**
+- TEST documents sharing a family with ≥1 **VAL** document: 1,567 / 2,875 = 54.50%
+- TEST documents sharing a family with train **or** val: **2,875 / 2,875 = 100.00%**
+- VAL documents sharing a family with ≥1 TRAIN document: 2,867 / 2,875 = 99.72%
+
+**A4. NOT COMPUTABLE — the clean-test subset is EMPTY (n = 0).** Every d3_en test document has a variant
+sibling in train or val, so no leakage-free holdout exists inside the frozen split and the
+evaluation-only sensitivity cannot be run. The laxer "no TRAIN sibling" variant yields **n = 10, all of
+class 0** — ROC-AUC undefined. Consequence: **the in-corpus d3_en scores (classical 0.9993, RoBERTa
+0.9976) cannot be leakage-corrected by evaluation alone**; quantifying the effect requires a
+family-grouped (`GroupShuffleSplit` on `original_id`) re-split **and retraining**, which is out of scope
+here and should be a separate pre-registered directive.
+
+### B. D1↔D3 provenance overlap
+
+**B5. Seed-level provenance EXISTS (not ABSENT), but only in the raw seeds file.** The cleaned variant
+cache is uniform — `clean_d3.pkl.source` is `'Synthetic Entity-Seed Expansion 2026'` for all 19,164 rows
+and `created_by` is `'LLM'` for all — so provenance must be joined from
+`data/raw/phishfuzzer/PhishFuzzer_emails_original_seed_v1.json` field `Source` via `Original_ID`.
+Seed buckets (n=3,300): Nazario 1,015 · WarrantedSpamDataset 842 · CEAS_08 839 · private "Manual" 300 ·
+SpamAssassin 183 · Spam Archive 2024/2025 121. **Nazario, CEAS_08 and SpamAssassin are three of D1's six
+sub-corpora**, so **62.4% of d3_en (11,964 documents, 1,994 families) descends from seeds drawn from D1's
+own constituent corpora** — Nazario 30.5%, CEAS_08 26.2%, SpamAssassin 5.7%. Of the 2,875 test documents,
+**1,775 (61.7%) are D1-provenance**.
+
+**B6a. D1→D3 (DistilBERT-256 trained on d1_sb, evaluated on d3_en TEST). Committed 0.9243.**
+
+| evaluation slice | n | pos share | ROC-AUC |
+|---|--:|--:|--:|
+| full test (reproduction anchor) | 2,875 | 0.661 | **0.9243** (= committed) |
+| D1-provenance families only | 1,775 | 0.496 | **0.9948** |
+| **excluding D1-provenance families** | 1,100 | 0.927 | **0.3970** |
+
+**CONFOUND, stated up front:** provenance is strongly correlated with class — the non-D1 slice is 92.7%
+positive with only **80 negatives**, the D1 slice is balanced (49.6%). AUC is rank-based so balance does
+not bias it in expectation, but the estimate on 80 negatives is noisy and the two slices are different
+populations (Manual/Warranted/Archive spam vs Nazario/CEAS_08/SpamAssassin). The diagnostic therefore
+**does not bound the leakage**; what it does show is that the committed 0.9243 is **highly non-homogeneous
+across seed provenance** — near-perfect on D3 documents descended from D1's own sub-corpora, at or below
+chance on documents of independent provenance. Resolving it needs a provenance-stratified re-split with
+retraining.
+
+**B6b. D3→D1 (RoBERTa-256 trained on d3_en, evaluated on d1_sb TEST). Committed 0.9659. NULL RESULT.**
+The literal instruction (exclude D3 documents on the evaluation side) is vacuous here — D3 is the
+*training* side, and evaluation-only exclusion cannot address training contamination. The informative
+symmetric variant is to drop the D1 test documents belonging to the sub-corpora D3's seeds were drawn
+from (`Nazario`, `CEAS_08`, `SpamAssasin`), leaving `Nigerian_Fraud` + `Ling`:
+
+| evaluation slice | n | ROC-AUC |
+|---|--:|--:|
+| full test (reproduction anchor) | 7,776 | **0.9659** (= committed) |
+| excluding D3-seed sub-corpora | 939 | **0.9898** |
+
+AUC **rises** on the provenance-clean slice, so the committed D3→D1 transfer result is **not** explained
+by seed-provenance overlap. Both full-test anchors reproduce the committed values exactly, validating the
+evaluation path.
+
+### C. Table 6.5 comparator provenance — the "4/6" claim is pool-dependent
+
+**C7. The committed rule, verbatim.** `notes/transformer_summary.md` §(a): *"Best transformer per
+**source** (by val AUC) applied to the other corpora's TEST splits. Compared against the best classical
+champion (tfidf/ensemble/dense) for the same directed pair."* And `notes/decisions.md` (D9 champion
+definitions): *"cross champions are the committed rows in results(_512).csv"*.
+
+**Does the rule predate observation of target test scores? Partly.** Each classical family's *model* was
+selected on **source validation** AUC before the target test was seen — `results.csv` notes confirm it,
+e.g. `'cross-corpus tfidf champion (val_auc=0.9997)'`. But the choice of **which family** to quote as
+"best classical" per direction is a **post-hoc maximum over already-observed target test AUCs**, and no
+committed entry pre-specifies it. The comparator pool is also implicitly restricted to the
+`__xcorpus_*` rows (2026-07-07), excluding the earlier baseline-phase cross rows (2026-07-06,
+`notes='cross-corpus'`, default hyperparameters). That exclusion is material:
+
+| direction | T AUC | classical max, **xcorpus pool** | Δ (committed) | classical max, **ALL committed rows** | Δ |
+|---|--:|--:|--:|--:|--:|
+| d1_sb→d2 | 0.9434 | 0.9091 LR | +0.0343 | 0.9152 LR | +0.0282 |
+| d1_sb→d3_en | 0.9243 | 0.8965 LR | +0.0278 | **0.9263 LR** | **−0.0020** |
+| d2→d1_sb | 0.9199 | 0.9080 LR | +0.0119 | **0.9469 LR** | **−0.0270** |
+| d2→d3_en | 0.7748 | 0.8429 LR | −0.0681 | 0.8559 LR | −0.0811 |
+| d3_en→d1_sb | 0.9659 | 0.8888 LightGBM | +0.0771 | 0.9225 LR | +0.0434 |
+| d3_en→d2 | 0.7306 | 0.7523 LinearSVC | −0.0217 | 0.7967 LR | −0.0661 |
+
+Under the committed (xcorpus-pool) reading transformers win **4/6**; under a literal
+"strongest committed classical transfer result" reading they win **2/6** — `d1_sb→d3_en` and `d2→d1_sb`
+flip. The restriction is defensible (compare val-selected champions, not a max over every run), but the
+**phrase "strongest committed classical" is literally inaccurate for 3 of 6 directions** and an external
+reviewer recomputing from `results.csv` will land on 2/6. Chapter 6 should state the comparator pool
+explicitly. Note also the direction of the bias: taking a post-hoc max over three classical families
+makes transformer wins *harder* (conservative for the 4/6 claim) but makes the two classical wins
+(`d2→d3_en`, `d3_en→d2`) *easier* — so the "transformers do not close the AI→real gap" statement is the
+anti-conservative one.
+
+**Nothing in `results.csv`, `results_512.csv`, `xai_metrics.csv`, `xai_metrics_limefix.csv`,
+`confusion_matrices.json` or any figure was modified by this audit. `CLAUDE.md` untouched.**
