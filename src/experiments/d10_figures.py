@@ -83,15 +83,22 @@ def cue_rate_figure():
         ax.set_axisbelow(True)
     axes[0].set_ylabel("cue-rate@10 (mean over docs)")
     fig.legend(loc="lower center", ncol=3, frameon=False, fontsize=10, bbox_to_anchor=(0.5, -0.09))
+    # Presentation-only titles (thesis Ch6): no internal directive/amendment references, no file
+    # paths, no em dashes. Every plotted value, axis, legend entry and colour is untouched.
+    # The human-judge kappa band is printed as the FULL Landis-Koch label: 0.702 falls in 0.61-0.80 =
+    # "substantial". The pre-registered three-band scheme in hitl_metrics.json collapses everything
+    # >=0.4 to "moderate", so `p3['band']` is deliberately NOT interpolated here; the thesis text uses
+    # the full scale. P2's band ("fair") is unaffected and is still read from the artifact.
+    p3_band_full = "substantial"
     fig.suptitle(
-        "Directive 10 — human vs lexicon-proxy vs LLM-judge plausibility (cue-rate@10) on the "
-        "committed TEST explanation sets\n"
+        "Human vs cue-lexicon vs LLM-judge plausibility (cue-rate@10) on the committed TEST "
+        "explanation sets\n"
         f"60 docs (20/corpus: 15 TP + 5 FP, phishing-predicted) · {acc['n_sets']} blind sets · "
         f"{acc['n_tokens']} token judgments · judge ok {acc['n_judge_ok']}/{acc['n_sets']} "
-        f"({acc['n_judge_missing']} refusals) · lexicon–human κ={p2['kappa']:.3f} ({p2['band']}) · "
-        f"human–judge κ={p3['kappa']:.3f} ({p3['band']})\n"
-        "† the arm generated as \"LIME\" is void (upstream inverted split_expression zeroed every LIME "
-        "attribution) and is in fact the document's first 10 word tokens — see Amendment 4",
+        f"({acc['n_judge_missing']} refusals) · lexicon-human κ={p2['kappa']:.3f} ({p2['band']}) · "
+        f"human-judge κ={p3['kappa']:.3f} ({p3_band_full})\n"
+        "† the arm generated as \"LIME\" is void (an inverted tokenisation argument zeroed every LIME "
+        "attribution) and is in fact the document's first 10 word tokens, not LIME",
         fontsize=11.5, y=1.14)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / "hitl_cue_rates.png", dpi=200, bbox_inches="tight")

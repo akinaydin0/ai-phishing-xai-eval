@@ -86,11 +86,15 @@ def deletion_curves():
         ax.grid(alpha=0.25)
         ax.legend(fontsize=6.5, ncol=2)
     axes[0].set_ylabel("comprehensiveness (drop in p_predicted)")
-    fig.suptitle("Directive 11 — faithfulness deletion curves with the CORRECTED LIME arm "
+    # Presentation-only titles (thesis Ch6): no internal directive/amendment references, no file
+    # paths, no em dashes. Plotted values, axes, legend structure and colours are untouched.
+    fig.suptitle("Faithfulness deletion curves with the corrected LIME arm "
                  "(higher = more faithful)\n"
                  "corrected LIME (red) vs committed SHAP (blue) / IG (green) vs the void arm "
                  "FIRST10 (purple dashed) vs random (grey dotted); bold = transformer, faded = "
-                 "tfidf/ensemble", fontsize=11.5, y=1.06)
+                 "tfidf/ensemble\n"
+                 "FIRST10 is the void arm relabelled as a position baseline (the document's first "
+                 "10 word tokens, not LIME)", fontsize=11.5, y=1.10)
     fig.tight_layout()
     _save(fig, "xai_lime_fix_deletion_curves")
 
@@ -130,10 +134,11 @@ def bars():
         ax.grid(alpha=0.25, axis="y")
         ax.set_axisbelow(True)
         ax.legend(fontsize=7.5)
-    fig.suptitle("Directive 11 — corrected LIME vs committed SHAP / IG vs the void FIRST10 arm "
-                 "(mean over in-corpus d1_sb / d2 / d3_en; black ticks = random baseline)\n"
-                 "FIRST10 (hatched) is the void arm relabelled: it is the document's first 10 word "
-                 "tokens, not LIME — see notes/decisions.md Amendment 4", fontsize=11.5, y=1.04)
+    # Presentation-only titles (see the note in deletion_curves).
+    fig.suptitle("Corrected LIME vs SHAP and Integrated Gradients vs the FIRST10 position baseline "
+                 "(in-corpus family means; black ticks = random baseline)\n"
+                 "FIRST10 (hatched) is the void arm relabelled: the document's first 10 word "
+                 "tokens, not LIME", fontsize=11.5, y=1.04)
     fig.tight_layout()
     _save(fig, "xai_lime_fix_bars")
 

@@ -1354,3 +1354,39 @@ where the ordering cannot be resolved*.
 **Supersedes** the D11 limitation "no significance testing" for these two comparisons only; every other
 D11 comparison remains a point estimate. `notes/lime_fix_summary.md` §(c)/§(e) carry the two-line
 addenda.
+
+---
+
+## 2026-08-17 · Ch6 presentation-only figure regeneration (DATA UNCHANGED)
+
+Three committed figures were regenerated for the dissertation's Chapter 6 with **in-image text only**
+changed: internal directive/amendment references, file paths and em dashes removed. **No metric
+artifact was read for anything other than plotting, none was modified, and no model was re-run.**
+
+**Files replaced (png + pdf each):** `figures/xai_lime_fix/xai_lime_fix_deletion_curves`,
+`figures/xai_lime_fix/xai_lime_fix_bars`, `figures/hitl/hitl_cue_rates`.
+
+**Text changes.** (1) Deletion curves: suptitle now *"Faithfulness deletion curves with the corrected
+LIME arm (higher = more faithful)"*; the method-comparison line is retained verbatim; FIRST10 is
+described as *"the void arm relabelled as a position baseline (the document's first 10 word tokens, not
+LIME)"* with no path and no amendment pointer. (2) Bars: suptitle now *"Corrected LIME vs SHAP and
+Integrated Gradients vs the FIRST10 position baseline (in-corpus family means; black ticks = random
+baseline)"* plus the single FIRST10 note. (3) HITL: suptitle now *"Human vs cue-lexicon vs LLM-judge
+plausibility (cue-rate@10) on the committed TEST explanation sets"*; all counts unchanged (60 docs /
+260 sets / 2,558 judgments / judge ok 251/260, 9 refusals); the void-arm disclosure is kept without a
+path.
+
+**One label deliberately not read from the artifact.** The human-judge kappa band is printed as
+**"0.702 (substantial)"** — the full Landis-Koch label (0.61-0.80). `hitl_metrics.json` stores
+`"moderate"` because the **pre-registered** three-band scheme collapses everything ≥0.4 to "moderate";
+that pre-registered value is untouched in the artifact and in `notes/hitl_summary.md`, and the P3 table
+there already recorded both readings. The figure and the thesis text now use the full scale
+consistently. `p3['band']` is therefore intentionally not interpolated in `d10_figures.py` (comment at
+the call site records why). The lexicon-human band ("fair") is still read from the artifact.
+
+**Verification.** The two figure scripts' diffs touch only suptitle strings and comments (no data,
+axis, legend or colour code). An md5 over `xai_metrics.csv`, `xai_metrics_limefix.csv`,
+`hitl_metrics.json`, `hitl_set_level.csv`, `results/xai_lime_fix/*.json` and `results/xai/*__shap.json`
+is **identical before and after** regeneration (`3a5fce09deb65c04655f0331ddbacb2c`). All plotted values
+are therefore provably unchanged. Canonical `figures/xai/*` were **not** regenerated; the erratum at the
+top of `notes/xai_summary.md` continues to govern them.
