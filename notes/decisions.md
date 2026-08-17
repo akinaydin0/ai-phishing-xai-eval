@@ -1390,3 +1390,45 @@ axis, legend or colour code). An md5 over `xai_metrics.csv`, `xai_metrics_limefi
 is **identical before and after** regeneration (`3a5fce09deb65c04655f0331ddbacb2c`). All plotted values
 are therefore provably unchanged. Canonical `figures/xai/*` were **not** regenerated; the erratum at the
 top of `notes/xai_summary.md` continues to govern them.
+
+---
+
+## 2026-08-17 · Confusion matrices for the six Table 6.1 finalists (regenerated, GATE PASSED 6/6)
+
+POLISH-1 established that **no committed artifact stores TN/FP/FN/TP**. The cells are therefore
+regenerated here under the thesis's **reproducibility-by-regeneration policy** (Ch5 artefact policy:
+detail outputs are regenerable from deterministic scripts plus committed anchors) for the appendix.
+**No training and no tuning.** Script `src/experiments/confusion_matrices.py`; artifact
+`results/confusion_matrices.json`.
+
+**Method.** Each finalist is scored **exactly once on its OWN frozen TEST partition** at the committed
+**0.5** operating point. Sklearn finalists go through the committed champions inference module
+(`src.xai.champions._SklearnChampion`), which rebuilds the model from its committed HPO `best_params`
+and re-fits it on the frozen TRAIN split — the identical inference path that produced the committed XAI
+results — with **LinearSVC mapped through the committed `expit(decision_function)`** margin mapping
+(monotone, so the 0.5 cut equals a zero-margin cut). Transformer finalists **load their saved
+fine-tuned checkpoints** (no fitting) at the committed `MAX_LEN=256`. Disclosure: the sklearn step is a
+deterministic **re-fit from committed hyperparameters**, not re-training or re-tuning; no pickled fitted
+estimator exists in the repo, and this is the same path all downstream XAI work uses.
+
+**Matrices (TN / FP / FN / TP; row sums equal the frozen test n).**
+
+| finalist | corpus | TN | FP | FN | TP | n_test |
+|---|---|--:|--:|--:|--:|--:|
+| LinearSVC | d1_sb | 3,548 | 19 | 24 | 4,185 | 7,776 |
+| MultinomialNB | d2 | 2,294 | 17 | 23 | 2,050 | 4,384 |
+| LinearSVC | d3_en | 948 | 27 | 8 | 1,892 | 2,875 |
+| DistilBERT-256 | d1_sb | 3,552 | 15 | 18 | 4,191 | 7,776 |
+| DistilBERT-256 | d2 | 2,308 | 3 | 20 | 2,053 | 4,384 |
+| RoBERTa-256 | d3_en | 936 | 39 | 18 | 1,882 | 2,875 |
+
+**VERIFICATION GATE: PASSED 6/6 (24/24 metric comparisons exact).** Accuracy, precision, recall and F1
+recomputed from every matrix equal the committed values at their stored precision (4 dp), against
+`results/results.csv` `__tuned` rows for the classical finalists and `results/transformers/<model>__<corpus>.json`
+`test` blocks for the transformers. All gate deltas are 0.0000; nothing was reconciled. Notably the
+transformer matrices reproduce the committed metrics exactly despite fp16 autocast inference, so no
+borderline sample flipped at the 0.5 cut.
+
+**Isolation.** `results.csv` (124), `results_512.csv` (8), `xai_metrics.csv` (30),
+`xai_metrics_limefix.csv` (12) and `results/transformers/*.json` are **byte-untouched**; only the new
+artifact and script were added. `CLAUDE.md` deliberately unchanged (no phase change).

@@ -1,0 +1,203 @@
+{
+  "policy": "regenerated under the thesis reproducibility-by-regeneration policy; no committed artifact stores TN/FP/FN/TP",
+  "operating_point": 0.5,
+  "linearsvc_mapping": "p1 = expit(decision_function) (committed margin mapping)",
+  "transformer_max_length": 256,
+  "seed": 42,
+  "gate": "accuracy/precision/recall/F1 recomputed from each matrix must equal the committed values at 4 dp",
+  "finalists": {
+    "LinearSVC__d1_sb": {
+      "kind": "classical",
+      "model": "LinearSVC",
+      "corpus": "d1_decontaminated_sb",
+      "n_test": 7776,
+      "confusion": {
+        "TN": 3548,
+        "FP": 19,
+        "FN": 24,
+        "TP": 4185
+      },
+      "recomputed": {
+        "accuracy": 0.9945,
+        "precision": 0.9955,
+        "recall": 0.9943,
+        "f1": 0.9949
+      },
+      "committed": {
+        "accuracy": 0.9945,
+        "precision": 0.9955,
+        "recall": 0.9943,
+        "f1": 0.9949
+      },
+      "committed_source": "results/results.csv run_id=LinearSVC__tfidf__d1_decontaminated_sb__d1_decontaminated_sb__tuned",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    },
+    "MultinomialNB__d2": {
+      "kind": "classical",
+      "model": "MultinomialNB",
+      "corpus": "d2",
+      "n_test": 4384,
+      "confusion": {
+        "TN": 2294,
+        "FP": 17,
+        "FN": 23,
+        "TP": 2050
+      },
+      "recomputed": {
+        "accuracy": 0.9909,
+        "precision": 0.9918,
+        "recall": 0.9889,
+        "f1": 0.9903
+      },
+      "committed": {
+        "accuracy": 0.9909,
+        "precision": 0.9918,
+        "recall": 0.9889,
+        "f1": 0.9903
+      },
+      "committed_source": "results/results.csv run_id=MultinomialNB__tfidf__d2__d2__tuned",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    },
+    "LinearSVC__d3_en": {
+      "kind": "classical",
+      "model": "LinearSVC",
+      "corpus": "d3_en",
+      "n_test": 2875,
+      "confusion": {
+        "TN": 948,
+        "FP": 27,
+        "FN": 8,
+        "TP": 1892
+      },
+      "recomputed": {
+        "accuracy": 0.9878,
+        "precision": 0.9859,
+        "recall": 0.9958,
+        "f1": 0.9908
+      },
+      "committed": {
+        "accuracy": 0.9878,
+        "precision": 0.9859,
+        "recall": 0.9958,
+        "f1": 0.9908
+      },
+      "committed_source": "results/results.csv run_id=LinearSVC__tfidf__d3_en__d3_en__tuned",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    },
+    "DistilBERT-256__d1_sb": {
+      "kind": "transformer",
+      "model": "DistilBERT-256",
+      "corpus": "d1_decontaminated_sb",
+      "n_test": 7776,
+      "confusion": {
+        "TN": 3552,
+        "FP": 15,
+        "FN": 18,
+        "TP": 4191
+      },
+      "recomputed": {
+        "accuracy": 0.9958,
+        "precision": 0.9964,
+        "recall": 0.9957,
+        "f1": 0.9961
+      },
+      "committed": {
+        "accuracy": 0.9958,
+        "precision": 0.9964,
+        "recall": 0.9957,
+        "f1": 0.9961
+      },
+      "committed_source": "results/transformers/distilbert-base-uncased__d1_decontaminated_sb.json:test",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    },
+    "DistilBERT-256__d2": {
+      "kind": "transformer",
+      "model": "DistilBERT-256",
+      "corpus": "d2",
+      "n_test": 4384,
+      "confusion": {
+        "TN": 2308,
+        "FP": 3,
+        "FN": 20,
+        "TP": 2053
+      },
+      "recomputed": {
+        "accuracy": 0.9948,
+        "precision": 0.9985,
+        "recall": 0.9904,
+        "f1": 0.9944
+      },
+      "committed": {
+        "accuracy": 0.9948,
+        "precision": 0.9985,
+        "recall": 0.9904,
+        "f1": 0.9944
+      },
+      "committed_source": "results/transformers/distilbert-base-uncased__d2.json:test",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    },
+    "RoBERTa-256__d3_en": {
+      "kind": "transformer",
+      "model": "RoBERTa-base-256",
+      "corpus": "d3_en",
+      "n_test": 2875,
+      "confusion": {
+        "TN": 936,
+        "FP": 39,
+        "FN": 18,
+        "TP": 1882
+      },
+      "recomputed": {
+        "accuracy": 0.9802,
+        "precision": 0.9797,
+        "recall": 0.9905,
+        "f1": 0.9851
+      },
+      "committed": {
+        "accuracy": 0.9802,
+        "precision": 0.9797,
+        "recall": 0.9905,
+        "f1": 0.9851
+      },
+      "committed_source": "results/transformers/roberta-base__d3_en.json:test",
+      "gate_deltas": {
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "gate_pass": true
+    }
+  },
+  "gate_pass_all": true
+}
