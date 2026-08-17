@@ -1598,3 +1598,116 @@ optimistic. This amendment pre-registers a group-aware sensitivity analysis to q
   of record**; this analysis is reported as a **sensitivity, not a replacement**. Nothing is reselected.
 
 **Status: pre-registered before execution; results to be appended on completion.**
+
+---
+
+## 2026-08-17 · Amendment 5 RESULTS — executed exactly as pre-registered (`2bad9cc`)
+
+Appended as a new dated block (decisions.md is append-only; the pre-registration entry above is left
+untouched). Total runtime **4.3 min**. Artifacts: `data/splits/d3_en_grouped.json`,
+`results/group_sens.json`, script `src/experiments/group_sens.py`. **`data/splits/d3_en.json` and every
+committed result are unmodified; the committed headlines remain the results of record.**
+
+### STEP A0 — scope confirmations
+**(1) The H1 512 ablation trio is evaluated on the D2 TEST split, not on d3_en test.** The committed row
+is `train_corpus=d3_en, test_corpus=d2, RoBERTa-base, auc=0.844, n_test=4384` in `results_512.csv`
+(n_test = the D2 test size 4,384), against the 256 value 0.7306 and the classical comparator 0.7523 —
+all three on D2 test. Training data is the frozen per-document d3_en **train** split (n_train=13,414) at
+`max_length=512`. **Therefore d3_en's family leakage cannot inflate the H1 result**: the evaluation
+corpus is D2, which shares no documents and no seed families with D3 (D3's seed buckets contain no Enron
+material). H1 stands unaffected.
+
+**(2) FLAG — the exposure is broader than the expected trio.** Every committed row that trains on d3_en
+and evaluates on d3_en test sits on the leaked boundary, not just SVC 0.9993 / RoBERTa 0.9976 / C1c:
+the **whole in-corpus d3 leaderboard** (LR 0.9982, NB 0.9870, LinearSVC 0.9993, DecisionTree 0.9232,
+RandomForest 0.9901, XGBoost 0.9957, LightGBM 0.9980, plus the untuned variants), the **dense-embedding
+rows** (LR-w2v 0.9853, MLP-w2v 0.9942, LR-glove 0.9760, MLP-glove 0.9961), **all three 256 transformers**
+(DistilBERT 0.9968, BERT 0.9979, RoBERTa 0.9976) **and all three 512 in-corpus transformers in
+`results_512.csv`** (DistilBERT 0.9975, BERT 0.9977, RoBERTa 0.9984). Also downstream: the D9 **d3_en
+imbalance stress numbers**, and the **XAI/HITL d3_en in-corpus units** (`tfidf_d3_en`, `ensemble_d3_en`,
+`transformer_d3_en`), whose explanation sets are drawn from the leaked test split. Cross-corpus rows
+(other-trained on d3 test, or d3-trained on other tests) are **not** affected by family leakage.
+
+### STEP 1 — grouped split asserts
+- **(a) no `Original_ID` in more than one part: PASS** (shared families: 0)
+- **(b) pairwise disjoint, covering all 19,164 rows exactly once: PASS** (n=19,164, unique=19,164)
+- **(c) achieved sizes / positive shares** (corpus 0.6605; families 2,235 train / 480 val / 479 test):
+
+| part | n | share of corpus | pos share | deviation |
+|---|--:|--:|--:|--:|
+| train | 13,410 | 69.97% | 0.6622 | +0.17 pp |
+| val | 2,874 | 15.00% | 0.6117 | **−4.88 pp (WARN, report-only)** |
+| test | 2,880 | 15.03% | 0.7021 | **+4.16 pp (WARN, report-only)** |
+
+The two warnings are the expected cost of grouping: `GroupShuffleSplit` cannot stratify, and class is
+strongly correlated with seed family. Pre-registered as report-only, not a gate.
+
+### STEP 2 — in-corpus sensitivity (the wounded trio)
+
+| metric | committed (per-document split) | grouped | Δ |
+|---|--:|--:|--:|
+| LinearSVC + TF-IDF, d3_en test ROC-AUC | 0.9993 | **0.9928** | **−0.0065** |
+| RoBERTa-256, d3_en test ROC-AUC | 0.9976 | **0.9877** | **−0.0099** |
+
+**C1c direction under the grouped split: the classical model is still higher** (LinearSVC 0.9928 vs
+RoBERTa 0.9877) — the same direction as the committed comparison (0.9993 vs 0.9976). **The C1c
+conclusion survives group-aware splitting.**
+
+**Interpretation.** Family leakage inflates the d3_en in-corpus absolutes by roughly **0.7–1.0 pp**, not
+by the order of magnitude the 100%-overlap statistic might suggest. Both families remain above 0.98 on a
+fully family-disjoint test set, so d3_en in-corpus separability is real; the committed absolutes are
+mildly optimistic and should be quoted with this sensitivity. Whether the ~1 pp gap is statistically
+separated was **not** tested (no CIs pre-registered here).
+
+### STEP 3 — cross-corpus onto the grouped d3 test (evaluation only)
+
+| direction | committed | onto grouped d3 test | Δ |
+|---|--:|--:|--:|
+| D1→D3 transformer (DistilBERT) | 0.9243 | 0.9160 | −0.0083 |
+| D1→D3 classical (LR tfidf) | 0.8965 | 0.8822 | −0.0143 |
+| D2→D3 transformer (DistilBERT) | 0.7748 | 0.8045 | +0.0297 |
+| D2→D3 classical (LR tfidf) | 0.8429 | 0.8631 | +0.0202 |
+
+Cross-corpus numbers move by ≤ 0.03 in both directions, i.e. the grouped test is not systematically
+harder for externally-trained models — as expected, since a model that never saw any D3 document cannot
+benefit from D3-internal family overlap. The residual movement reflects the different test composition
+(2,880 vs 2,875 documents, positive share 0.7021 vs 0.6605).
+
+**(c) Provenance decomposition on the grouped test** (D1→D3 DistilBERT scores):
+
+| subset | n | pos | neg | ROC-AUC |
+|---|--:|--:|--:|--:|
+| D1-descended families | 1,680 | 924 | 756 | **0.9926** |
+| independent provenance | 1,200 | 1,098 | 102 | **0.4218** |
+
+The AUDIT-D3 finding **replicates on the family-disjoint split**: a D1-trained model is near-perfect on
+D3 documents descended from D1's own sub-corpora and near/below chance on independent-provenance ones.
+Neither subset trips the pre-registered `< 100 negatives` instability flag, but the independent subset is
+**marginal at 102 negatives** and remains class-skewed (91.5% positive), so it still bounds nothing
+precisely. **Conclusion: seed-provenance overlap, not intra-D3 family leakage, is the larger threat to
+the D1↔D3 transfer numbers** — family grouping does not address it.
+
+### STEP 4 — outward transfer from the grouped-trained LinearSVC (committed D1/D2 tests unchanged)
+
+| direction | grouped-trained LinearSVC | committed LinearSVC (like-for-like) | Δ | committed transformer |
+|---|--:|--:|--:|--:|
+| D3→D1 (n=7,776) | **0.9007** | 0.8783 | **+0.0224** | 0.9659 |
+| D3→D2 (n=4,384) | **0.7467** | 0.7523 | **−0.0056** | 0.7306 |
+
+Training on a family-disjoint D3 split does **not** degrade outward transfer — it is slightly better to
+D1 and essentially unchanged to D2. So the committed cross-corpus story (including the AI→real
+difficulty on D3→D2) is **robust to the leakage**: the per-document split did not manufacture the
+transfer results.
+
+### Deviations from the directive
+1. **New file added** (`src/experiments/group_sens.py`) alongside the two artifacts, for reproducibility;
+   "no other files changed" is otherwise honoured — no committed result, figure, split or thesis text was
+   modified.
+2. **STEP 3 "committed D1/D2 champion" was ambiguous** (each direction has a transformer champion and a
+   classical champion). Both are reported rather than one being chosen silently.
+3. **STEP 4 comparator**: the like-for-like committed value is the classical LinearSVC cross row
+   (0.8783 / 0.7523); the committed transformer values are shown alongside for context, since 0.9659 is a
+   RoBERTa number and not comparable to a LinearSVC.
+4. **Results appended as a new dated block** rather than edited into the Amendment 5 entry, to honour the
+   append-only rule.
+5. No CIs were computed (none pre-registered), so all Δ values here are point estimates.

@@ -1,0 +1,115 @@
+{
+  "amendment": "5",
+  "pre_registration_commit": "2bad9cc",
+  "seed": 42,
+  "note": "post-hoc SENSITIVITY; committed values remain the results of record",
+  "committed_reference": {
+    "in_svc": 0.9993,
+    "in_roberta": 0.9976,
+    "d1_to_d3_transformer": 0.9243,
+    "d1_to_d3_classical": 0.8965,
+    "d2_to_d3_transformer": 0.7748,
+    "d2_to_d3_classical": 0.8429,
+    "d3_to_d1_transformer": 0.9659,
+    "d3_to_d1_classical_svc": 0.8783,
+    "d3_to_d2_transformer": 0.7306,
+    "d3_to_d2_classical_svc": 0.7523
+  },
+  "split": {
+    "corpus": "d3_en",
+    "variant": "grouped_by_original_id",
+    "n": 19164,
+    "seed": 42,
+    "group_key": "original_id",
+    "n_train": 13410,
+    "n_val": 2874,
+    "n_test": 2880,
+    "pos_share_corpus": 0.660614,
+    "pos_share_train": 0.662192,
+    "pos_share_val": 0.611691,
+    "pos_share_test": 0.702083,
+    "n_families_train": 2235,
+    "n_families_val": 479,
+    "n_families_test": 480
+  },
+  "step2": {
+    "linearsvc_grouped": 0.9928,
+    "linearsvc_committed": 0.9993,
+    "roberta_grouped": 0.9877,
+    "roberta_committed": 0.9976,
+    "c1c_direction_grouped": "classical (LinearSVC)",
+    "hyperparameters": {
+      "linearsvc": {
+        "C": 9.587479255847708,
+        "vectorizer": {
+          "ngram": "1_2",
+          "min_df": 2,
+          "sublinear": true,
+          "max_features": 100000
+        }
+      },
+      "roberta": {
+        "lr": 5e-05,
+        "max_epochs": 4,
+        "patience": 1,
+        "batch": 32,
+        "max_len": 256,
+        "weight_decay": 0.01,
+        "warmup_ratio": 0.1,
+        "seed": 42,
+        "epochs_run": 3,
+        "best_epoch": 1,
+        "best_val_auc": 0.9886,
+        "peak_mem_mb": 5163.8,
+        "wall_s": 189.0,
+        "per_device_batch": 32,
+        "grad_accum": 1
+      }
+    }
+  },
+  "step3": {
+    "d1": {
+      "transformer_grouped": 0.916,
+      "transformer_committed": 0.9243,
+      "classical_lr_grouped": 0.8822,
+      "classical_lr_committed": 0.8965
+    },
+    "d2": {
+      "transformer_grouped": 0.8045,
+      "transformer_committed": 0.7748,
+      "classical_lr_grouped": 0.8631,
+      "classical_lr_committed": 0.8429
+    },
+    "provenance_decomposition_grouped_test": {
+      "D1_descended": {
+        "n": 1680,
+        "pos": 924,
+        "neg": 756,
+        "auc": 0.9926,
+        "unstable_lt100_neg": false
+      },
+      "independent_provenance": {
+        "n": 1200,
+        "pos": 1098,
+        "neg": 102,
+        "auc": 0.4218,
+        "unstable_lt100_neg": false
+      }
+    }
+  },
+  "step4": {
+    "d1": {
+      "grouped_trained_linearsvc": 0.9007,
+      "committed_linearsvc": 0.8783,
+      "committed_transformer": 0.9659,
+      "n_test": 7776
+    },
+    "d2": {
+      "grouped_trained_linearsvc": 0.7467,
+      "committed_linearsvc": 0.7523,
+      "committed_transformer": 0.7306,
+      "n_test": 4384
+    }
+  },
+  "runtime_min": 4.3
+}
