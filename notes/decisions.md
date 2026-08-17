@@ -1551,3 +1551,50 @@ anti-conservative one.
 
 **Nothing in `results.csv`, `results_512.csv`, `xai_metrics.csv`, `xai_metrics_limefix.csv`,
 `confusion_matrices.json` or any figure was modified by this audit. `CLAUDE.md` untouched.**
+
+---
+
+## 2026-08-17 · Amendment 5 — Group-aware sensitivity analysis for d3_en (pre-registered)
+
+**Motivation.** AUDIT-D3 (commit `66bcdd2`) confirmed the frozen d3_en split is **per-document**
+(`src/splits.py` L108-113: stratified `train_test_split`, no `groups=`), so PhishFuzzer variants of the
+same seed email appear on both sides of the train/test boundary — **100% of test seed families have a
+train or val sibling** (99.65% have a train sibling). The in-corpus d3 absolutes are therefore
+optimistic. This amendment pre-registers a group-aware sensitivity analysis to quantify that.
+
+**Pre-registered design (fixed BEFORE any result is seen).**
+- **Group key:** `Original_ID` from `data/cache/clean_d3.pkl` (100% join verified in AUDIT-D3:
+  19,164/19,164, 0 nulls, 3,194 distinct families).
+- **Split:** two-stage `GroupShuffleSplit`, seed 42 — stage 1
+  `GroupShuffleSplit(n_splits=1, train_size=0.70, random_state=42)` over all d3_en groups; stage 2
+  `GroupShuffleSplit(n_splits=1, train_size=0.50, random_state=42)` over the held-out groups → val/test.
+  **No stratification** (group splits cannot stratify); achieved per-part sizes and positive shares will
+  be reported (corpus positive share 0.6605; deviations > 2 pp warned, **report-only, not a gate**).
+  Persisted to `data/splits/d3_en_grouped.json` in the same hash-keyed format with an extra field
+  `"variant": "grouped_by_original_id"`. **`data/splits/d3_en.json` is NOT overwritten.**
+- **Classical (FROZEN, no re-tuning, no re-search):** LinearSVC + TF-IDF refit on the grouped train with
+  the committed d3_en hyperparameters read from `results/hpo/d3_en_svc.json` —
+  **`best_params = {"C": 9.587479255847708}`** — and the committed vectorizer configuration for the
+  `svc` family, `hpo.DEFAULT_LINEAR_VEC = {"ngram": "1_2", "min_df": 2, "sublinear": True,
+  "max_features": 100000}` (`hpo._vec_from_best` returns `dict(DEFAULT_LINEAR_VEC)` for `svc`).
+  Decision scores via the committed `expit(decision_function)` margin mapping.
+- **Transformer (FROZEN, ONE run):** `roberta-base` fine-tuned **once** on the grouped train with the
+  committed d3_en run's hyperparameters from `results/transformers/roberta-base__d3_en.json` and
+  `src/experiments/transformers_ft.py` — **`selected_lr = 5e-05`** (the committed val-selected value; the
+  3-lr grid is **not** re-run), `MAX_EPOCHS = 4`, `PATIENCE = 1`, `BATCH = 32` (effective, grad
+  accumulation on OOM), `MAX_LEN = 256`, `WEIGHT_DECAY = 0.01`, `WARMUP_RATIO = 0.1`, AdamW + linear
+  warmup schedule, fp16, `SEED = 42`, `set_determinism`, same pinned environment
+  (`torch 2.11.0+cu128`, `transformers 4.57.6`, CUDA build 12.8, RTX 3090). The committed run used the
+  **validation split for per-epoch ROC-AUC early stopping and best-epoch checkpoint selection**
+  (`selection: val_roc_auc`), so the **grouped val is used for exactly that and nothing else** — no
+  hyperparameter is chosen on it here. Training reuses the committed `transformers_ft.train_lr` loop
+  verbatim.
+- **Reporting scope.** STEP 2 in-corpus sensitivity (LinearSVC, RoBERTa, C1c direction); STEP 3
+  evaluation-only cross-corpus onto the grouped test plus the provenance decomposition (subsets with
+  < 100 negatives flagged unstable); STEP 4 grouped-trained LinearSVC outward to the committed D1/D2
+  tests (those splits unchanged). All numbers to `results/group_sens.json` at 4 dp beside their
+  committed counterparts.
+- **Status of the committed results.** The committed headline values remain the **pre-registered results
+  of record**; this analysis is reported as a **sensitivity, not a replacement**. Nothing is reselected.
+
+**Status: pre-registered before execution; results to be appended on completion.**
