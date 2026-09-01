@@ -1,0 +1,23 @@
+[d1_decontaminated_sb   lr   ] SKIP (already complete)
+[d1_decontaminated_sb   nb   ] SKIP (already complete)
+[d1_decontaminated_sb   svc  ] SKIP (already complete)
+[d1_decontaminated_sb   dt   ] SKIP (already complete)
+[d1_decontaminated_sb   rf   ] SKIP (already complete)
+[d1_decontaminated_sb   xgb  ] trials=40 dev=cuda study= 1648.0s total= 2563.9s val_auc=0.9993 best_iter=797
+[d1_decontaminated_sb   lgbm ] trials=40 dev= cpu study= 5660.6s total= 5818.0s val_auc=0.9996 best_iter=314
+[d2                     lr   ] trials=25 dev= cpu study=   45.3s total=   64.4s val_auc=0.9991
+[d2                     nb   ] trials=25 dev= cpu study=   18.4s total=   36.8s val_auc=0.9990
+[d2                     svc  ] trials=25 dev= cpu study=   14.9s total=   33.8s val_auc=0.9991
+[d2                     dt   ] trials=30 dev= cpu study=  164.7s total=  205.4s val_auc=0.9763
+[d2                     rf   ] trials=30 dev= cpu study=  736.0s total=  772.8s val_auc=0.9974
+[d2                     xgb  ] trials=40 dev=cuda study= 1060.6s total= 1354.7s val_auc=0.9983 best_iter=790
+[d2                     lgbm ] trials=40 dev= cpu study= 3316.7s total= 3450.2s val_auc=0.9985 best_iter=639
+[d3_en                  lr   ] trials=25 dev= cpu study=   39.7s total=   55.0s val_auc=0.9975
+[d3_en                  nb   ] trials=25 dev= cpu study=    7.2s total=   21.2s val_auc=0.9867
+[d3_en                  svc  ] trials=25 dev= cpu study=   13.0s total=   27.7s val_auc=0.9989
+[d3_en                  dt   ] trials=30 dev= cpu study=  176.6s total=  207.9s val_auc=0.9354
+[d3_en                  rf   ] trials=30 dev= cpu study= 2942.5s total= 3126.7s val_auc=0.9894
+[d3_en                  xgb  ] trials=40 dev=cuda study= 1946.4s total= 2462.1s val_auc=0.9959 best_iter=784
+[d3_en                  lgbm ] trials=40 dev= cpu study= 2796.9s total= 2880.1s val_auc=0.9972 best_iter=340
+
+Total HPO+finalise: 384.7 min; 32 rows upserted to results/results.csv

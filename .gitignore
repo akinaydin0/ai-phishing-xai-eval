@@ -3,15 +3,15 @@ data/raw/
 data/processed/
 data/cache/
 data/embeddings/
-results/hpo/*.log
+# (now committed) results/hpo/*.log
 results/transformers/checkpoints/
 results/transformers/_partial/
 results/transformers_*/checkpoints/
 results/transformers_*/_partial/
-results/xai/*__shap.json
-results/xai/*__lime.json
-results/xai/*__ig.json
-results/stats/scores/
+# (now committed) results/xai/*__shap.json
+# (now committed) results/xai/*__lime.json
+# (now committed) results/xai/*__ig.json
+# (now committed) results/stats/scores/
 results/preproc_ablation/cache/
 __pycache__/
 .ipynb_checkpoints/
@@ -23,4 +23,7 @@ results/hitl/.env
 results/hitl/api_key.txt
 
 # Directive 11 corrected-LIME attributions (heavy, regenerable via src.xai.run_lime_fix)
-results/xai_lime_fix/*__lime.json
+# (now committed) results/xai_lime_fix/*__lime.json
+
+# Release staging area for heavy artefacts (tools/archive_artefacts.ps1); the archives live on GitHub Releases
+_release/

@@ -1,0 +1,12 @@
+GloVe: loaded
+  d1_sb  tfidf     champion=LogisticRegression
+  d1_sb  ensemble  champion=LightGBM
+  d1_sb  dense     champion=w2v+MLP
+  d2     tfidf     champion=LogisticRegression
+  d2     ensemble  champion=LightGBM
+  d2     dense     champion=w2v+MLP
+  d3_en  tfidf     champion=LinearSVC
+  d3_en  ensemble  champion=LightGBM
+  d3_en  dense     champion=glove+MLP
+
+18 cross-corpus rows upserted; heatmaps + champions.json written

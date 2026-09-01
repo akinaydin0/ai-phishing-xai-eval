@@ -260,3 +260,8 @@ hallucination). DO NOT cite them in any output:
 - Plan before executing; checkpoint at methodological decisions before committing to them.
 - Flag inference vs cited fact. Don't fabricate statistics — if data isn't present, say so.
 - Use the existing venv. Commit at logical milestones with descriptive messages.
+
+## Heavy artefacts (added 2026-09-01)
+- Files over GitHub's 100 MB limit (transformer checkpoints, data caches, GloVe, raw data, preproc cache) are NOT in git: they live as assets of GitHub Release `artefacts-v1`. See ARTEFACTS.md; create with tools/archive_artefacts.ps1, restore on a fresh clone with tools/restore_artefacts.ps1 (verifies SHA-256).
+- XAI attribution JSONs, stats scores and HPO logs are committed directly (about 32 MB). `_release/` is the ignored staging folder.
+- viva/ holds the final viva package (deck, Q&A PDF, assistant briefs) and viva/build/ the scripts that regenerate them.
