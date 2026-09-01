@@ -40,9 +40,30 @@ Get-ChildItem $out -Filter *.zip | ForEach-Object {
 Write-Host "manifest written: $manifest"
 
 # Create the release (idempotent: reuse if it exists) and upload everything.
-$exists = (& gh release view $tag 2>$null)
-if (-not $exists) {
+# NOTE: `gh release view` writes to stderr when the tag is absent; under PowerShell 5.1 with
+# $ErrorActionPreference='Stop' that becomes a terminating NativeCommandError and kills the script
+# right after zipping (observed 2026-09-01). `gh release list` exits 0 and prints nothing instead.
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+$tags = @(& gh release list --json tagName --jq ".[].tagName")
+if ($tags -notcontains $tag) {
+  Write-Host "creating release $tag"
   & gh release create $tag --title "Heavy artefacts (checkpoints, caches, embeddings, raw data)" --notes-file ARTEFACTS.md
+} else {
+  Write-Host "release $tag already exists; reusing"
 }
-Get-ChildItem $out -File | ForEach-Object { & gh release upload $tag $_.FullName --clobber }
+
+$failed = @()
+Get-ChildItem $out -File | ForEach-Object {
+  Write-Host ("uploading {0} ({1} MB)" -f $_.Name, [math]::Round($_.Length/1MB,0))
+  & gh release upload $tag $_.FullName --clobber
+  if ($LASTEXITCODE -ne 0) { $failed += $_.Name }
+}
+$ErrorActionPreference = $prevEAP
+
+if ($failed.Count -gt 0) {
+  Write-Host ("FAILED uploads ({0}): {1}" -f $failed.Count, ($failed -join ", "))
+  Write-Host "Re-run this script: existing zips are skipped and uploads use --clobber."
+  exit 1
+}
 Write-Host "done: https://github.com/akinaydin0/msc-thesis/releases/tag/$tag"
