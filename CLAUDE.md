@@ -1,5 +1,15 @@
 # MSc Thesis Project — Context
 
+> ### ▶ START HERE: read `CONTEXT.md` first
+> `CONTEXT.md` (repo root) is the project handover: current state, headline results, where every
+> artefact lives, how to restore the 6.12 GB GitHub Release on a new machine, and — most important —
+> the **five caveats** that must not be re-derived or cited around (void LIME numbers, d3_en
+> seed-family leakage, the Table 6.5 comparator pool, D1/D3 provenance overlap, fabricated
+> references). This file below holds the *operating rules*; `CONTEXT.md` holds the *state*.
+> The append-only canonical log is `notes/decisions.md`.
+> Submitted dissertation: `AKIN-AYDIN-DISSERTATION.pdf` (password/permission protected — its text
+> cannot be extracted programmatically).
+
 ## Project
 
 **Title:** An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails
