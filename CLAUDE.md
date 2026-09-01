@@ -41,7 +41,11 @@ Log `results/xai_metrics.csv` (30 rows, **independently verified PASS** 2026-07-
 exact, 288/288 table cells consistent at 3 dp, means exact, comp@k monotone on SHAP/IG, suff@10 ≤ random
 30/30); figures `figures/xai/*`; report `notes/xai_summary.md`.
 Per-unit attribution JSONs git-ignored (18 MB, regenerable). Run: 30 (unit,method) in **306 min**.
-**Findings (RQ3):** **SHAP is the only demonstrably faithful method; LIME ≈ random** (in-corpus AOPC
+**Findings (RQ3):** ⚠️ **[SUPERSEDED — every LIME claim in this paragraph is VOID. See Directive 11
+below and `CONTEXT.md` caveat 1. Do not cite: "LIME ≈ random", the "LIME most stable, least faithful"
+trade-off (inverted), "IG is their best explainer" (revised), or the per-unit cost figures (wrong
+basis — quote `timing.attr`, not `runtime_s`). Corrected numbers:
+`results/xai_metrics_limefix.csv`.]** **SHAP is the only demonstrably faithful method; LIME ≈ random** (in-corpus AOPC
 ensemble·SHAP 0.281 / tfidf·SHAP 0.161 / transformer·SHAP 0.107 ≈ IG 0.102 ≫ LIME ~0.02). **Faithfulness–
 stability trade-off** (LIME most stable, least faithful). **Transformers hardest to explain** (IG is
 their best explainer). **RQ3 answer: linear TF-IDF + SHAP** — top accuracy, faithful+plausible, cheapest
