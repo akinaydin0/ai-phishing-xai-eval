@@ -7,8 +7,9 @@
 > seed-family leakage, the Table 6.5 comparator pool, D1/D3 provenance overlap, fabricated
 > references). This file below holds the *operating rules*; `CONTEXT.md` holds the *state*.
 > The append-only canonical log is `notes/decisions.md`.
-> Submitted dissertation: `AKIN-AYDIN-DISSERTATION.pdf` (password/permission protected — its text
-> cannot be extracted programmatically).
+> Submitted dissertation: `AKIN-AYDIN-DISSERTATION.pdf` (85 pp, 7 chapters + STARD-AI and
+> group-sensitivity appendices). It is NOT encrypted; if a PDF reader claims it is, extract with
+> `pypdf` instead.
 
 ## Project
 

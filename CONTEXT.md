@@ -7,9 +7,12 @@ rules; this file holds the *state of the work*, the *verdicts*, and — most imp
 
 - **Project:** An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails
 - **Author:** Akın Aydın — MSc Machine Learning, Liverpool John Moores University
-- **Final dissertation PDF (submitted version):** `AKIN-AYDIN-DISSERTATION.pdf` (repo root).
-  ⚠️ It is **password/permission protected**, so its text could not be extracted programmatically.
-  Everything below is grounded in the repo's own artefacts, not in the PDF.
+- **Final dissertation PDF (submitted version):** `AKIN-AYDIN-DISSERTATION.pdf` (repo root),
+  85 pages, 7 chapters + 2 appendices. **It is NOT encrypted** (no `/Encrypt`; producer
+  `pdfTeX-1.40.28`) — but some built-in PDF readers wrongly report "password-protected" and refuse
+  it. If that happens, extract with `pypdf` instead:
+  `PdfReader(path).pages[i].extract_text()` works fine (write to a UTF-8 file; the Windows console
+  cannot print `ı`). Extraction drops some inter-word spaces, so quote from the PDF itself.
 - **Earlier draft with supervisor feedback:** `Dissertation-full-draft-Akin-AydinFeedback.pdf`
 - **Canonical decision log:** `notes/decisions.md` — append-only, ~124 KB, every pre-registration,
   amendment and result entry in chronological order. **This is the ground truth.**
@@ -37,6 +40,40 @@ evaluated *quantitatively* (faithfulness / stability / plausibility) rather than
 | `d3_en` | PhishFuzzer LLM variants, English only | 19,164 | 6,504 / 12,660 | 13,414 / 2,875 / 2,875 |
 
 Splits are frozen, sha1-body-hash-keyed, seed 42, consumed **only** via `src.splits.load_splits`.
+
+**Research questions** (Ch1 §1.2; answered in Ch6 §6.4.1):
+- **RQ1** — how effectively do classical / ensemble / transformer models detect phishing across
+  legacy, modern and AI-generated corpora under frozen, leakage-controlled splits?
+- **RQ2** — how faithful, stable and plausible are SHAP, LIME and IG explanations, particularly on
+  AI-generated phishing?
+- **RQ3** — what trade-offs emerge between detection performance, explanation quality and
+  computational cost under one shared protocol?
+
+**Answers, as written in the thesis.** *RQ1:* model-family advantage depends on corpus **and**
+direction; in-corpus is at the 0.999 ceiling on the real-mail corpora (no threshold-level separation),
+but on AI-generated D3 the classical champion **significantly** beats the transformer; cross-corpus,
+the transformer wins every direction involving D1, while the legacy↔AI axis splits into two different
+mechanisms — D3→D2 was substantially a **truncation artefact** (recovered at 512), whereas D2→D3 is a
+genuine **distributional** gap and the one direction where a classical model beats every transformer
+configuration. *RQ2:* no universal ordering — corrected LIME is most faithful and most plausible on
+family means but least stable and most expensive; **IG is the pragmatic transformer default**;
+transformers stay the hardest family to explain faithfully; plausibility is **ordinal and
+conservative**. *RQ3:* **linear TF-IDF + SHAP** gives the best overall balance — but on *replaced*
+grounds, not the original void-arm reasoning.
+
+### Thesis map (`AKIN-AYDIN-DISSERTATION.pdf`)
+
+| ch | title | p. |
+|---|---|--:|
+| 1 | Introduction (1.4 = Legal/Social/Ethical/Professional) | 1 |
+| 2 | Background and Literature Review | 6 |
+| 3 | Analysis (datasets, EDA, evaluation requirements) | 17 |
+| 4 | Design (corpus, leakage control, models, explanation framework, **4.7 validation/integrity layer**) | 25 |
+| 5 | Implementation (**5.4 experiment infrastructure and reproducibility**) | 38 |
+| 6 | Evaluation — 6.1 detection, 6.2 cross-corpus (+6.2.1 context-window ablation), 6.3 explainability (6.3.1 SHAP/IG, **6.3.2 measurement validity and corrected LIME**, 6.3.3 human + LLM-judge, 6.3.4 RQ2/RQ3), 6.4 discussion (**6.4.4 scientific implications of the verification episode**, 6.4.5 threats to validity) | 47 |
+| 7 | Conclusion (7.1 contributions, 7.2 limitations, 7.3 future work) | 67 |
+| A | **STARD-AI Reporting Checklist** (39 items, applied by analogy) | 74 |
+| B | Appendices — incl. **B.4 Group-Aware Split Sensitivity for the Adversarial Corpus** | 79 |
 
 ---
 
@@ -192,12 +229,20 @@ only needed to re-run the LLM judge, whose outputs are already committed.
 
 ---
 
-## 6. Open items
+## 6. Status and open items
 
-- **STARD-AI checklist** (supervisor item 5) — not started.
-- **DeSE 2026 paper**, full paper deadline 15/09/2026 — distil from the dissertation.
-- Ch6 text should state the Table 6.5 comparator pool (caveat 3) and carry the d3_en leakage
-  sensitivity (caveat 2).
-- Optional future work: provenance-stratified D1/D3 re-split *with* retraining (caveat 4); human
-  re-annotation of the corrected-LIME sets (deferred — the D10 ratings were collected on the void
-  arm and cannot be reused); adding impersonation/secrecy categories to the cue lexicon.
+**The dissertation is written, submitted, and already incorporates every finding above** — including
+the corrected LIME arm (§6.3.2), the human/LLM-judge validation and κ = 0.396 (§6.3.3), the C5 null,
+the 512-token recovery (§6.2.1), the "five flips plus one unresolved" unit-level result, the
+group-aware leakage sensitivity (**Appendix B.4**), the 62.4% provenance audit with its 80-negative
+instability caveat (Ch6), and the **STARD-AI checklist (Appendix A)** — so supervisor item 5 is
+**done**, not outstanding.
+
+Remaining:
+- **DeSE 2026 paper** — full paper due **15/09/2026**; distil from the dissertation.
+- **Viva** — `viva/` holds the deck, Q&A pack and presentation.
+- Future work (as stated in §7.3 / here): provenance-stratified D1↔D3 re-split **with retraining**
+  (caveat 4 is the one genuinely unresolved threat); human re-annotation of the corrected-LIME sets
+  (deferred — the D10 ratings were collected on the void arm and cannot be reused); adding
+  impersonation/secrecy categories to the cue lexicon; strengthening the positive-control suite
+  (T1 is weak on its own — a random attribution passes it at p≈0.9998; T1b and T4 carry the power).
