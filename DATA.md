@@ -24,7 +24,7 @@ The licence statements follow Table C.1 of the dissertation (EU FAIR data criter
 
 ### D3: PhishFuzzer
 
-- **Source:** https://github.com/DataPhish/PhishFuzzer at commit `1e21dd4`. The accompanying paper is Toth, Bisztray and Gruschka, arXiv:2511.21448.
+- **Source:** https://github.com/DataPhish/PhishFuzzer at commit `1e21dd4`. The accompanying paper is Tóth, Bisztray and Gruschka, arXiv:2511.21448.
 - **Terms:**
   - The repository has no licence file, although its paper describes the framework and dataset as fully open source.
   - The CC BY 4.0 licence of the arXiv paper does not cover the data.
@@ -49,7 +49,7 @@ Short excerpts:
   - The D1 excerpts are reproduced as word tokens from the Kaggle dataset naserabdullahalam/phishing-email-dataset (https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset) under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
   - The D2 and D3 excerpts are short quotations that stay under their sources' terms.
 
-A ten-word overlap check of every committed file against the three cleaned corpora (2026-10-12) found no other verbatim passage.
+A sampled ten-word shingle check of every committed file against the three cleaned corpora (2026-10-12), which reliably detects verbatim passages of about 30 words or more, found no other such passage.
 
 ## Cleaning, deduplication and decontamination
 

@@ -25,7 +25,7 @@ preferred-citation:
   year: 2026
   conference:
     name: "19th International Conference on Developments in eSystems Engineering (DeSE 2026)"
-  notes: "submitted; to be updated on acceptance"
+  notes: "prepared for submission to DeSE 2026; to be updated on submission and acceptance"
 references:
   - type: thesis
     title: "An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails"

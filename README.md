@@ -1,6 +1,6 @@
 # An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails: Leakage-Controlled Evaluation Across Legacy, Modern and AI-Generated Corpora
 
-This repository is the code and artefact record of an MSc dissertation (Liverpool John Moores University, 2026) and of a paper submitted to DeSE 2026, the 19th International Conference on Developments in eSystems Engineering. The authors are Akın Aydın and Dhiya Al-Jumeily. Contact: akinaydin0@outlook.com.
+This repository is the code and artefact record of an MSc dissertation (Liverpool John Moores University, 2026) and of a paper prepared for submission to DeSE 2026, the 19th International Conference on Developments in eSystems Engineering. The authors are Akın Aydın and Dhiya Al-Jumeily. Contact: akinaydin0@outlook.com.
 
 ## What is here
 
@@ -135,8 +135,8 @@ Generative AI coding assistants (Anthropic Claude Code) were used for implementa
 
 ## Citation
 
-The citation metadata is in [CITATION.cff](CITATION.cff). Until the paper is accepted, please cite it as submitted:
+The citation metadata is in [CITATION.cff](CITATION.cff). Until the paper is accepted, please cite it as prepared for submission to DeSE 2026:
 
-Akın Aydın and Dhiya Al-Jumeily. An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails: Leakage-Controlled Evaluation Across Legacy, Modern and AI-Generated Corpora. Submitted to the 19th International Conference on Developments in eSystems Engineering (DeSE 2026), 2026.
+Akın Aydın and Dhiya Al-Jumeily. An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails: Leakage-Controlled Evaluation Across Legacy, Modern and AI-Generated Corpora. Prepared for submission to the 19th International Conference on Developments in eSystems Engineering (DeSE 2026), 2026.
 
 Dissertation: Akın Aydın. An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails. MSc dissertation, Liverpool John Moores University, 2026.
