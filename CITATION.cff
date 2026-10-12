@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this code or its results, please cite them using the metadata below."
+type: software
+title: "An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails: Leakage-Controlled Evaluation Across Legacy, Modern and AI-Generated Corpora"
+authors:
+  - family-names: "Aydın"
+    given-names: "Akın"
+    affiliation: "Liverpool John Moores University"
+  - family-names: "Al-Jumeily"
+    given-names: "Dhiya"
+    affiliation: "Liverpool John Moores University"
+repository-code: "https://github.com/akinaydin0/ai-phishing-xai-eval"
+license: MIT
+date-released: "2026-10-12"
+preferred-citation:
+  type: conference-paper
+  title: "An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails: Leakage-Controlled Evaluation Across Legacy, Modern and AI-Generated Corpora"
+  authors:
+    - family-names: "Aydın"
+      given-names: "Akın"
+      affiliation: "Liverpool John Moores University"
+    - family-names: "Al-Jumeily"
+      given-names: "Dhiya"
+      affiliation: "Liverpool John Moores University"
+  year: 2026
+  conference:
+    name: "19th International Conference on Developments in eSystems Engineering (DeSE 2026)"
+  notes: "submitted; to be updated on acceptance"
+references:
+  - type: thesis
+    title: "An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails"
+    authors:
+      - family-names: "Aydın"
+        given-names: "Akın"
+        affiliation: "Liverpool John Moores University"
+    year: 2026
+    thesis-type: "MSc dissertation, MSc Artificial Intelligence (Machine Learning)"
+    institution:
+      name: "Liverpool John Moores University"
