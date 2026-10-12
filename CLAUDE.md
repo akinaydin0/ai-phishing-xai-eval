@@ -289,8 +289,7 @@ The next update, after the submission, is the one-word "submitted" change in REA
    annotation guide + agreement metrics **pre-registered before any rating**.
 7. **LSEP** stays **Chapter 1 §1.4** (supervisor approved either placement); DOI-anchored at writing.
 8. **Conference: DeSE 2026** (16 to 18 December 2026, Malaysia; IEEE Xplore) — **full paper 20 October 2026**
-   (full-paper submission deadline, EDAS), camera-ready 15 November 2026 (registration date not confirmed);
-   distil from the dissertation draft in August.
+   (full-paper submission deadline, EDAS), camera-ready 15 November 2026 (author registration by 20 November 2026).
 9. **Viva** question redirected to programme leader **[name redacted]**. Resolved: **viva completed** (confirmed 2026-10-12).
 
 ## Reference Errata (Important — do not cite these)
