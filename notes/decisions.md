@@ -1808,3 +1808,15 @@ with output `results/stats/d3_family_audit.json`.
 
 This is the family key that the family-cluster bootstrap uses. Nothing else changes: the per-document
 split remains the result of record, and earlier entries are untouched.
+
+## 2026-10-12 · AMENDMENT (pre-execution): family-cluster bootstrap for the D3-test comparisons
+
+Status when written: NO cluster-bootstrap result exists yet. Trigger: two reviews of the DeSE 2026 paper noted that the committed paired stratified bootstrap (D9, B=10,000, seed 42, document-level resampling within class) treats the six variants of one D3 seed email as independent, so the intervals for the comparisons evaluated on the d3_en test partition (C1c, C4, C5) may understate sampling uncertainty.
+
+Analysis (fixed): for C1c, C4 and C5, recompute the 95% percentile interval of AUC_a - AUC_b by a cluster bootstrap over D3 seed families: B=10,000, seed 42, families drawn with replacement (as many as in the test partition), all member documents of a drawn family kept, identical resampled index set for both models, same committed cached test score vectors as D9. Resamples with a single class are skipped and counted. The document-level paired stratified bootstrap is recomputed under the same seed as a reference, and the variance ratio (design effect) is reported. The family key is the one verified by src/experiments/d3_family_audit.py.
+
+Not changed: champions, thresholds, the point estimates, the McNemar tests (which remain document-level and are reported as such), the per-document split as the result of record.
+
+Interpretation rule (binding): the cluster intervals annotate the committed comparisons and are reported in the paper whatever they show; no claim direction is introduced or reversed on their basis, and an interval that includes zero is stated as such.
+
+Script: src/experiments/cluster_bootstrap_d3.py (added with this entry). Outputs: results/stats/cluster_bootstrap_{C1c,C4,C5}.json.
