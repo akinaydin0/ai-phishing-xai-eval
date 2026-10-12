@@ -154,8 +154,10 @@ caveat 6. Heavy artefacts are restored on the second machine from the verified `
 purged, two redactions, tool-generated trailers removed). See decisions.md (2026-10-12 HISTORY
 REWRITE) and `notes/history_rewrite_2026-10-12_commit_map.txt` for old → new commit hashes.
 
-**Next:** DeSE paper finalisation (deadlines: item 8 below); public release once README, LICENSE,
-DATA.md and CITATION.cff exist.
+**Status and next step (2026-10-12):** the repository has been public at
+https://github.com/akinaydin0/ai-phishing-xai-eval since 12 October 2026. The paper is prepared for
+submission to DeSE 2026 (EDAS deadline 20 October 2026; dates in item 8 below) and lives outside git.
+The next update, after the submission, is the one-word "submitted" change in README.md and CITATION.cff.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
@@ -286,8 +288,9 @@ DATA.md and CITATION.cff exist.
    annotation (~20 docs/corpus from the existing TEST `explained_ids`) + LLM-judge cross-check;
    annotation guide + agreement metrics **pre-registered before any rating**.
 7. **LSEP** stays **Chapter 1 §1.4** (supervisor approved either placement); DOI-anchored at writing.
-8. **Conference: DeSE 2026** (16–18 Dec 2026, Malaysia; IEEE Xplore) — **full paper 15/09/2026**,
-   camera-ready + registration 15/10/2026; distil from the dissertation draft in August.
+8. **Conference: DeSE 2026** (16 to 18 December 2026, Malaysia; IEEE Xplore) — **full paper 20 October 2026**
+   (full-paper submission deadline, EDAS), camera-ready 15 November 2026 (registration date not confirmed);
+   distil from the dissertation draft in August.
 9. **Viva** question redirected to programme leader **[name redacted]**. Resolved: **viva completed** (confirmed 2026-10-12).
 
 ## Reference Errata (Important — do not cite these)
