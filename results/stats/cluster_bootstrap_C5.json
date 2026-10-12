@@ -1,0 +1,35 @@
+{
+  "comparison": "C5",
+  "n_documents": 2875,
+  "n_families": 2004,
+  "family_size_distribution": {
+    "1": 1319,
+    "2": 528,
+    "3": 129,
+    "4": 27,
+    "5": 1
+  },
+  "auc_a": 0.764187,
+  "auc_b": 0.774806,
+  "delta_point": -0.010619,
+  "B": 10000,
+  "seed": 42,
+  "cluster_bootstrap": {
+    "ci95": [
+      -0.024219,
+      0.002382
+    ],
+    "sd": 0.006722,
+    "resamples_skipped_single_class": 0,
+    "excludes_zero": false
+  },
+  "document_bootstrap_reference": {
+    "ci95": [
+      -0.022303,
+      0.000919
+    ],
+    "sd": 0.005966
+  },
+  "design_effect_variance_ratio": 1.269,
+  "method": "families resampled with replacement, all member documents kept, identical index set for both models, percentile interval"
+}
