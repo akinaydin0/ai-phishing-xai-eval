@@ -21,7 +21,8 @@ manifest (`MANIFEST.sha256`) is uploaded alongside and checked on restore.
 Everything else (source, frozen splits, all summary results, XAI attribution JSONs, statistics,
 human-validation outputs, notes and the decision log, figures) is committed directly in git. The
 Python environment is not archived: recreate it from `requirements.txt`
-(pinned: PyTorch 2.11.0+cu128, Transformers 4.57.6, Accelerate 1.14.0, scikit-learn 1.8.0).
+(pinned: PyTorch 2.11.0+cu128, Transformers 4.57.6, Accelerate 1.14.0, scikit-learn 1.8.0), or from
+`requirements-cpu.txt` on a machine without an NVIDIA GPU.
 
 Restore (with access to the private release): run `tools/restore_artefacts.ps1` from the
 repository root, or check each zip against `MANIFEST.sha256` and extract it with

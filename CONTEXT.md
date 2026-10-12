@@ -238,17 +238,18 @@ Every restored path is git-ignored. The second machine was restored this way on 
 
 Use **forward slashes** for the script path in bash/Git Bash — backslashes get swallowed.
 
-`requirements.txt` pins `torch==2.11.0+cu128`, which needs an NVIDIA GPU + CUDA wheel. On a GPU-less
-machine install CPU torch instead
-(`pip install torch --index-url https://download.pytorch.org/whl/cpu`) — nothing needs retraining;
+`requirements.txt` pins `torch==2.11.0+cu128` (NVIDIA GPU, CUDA 12.8) and names the PyTorch cu128
+index, so `pip install -r requirements.txt` can resolve it. On a GPU-less machine use
+`requirements-cpu.txt` instead: the same pins with `torch==2.11.0+cpu`, i.e. the `pip freeze` of the
+CPU machine on which the positive-control suite passed (2026-10-12). Nothing needs retraining;
 checkpoint loading, inference, XAI and figure regeneration all work on CPU.
 
 - **AMD GPUs do not help:** they have no CUDA, and ROCm does not support RDNA1 cards such as the
   second machine's RX 5600 XT.
 - **Python 3.11 for the venv:** create it with the pinned 3.11. A newer system Python, such as the
   3.14 on the second machine, may lack wheels for the pinned packages.
-- **Torch pin:** `pip install -r requirements.txt` cannot resolve the `+cu128` torch pin from PyPI.
-  Install the other requirements first, then CPU torch.
+- **Torch pin:** the `+cu128` and `+cpu` builds are not on PyPI, so each requirements file carries an
+  `--extra-index-url` line for the PyTorch index. Keep it when re-freezing.
 
 `results/hitl/.env` (Anthropic API key) is git-ignored by design and does **not** transfer; it is
 only needed to re-run the LLM judge, whose outputs are already committed.

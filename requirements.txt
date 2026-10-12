@@ -1,3 +1,7 @@
+# Python 3.11.9. Generated with `pip freeze`; keep these header lines when re-freezing.
+# torch below is the CUDA 12.8 build, which is not on PyPI: the next line adds the PyTorch cu128 index.
+# No NVIDIA GPU? Use requirements-cpu.txt instead.
+--extra-index-url https://download.pytorch.org/whl/cu128
 accelerate==1.14.0
 alembic==1.18.5
 annotated-types==0.7.0

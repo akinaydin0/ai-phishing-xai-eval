@@ -27,3 +27,29 @@ results/hitl/api_key.txt
 
 # Release staging area for heavy artefacts (tools/archive_artefacts.ps1); the archives live on GitHub Releases
 _release/
+
+# Secrets and local credentials (never commit)
+.env.*
+api_key*.txt
+*.pem
+*.key
+kaggle.json
+.claude/settings.local.json
+
+# Local scratch, test caches and heavy binaries
+_scratch/
+.pytest_cache/
+*.pkl
+*.safetensors
+*.zip
+
+# Private material kept outside this repository (purged from the history, 2026-10-12)
+/paper/
+/viva/
+/Dissertation-full-draft-Akin-AydinFeedback.pdf
+/AKIN-AYDIN-DISSERTATION.pdf
+/proposal.docx
+/interim_slides.pptx
+# Rebuilt locally with the email text (src.experiments.d10_package). results/hitl/key.json stays tracked
+# WITHOUT the text: after src.experiments.d10_restore_text, do not commit it.
+/results/hitl/annotate.html

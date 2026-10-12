@@ -250,7 +250,8 @@ DATA.md and CITATION.cff exist.
   └── report/
   ```
 - **Environment:** Python 3.11.9 venv at `./venv/`. Freeze after any install:
-  `./venv/Scripts/python.exe -m pip freeze > requirements.txt`.
+  `./venv/Scripts/python.exe -m pip freeze > requirements.txt`, then restore its comment and
+  `--extra-index-url` header lines and update `requirements-cpu.txt`, which differs only in the torch build.
 - **Figures:** save as **both PNG and PDF** (PNG for the report, PDF for LaTeX/vector).
 - **Scripts:** runnable **headless from the repo root** (e.g. `python -m src.cleaning --all`,
   `python -m src.eda_v2`).
