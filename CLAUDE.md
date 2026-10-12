@@ -3,9 +3,9 @@
 > ### ▶ START HERE: read `CONTEXT.md` first
 > `CONTEXT.md` (repo root) is the project handover: current state, headline results, where every
 > artefact lives, how to restore the 6.12 GB GitHub Release on a new machine, and — most important —
-> the **five caveats** that must not be re-derived or cited around (void LIME numbers, d3_en
+> the **six caveats** that must not be re-derived or cited around (void LIME numbers, d3_en
 > seed-family leakage, the Table 6.5 comparator pool, D1/D3 provenance overlap, fabricated
-> references). This file below holds the *operating rules*; `CONTEXT.md` holds the *state*.
+> references, the explanation sets' realised error counts). This file below holds the *operating rules*; `CONTEXT.md` holds the *state*.
 > The append-only canonical log is `notes/decisions.md`.
 > Submitted dissertation: `AKIN-AYDIN-DISSERTATION.pdf` (85 pp, 7 chapters + STARD-AI and
 > group-sensitivity appendices). It is NOT encrypted; if a PDF reader claims it is, extract with
@@ -16,7 +16,9 @@
 **Title:** An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails
 **Author:** Akın Aydın, MSc Machine Learning, Liverpool John Moores University
 **Final deadline:** 31 August 2026 (dissertation). Interim report submitted May 2026.
-**Hardware:** Local workstation with NVIDIA RTX 3090 (24 GB VRAM).
+**Hardware:** Local workstation with NVIDIA RTX 3090 (24 GB VRAM), where all training ran. A second
+machine (cloned 2026-09-02) has an AMD RX 5600 XT, which has no CUDA, so use CPU torch there. Nothing
+needs retraining; see `CONTEXT.md` §5.
 
 The project designs and evaluates an **explainable** phishing-detection framework, with
 particular emphasis on **AI-generated** phishing. It compares three model families and
@@ -36,11 +38,14 @@ quantitatively for **faithfulness / stability / plausibility** (each vs a random
 via `src/xai/` (`cue_lexicon.py` committed *before* results; `champions.py`, `explainers.py`,
 `metrics.py`, `run_xai.py`, `report_xai.py`, `figures_xai.py`). Pre-registered protocol + fixed
 206-term lexicon in `notes/decisions.md`. Explanation docs are **TEST-split only** (n=200 in-corpus /
-100 cross, 100/class, all misclassified up to 30, seed 42; ids in `results/xai/explained_ids_*.json`).
+100 cross, 100/class, seed 42; ids in `results/xai/explained_ids_*.json`). Each set holds up to 30
+(15 cross) deliberately sampled misclassified docs plus a same-class fill that can add more errors.
+The **realised** error counts are 23–33 per in-corpus set and 30–43 per cross set (`CONTEXT.md` caveat 6).
 Log `results/xai_metrics.csv` (30 rows, **independently verified PASS** 2026-07-17 — row accounting
 exact, 288/288 table cells consistent at 3 dp, means exact, comp@k monotone on SHAP/IG, suff@10 ≤ random
 30/30); figures `figures/xai/*`; report `notes/xai_summary.md`.
-Per-unit attribution JSONs git-ignored (18 MB, regenerable). Run: 30 (unit,method) in **306 min**.
+Per-unit attribution JSONs (18 MB) were git-ignored at the time and have been **committed since
+2026-09-01**. Run: 30 (unit,method) in **306 min**.
 **Findings (RQ3):** ⚠️ **[SUPERSEDED — every LIME claim in this paragraph is VOID. See Directive 11
 below and `CONTEXT.md` caveat 1. Do not cite: "LIME ≈ random", the "LIME most stable, least faithful"
 trade-off (inverted), "IG is their best explainer" (revised), or the per-unit cost figures (wrong
@@ -55,7 +60,8 @@ cross-corpus win 4/6, **AI→real d3_en→d2 NOT closed** 0.731 vs 0.752; result
 **Done:** pre-registered `max_length=512` ablation (Directive 8; isolated `results/transformers_512/`,
 canonical results byte-identical). **Verdict H1 (directional):** raising the window recovers
 **d3_en→d2 0.731→0.844** (above best classical 0.752 — reverses the D6 loss) because the d3_en
-champion now trains on fuller AI emails (train truncation 76%→22%); **d2→d3_en unmoved** (−0.011, d2
+champion now trains on fuller AI emails (train truncation 73%→19% for the RoBERTa champion; the
+often-quoted 76%→22% is the DistilBERT/BERT WordPiece figure; see decisions.md 2026-10-12); **d2→d3_en unmoved** (−0.011, d2
 docs already short). So the legacy↔AI break is, for the d3_en→d2 half, largely a 256-token truncation
 artifact — not purely distributional. 6 units = 145 min (~2× the 256 cost). See
 `notes/transformer_512_summary.md`, `results/results_512.csv`,
@@ -80,7 +86,8 @@ phishing-predicted), **260 blind sets / 2,558 token judgments**; judge `claude-o
 refusals. **Verdict: the cue-lexicon proxy is directionally validated, "fair" in calibration** —
 **P2 lexicon–human κ=0.396 (fair, on the 0.4 boundary; E2 FAILS by 0.004)**, per corpus 0.434/0.421
 (moderate) / 0.368; **E1 holds 4/4** (separated 3/4); **concordance 6/6 valid (LIME-free) contrasts**;
-**P3 human–judge κ=0.702 (moderate, 93.1%)**, ρ 0.818/0.734. **The proxy is CONSERVATIVE: human
+**P3 human–judge κ=0.702 (93.1%; pre-registered band "moderate", which is "substantial" on the full
+Landis–Koch scale used in the dissertation and paper)**, ρ 0.818/0.734. **The proxy is CONSERVATIVE: human
 separation > lexicon in 9/9 method-vs-random contrasts** → the committed plausibility column
 **understates** the effect and is **ordinal, not absolute**. Lexicon gap (not acted on): no
 impersonation/secrecy category; `greeting` drives 29.2% of its false positives. Sensitivity excl. the
@@ -97,7 +104,7 @@ real docs, T3 legacy value still reproduces the void arm, **T4 a ZERO vector mus
 provably detects the original defect). Fix = `split_expression` omitted (LIME default `r"\W+"`); the
 defective value kept as `explainers.LEGACY_VOID_SPLIT_EXPRESSION` for audit reproduction. **12/12 units
 re-run in 2.75 h** on the SAME committed `explained_ids`, committed D7 params verbatim; isolated
-`results/xai_metrics_limefix.csv` + `results/xai_lime_fix/` (git-ignored); **canonical `xai_metrics.csv`
+`results/xai_metrics_limefix.csv` + `results/xai_lime_fix/` (its JSONs were git-ignored at the time and have been committed since 2026-09-01); **canonical `xai_metrics.csv`
 (30), `results.csv` (124), `results_512.csv` (8), `figures/xai/*` byte-untouched**.
 **Findings — the void arm had inverted LIME on BOTH axes.** Corrected LIME AOPC **0.071–0.295, above its
 random baseline on 12/12 units by at least 4×** (ratios 4.0×–2357×; top end is a 0.0001-denominator
@@ -131,7 +138,14 @@ longer reproducible from current code (use `LEGACY_VOID_SPLIT_EXPRESSION`); `not
 its erratum. Review PASS 5/5 (S1–S5) with corrections applied. See `notes/lime_fix_summary.md`,
 decisions.md (2026-07-26 pre-reg + result).
 
-**Next:** STARD-AI checklist (supervisor item 5); dissertation writing; DeSE 2026 paper (15/09).
+**Status (2026-10-12):** dissertation **submitted** (`AKIN-AYDIN-DISSERTATION.pdf` = LaTeX compile
+"main 18", 1 Sep 2026; STARD-AI = Appendix A, so supervisor item 5 is done) and **viva completed**.
+**DeSE 2026 paper in progress**, written in OpenAI Prism with a Cowork agent. A snapshot of its source
+is in `paper/` (`main.tex`, `refs.bib`, `main.pdf`; untracked as of 2026-10-12). A read-only audit of
+that draft against this repo matched 257 of 264 sub-claims. The mismatches, plus three undisclosed
+implementation details, are logged in decisions.md (2026-10-12 AUDIT-PAPER) and in `CONTEXT.md`
+caveat 6. Heavy artefacts are restored on the second machine from the verified `_release` zips.
+**Next:** DeSE paper finalisation (deadlines: item 8 below).
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
@@ -155,7 +169,9 @@ decisions.md (2026-07-26 pre-reg + result).
 - **Counts:** 33,716 emails — 16,545 ham (label 0) / 17,171 spam (label 1).
 
 ### D3 — PhishFuzzer (Tóth et al. 2025)
-- **Source:** GitHub — `DataPhish/PhishFuzzer` (paper: arXiv 2511.21448; CC BY 4.0).
+- **Source:** GitHub — `DataPhish/PhishFuzzer`. Paper: Toth, Bisztray & Gruschka, arXiv 2511.21448,
+  **verified 2026-10-12**: its abstract names PhishFuzzer and links this repo. CC BY 4.0 is the
+  *paper's* licence; the dataset repo itself has **no licence** (GitHub API `license: null`).
 - **Path:** `data/raw/phishfuzzer/` (two JSON files: original seeds + entity-rephrased variants).
 - **Counts:** 23,100 emails = 3,300 seeds + 19,800 LLM variants.
 - **Usage rule:** use **only the 19,800 variants** (`load_phishfuzzer(variant="variants")`).
@@ -181,8 +197,12 @@ decisions.md (2026-07-26 pre-reg + result).
   healthy (15,406 ham / 13,818 spam). The ±2pp class-shift guard is replaced for the three
   frozen corpora by exact **determinism fingerprints** (`CLEANING_EXPECTED` in
   `src/cleaning.py`): any drift hard-fails the pipeline and forces a conscious re-pin.
-- **Token-length medians:** modern phishing 62, modern legitimate 199, Enron ham 176,
+- **Token-length medians (RAW):** modern phishing 62, modern legitimate 199, Enron ham 176,
   Enron spam 138, AI-generated phishing 232.
+  - The dissertation and paper use the **cleaned** values: Enron ham 169, Enron spam 132,
+    AI phishing 229 (`notes/eda_v2_summary.md`).
+  - The "D2 median 176 WordPiece tokens" in the 512 discussion is a different statistic: the D2
+    train split under the DistilBERT tokenizer. It only coincides with the raw ham 176.
 - **Pairwise Jaccard (top-500 tokens) — cleaned (primary):** legacy↔modern **0.353**,
   legacy↔AI **0.248**, modern↔AI **0.256** (post-cleaning; matches `notes/decisions.md`).
   Raw (pre-cleaning) values were legacy↔modern 0.351, legacy↔AI 0.250, modern↔AI 0.263.
@@ -257,7 +277,7 @@ decisions.md (2026-07-26 pre-reg + result).
 7. **LSEP** stays **Chapter 1 §1.4** (supervisor approved either placement); DOI-anchored at writing.
 8. **Conference: DeSE 2026** (16–18 Dec 2026, Malaysia; IEEE Xplore) — **full paper 15/09/2026**,
    camera-ready + registration 15/10/2026; distil from the dissertation draft in August.
-9. **Viva** question redirected to programme leader **[name redacted]** (email sent, pending).
+9. **Viva** question redirected to programme leader **[name redacted]**. Resolved: **viva completed** (confirmed 2026-10-12).
 
 ## Reference Errata (Important — do not cite these)
 
@@ -279,4 +299,5 @@ hallucination). DO NOT cite them in any output:
 ## Heavy artefacts (added 2026-09-01)
 - Files over GitHub's 100 MB limit (transformer checkpoints, data caches, GloVe, raw data, preproc cache) are NOT in git: they live as assets of GitHub Release `artefacts-v1`. See ARTEFACTS.md; create with tools/archive_artefacts.ps1, restore on a fresh clone with tools/restore_artefacts.ps1 (verifies SHA-256).
 - XAI attribution JSONs, stats scores and HPO logs are committed directly (about 32 MB). `_release/` is the ignored staging folder.
+- Restoring without `gh`: if the release zips are already local (e.g. a cloud backup of `_release/`), check them against `MANIFEST.sha256`, then run `tar.exe -xf <zip>` from the repo root. Every restored path is git-ignored. The second machine was restored this way on 2026-10-12 (22/22 hashes matched).
 - viva/ holds the final viva package (deck, Q&A PDF, assistant briefs) and viva/build/ the scripts that regenerate them.

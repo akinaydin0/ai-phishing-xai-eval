@@ -86,7 +86,8 @@ grounds, not the original void-arm reasoning.
   tokens (0.731 vs classical 0.752).
 - **512-token ablation (H1, directional):** raising the window recovers `d3_en->d2` to **0.844**,
   above the best classical 0.752, because the d3_en champion finally trains on fuller AI emails
-  (train truncation 76% -> 22%). `d2->d3_en` unmoved. So that half of the legacy/AI break was largely
+  (train truncation 73% -> 19% for the RoBERTa champion; the often-quoted 76% -> 22% is the
+  DistilBERT/BERT WordPiece figure on the same split). `d2->d3_en` unmoved. So that half of the legacy/AI break was largely
   a **truncation artefact**, not purely distributional.
 - **RQ3 answer: linear TF-IDF + SHAP** — top accuracy, faithful, more stable, more plausible, and
   ~64x cheaper to attribute than LIME (0.6 s vs 39.6 s per 200 documents). This survived a serious
@@ -137,6 +138,9 @@ There is **no clean holdout inside the frozen split** (clean subset n = 0).
 - Exposure is **broader than the headline trio**: every d3-trained-on-d3-test row (whole leaderboard,
   dense rows, all 256 *and* 512 in-corpus transformers, D9 imbalance, XAI/HITL d3_en units).
 - **H1 is safe** — it evaluates on the **D2** test split, not d3_en.
+- **Wording trap:** the figures above count *documents*. Do not write "every test seed family has a
+  training sibling": 10 test documents (2–3 families) have no training sibling. Only the
+  train-**or**-val statement is 100%.
 
 ### 3. Table 6.5's "4/6" depends on the comparator pool — state the pool
 "Best classical champion per directed pair" is taken over the `__xcorpus_*` val-selected champions.
@@ -157,13 +161,34 @@ retraining**.
   proposal): Aljofey et al. 2022 "IEEE Access 10, 15321"; Almeida et al. 2020 "ESWA 153, 113434";
   Alsharnouby et al. 2020 "IJHCS 141, 102432". Real: Aljofey et al. 2022 *Sci. Rep.* 12, 8842,
   DOI 10.1038/s41598-022-10841-5; Alsharnouby et al. **2015**, IJHCS 82.
-- **D3 attribution is unverified at source:** the PhishFuzzer repo has **no licence at all**
-  (`license: null`) and its citation block is literally `[Placeholder for citation information]`.
-  "CC BY 4.0", "Tóth et al. 2025" and "arXiv 2511.21448" appear **nowhere** in the source.
-  The dataset's own name there is *"The Machine Wars Email Dataset"*.
+- **D3 attribution was verified on 2026-10-12, from the paper side.** arXiv 2511.21448 (Toth,
+  Bisztray & Gruschka, *The Phish, The Spam, and The Valid…*) names PhishFuzzer and links
+  github.com/DataPhish/PhishFuzzer (23,100 variants), so citing it is correct.
+  - The GitHub repo itself still has **no licence** (`license: null`), a placeholder citation block,
+    and calls the data *"The Machine Wars Email Dataset"*.
+  - CC BY 4.0 is the arXiv paper's licence, not a dataset licence.
 - The D3 variant generator **is** pinned: `expand.py:25` gives `MODEL_ID = "google/gemini-2.5-flash"`,
   temperature 0.7, via OpenRouter.
 - Lexicon caveat: the `greeting` category drives **29.2%** (61/209) of the proxy's false positives.
+
+### 6. Explanation sets are more error-enriched than the design says (found 2026-10-12)
+The D7 design reads: "every misclassified document up to 30 (15 for transfer), the rest correctly
+classified". But `src/xai/champions.py:181` fills the remaining places from same-class documents
+*outside the capped error sample*, so errors that were not sampled can re-enter.
+- **Realised errors per set** (y_true ≠ pred in `results/xai/explained_ids_<unit>.json`):
+  - ensemble 33 / 32 / 31 and transformer_d3_en 31, against a quota of 30;
+  - the transfer sets 30 / 38 / 43 out of 100, against a quota of 15;
+  - 73 of the 2,100 documents in total.
+- The stored `n_misclassified` counts only the deliberately sampled errors.
+- Metrics are unaffected, because they were computed on these sets. Only the *description* changes,
+  so describe the sets by their realised error counts.
+
+Two other undisclosed deviations from the D7 pre-registration:
+- **SHAP background:** 200 rows instead of 1,000.
+- **IG target:** attributes the class-1 logit, with its sign flipped for ham-predicted documents,
+  instead of "the predicted-class logit".
+
+Both are logged in decisions.md (2026-10-12 AUDIT-PAPER).
 
 ---
 
@@ -220,10 +245,23 @@ python -m venv venv
 
 Use **forward slashes** for the script path in bash/Git Bash — backslashes get swallowed.
 
+**No `gh`, or the zips are already local** (e.g. a cloud backup of `_release/`): check every zip
+against `MANIFEST.sha256`, then run `tar.exe -xf <zip>` from the repo root and skip the
+`gh release download` line. Every restored path is git-ignored. The second machine was restored this
+way on 2026-10-12, with 22/22 hashes matching.
+
 `requirements.txt` pins `torch==2.11.0+cu128`, which needs an NVIDIA GPU + CUDA wheel. On a GPU-less
 machine install CPU torch instead
 (`pip install torch --index-url https://download.pytorch.org/whl/cpu`) — nothing needs retraining;
 checkpoint loading, inference, XAI and figure regeneration all work on CPU.
+
+- **AMD GPUs do not help:** they have no CUDA, and ROCm does not support RDNA1 cards such as the
+  second machine's RX 5600 XT.
+- **Python 3.11 for the venv:** create it with the pinned 3.11. A newer system Python, such as the
+  3.14 on the second machine, may lack wheels for the pinned packages.
+- **Torch pin:** `pip install -r requirements.txt` cannot resolve the `+cu128` torch pin from PyPI.
+  Install the other requirements first, then CPU torch.
+
 `results/hitl/.env` (Anthropic API key) is git-ignored by design and does **not** transfer; it is
 only needed to re-run the LLM judge, whose outputs are already committed.
 
@@ -238,9 +276,17 @@ group-aware leakage sensitivity (**Appendix B.4**), the 62.4% provenance audit w
 instability caveat (Ch6), and the **STARD-AI checklist (Appendix A)** — so supervisor item 5 is
 **done**, not outstanding.
 
-Remaining:
-- **DeSE 2026 paper** — full paper due **15/09/2026**; distil from the dissertation.
-- **Viva** — `viva/` holds the deck, Q&A pack and presentation.
+Status (2026-10-12):
+- **Viva — completed.** `viva/` keeps the deck, Q&A pack and presentation.
+- **DeSE 2026 paper — in progress.** It is written in OpenAI Prism with a Cowork agent, and a source
+  snapshot is in `paper/`. A read-only audit of that draft (2026-10-12) matched 257 of 264 sub-claims.
+  The paper needs four corrections:
+  - the explanation-set error counts (caveat 6);
+  - "every test family has a training sibling" (caveat 2);
+  - D3 truncation 73→19, not 76→22;
+  - judge retries (278 calls for 260 sets).
+
+  Details are in decisions.md (2026-10-12 AUDIT-PAPER).
 - Future work (as stated in §7.3 / here): provenance-stratified D1↔D3 re-split **with retraining**
   (caveat 4 is the one genuinely unresolved threat); human re-annotation of the corrected-LIME sets
   (deferred — the D10 ratings were collected on the void arm and cannot be reused); adding

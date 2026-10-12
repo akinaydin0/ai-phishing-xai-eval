@@ -1711,3 +1711,70 @@ transfer results.
 4. **Results appended as a new dated block** rather than edited into the Amendment 5 entry, to honour the
    append-only rule.
 5. No CIs were computed (none pre-registered), so all Δ values here are point estimates.
+
+## 2026-10-12 · AUDIT-PAPER — DeSE paper number check: corrections and undisclosed details (NO RESULTS CHANGED)
+
+**Scope.** A read-only audit of the DeSE 2026 paper draft (`paper/main.tex`, untracked snapshot)
+against the committed artefacts at `be7ed67`: 264 sub-claims, of which 257 match, 6 mismatch and 1 is
+not found.
+- No committed number, table, interval or p-value changes.
+- Recomputed from committed files: AUCs (from score vectors), McNemar/Holm, κ, Spearman, family means,
+  ratios and counts.
+- Taken as committed: the bootstrap intervals (numpy RNG) and the notes-only items.
+- Not re-run: the positive-control suite, since this machine had no Python environment.
+
+The items below correct or qualify earlier entries, which stay untouched (append-only).
+
+1. **Explanation sets exceed the stated error quota (D7 design, ~line 351).**
+   - **Mechanism.** `src/xai/champions.py:170-174` caps only the *sampled* errors. The fill at
+     `:181` draws from same-class documents not in that capped subset, so errors that were not sampled
+     can re-enter. The `# pred==y for these` comment holds only when the cap does not bind.
+   - **Realised errors** (y_true ≠ pred in `results/xai/explained_ids_<unit>.json`):
+     - ensemble_d1_sb 33, ensemble_d2 32, ensemble_d3_en 31 and transformer_d3_en 31, against a quota of 30;
+     - xfer_d3_en__d1_sb 30, xfer_d2__d3_en 38 and xfer_d3_en__d2 43 of 100, against a quota of 15;
+     - the other five sets have 30 / 30 / 30 / 30 / 23. In total 73 of 2,100 documents are errors
+       beyond the sampled ones.
+   - **Stored field.** `n_misclassified` records only the sampled subset.
+   - **Impact.** Every metric was computed on these sets, so nothing changes numerically. Describe the
+     sets by their realised error counts. The transfer sets are 30–43% errors, not ≤15%.
+2. **Truncation attribution.**
+   - **Where the error is.** Line 529 and the generated `notes/transformer_512_summary.md` items 2–3.
+     That text is hard-coded in `src/experiments/transformer_512_report.py:209,215`.
+   - **Correction.** "76% → 22%" is the DistilBERT/BERT WordPiece train truncation on d3_en
+     (75.95% → 22.11%). The d3_en champion at both windows is RoBERTa-base, whose figure is
+     **73.46% → 18.73%** (`results/transformers{,_512}/roberta-base__d3_en.json`,
+     `truncation.train.truncated_pct`). Table (c) of the same summary lists both rows. The H1 verdict
+     is unaffected.
+3. **Seed-family sibling wording.**
+   - **Where.** The Amendment 5 motivation (~line 1561) and the `src/experiments/group_sens.py:5`
+     docstring restate AUDIT-D3 A3 at family level.
+   - **What A3 measured.** It counted *documents*: 100% of test documents have a train-or-val
+     sibling, and 99.65% (2,865/2,875) have a train sibling.
+   - **Consequence.** 10 test documents (class 0) have none in train. Train covers 3,191 of the 3,194
+     families, so 2–3 test families have no training member. "Every test family has a training
+     sibling" is therefore not supported.
+4. **Judge calls (D10).** There were 278 API calls for 260 sets. 251 sets needed one call each; the
+   9 refused sets were tried 3 times each under the pre-registered `MAX_ATTEMPTS = 3`
+   (`src/experiments/d10_judge.py:49`).
+5. **Undisclosed deviations from the D7 pre-registration (method hyperparameters, ~lines 374 and 380).**
+   - **SHAP LinearExplainer background:** 200 seeded train rows (`src/xai/explainers.py:82-88`), not 1,000.
+   - **IG target:** `target=1`, applied to the class-1 *logit* (`explainers.py:210-219`), with the sign
+     flipped for ham-predicted documents when ranking (`src/xai/textops.py:54-66`). The pre-registration
+     said "target = predicted-class logit".
+   - Neither deviation was recorded before. Both are reported here without re-running anything.
+6. **Typos and clarifications.**
+   - **Line 1237, "IG ~8× cheaper".** This is the `runtime_s` basis. On the `timing.attr` basis used
+     everywhere else (line 1246, `notes/lime_fix_summary.md`, the dissertation), IG is 6.6× cheaper
+     than corrected LIME.
+   - **Line 1634, "480 val / 479 test" families.** `results/group_sens.json` and
+     `data/splits/d3_en_grouped.json` give val 479 / test 480.
+   - **`fp_per_1000_legit@95recall` (D9).** It is read from the precision–recall curve: the threshold
+     with the highest precision among those with recall ≥ 0.95 (`src/experiments/d9_imbalance.py:66-75`).
+     It is not the ROC false-positive rate at exactly 95% TPR.
+   - **Duplicate rates.** 9.6% raw and 11.64% normalised are both D2 figures; `data/cache/clean_d2_report.json`
+     gives `dup_pct_observed` 11.6443.
+7. **D3 attribution verified (`CONTEXT.md` caveat 5).**
+   - arXiv 2511.21448 (Toth, Bisztray, Gruschka) names PhishFuzzer and links
+     github.com/DataPhish/PhishFuzzer (23,100 variants).
+   - CC BY 4.0 is the paper's licence. The dataset repository has no licence (GitHub API
+     `license: null`, 2026-10-12).
