@@ -1778,3 +1778,33 @@ The items below correct or qualify earlier entries, which stay untouched (append
      github.com/DataPhish/PhishFuzzer (23,100 variants).
    - CC BY 4.0 is the paper's licence. The dataset repository has no licence (GitHub API
      `license: null`, 2026-10-12).
+
+## 2026-10-12 · RECONSTRUCTION: D3 family-audit script
+
+The AUDIT-D3 family-overlap analysis (2026-08-17, section A) was run from a scratchpad and never
+committed. For reproducibility it is reconstructed after the fact as `src/experiments/d3_family_audit.py`,
+with output `results/stats/d3_family_audit.json`.
+- **Inputs:** only frozen artefacts.
+  - The split `data/splits/d3_en.json`.
+  - The family key of the Appendix B.4 grouped split: `original_id` from `data/cache/clean_d3.pkl`
+    (English rows), joined to `load_corpus("d3_en")` exactly as in `src/experiments/group_sens.py`.
+    The reconstruction adds a guard that checks row alignment by sha1 body hash.
+- **What it does not do:** run a model or read a score.
+
+**It reproduces every previously logged figure exactly (13/13; the script hard-fails otherwise):**
+- 19,164 documents in 3,194 families, all of size 6;
+- families per split: train 3,191 / val 1,963 / test 2,004;
+- test documents with a train sibling: 2,865 / 2,875 = 99.65%;
+- with a val sibling: 1,567 = 54.50%;
+- with a train-or-val sibling: 2,875 = 100.00%;
+- val documents with a train sibling: 2,867 = 99.72%;
+- 10 test documents without a train sibling, all class 0, and 0 without a train-or-val sibling.
+
+**New figures (not logged before):**
+- The 10 test documents without a train sibling belong to exactly **3** families. So 3 of the 2,004
+  test families have no training member, which settles the "2–3" bound in the AUDIT-PAPER entry above.
+- **2,001** families straddle the train/test boundary.
+- The full partition-overlap matrix is in the JSON (e.g. 56.20% of train documents have a test sibling).
+
+This is the family key that the family-cluster bootstrap uses. Nothing else changes: the per-document
+split remains the result of record, and earlier entries are untouched.

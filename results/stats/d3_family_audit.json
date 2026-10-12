@@ -1,0 +1,156 @@
+{
+  "corpus": "d3_en",
+  "split_file": "data/splits/d3_en.json",
+  "family_key": "original_id from data/cache/clean_d3.pkl (language == 'en'), aligned to load_corpus('d3_en') as in src/experiments/group_sens.py (Appendix B.4)",
+  "n_documents": 19164,
+  "n_families": 3194,
+  "family_size_distribution": {
+    "6": 3194
+  },
+  "families_per_partition": {
+    "train": 3191,
+    "val": 1963,
+    "test": 2004
+  },
+  "documents_whose_family_has_a_member_in_another_partition": {
+    "train": {
+      "n_documents": 13414,
+      "family_has_member_in": {
+        "val": {
+          "n": 7336,
+          "pct": 54.69
+        },
+        "test": {
+          "n": 7538,
+          "pct": 56.2
+        },
+        "val_or_test": {
+          "n": 11134,
+          "pct": 83.0
+        }
+      }
+    },
+    "val": {
+      "n_documents": 2875,
+      "family_has_member_in": {
+        "train": {
+          "n": 2867,
+          "pct": 99.72
+        },
+        "test": {
+          "n": 1611,
+          "pct": 56.03
+        },
+        "train_or_test": {
+          "n": 2875,
+          "pct": 100.0
+        }
+      }
+    },
+    "test": {
+      "n_documents": 2875,
+      "family_has_member_in": {
+        "train": {
+          "n": 2865,
+          "pct": 99.65
+        },
+        "val": {
+          "n": 1567,
+          "pct": 54.5
+        },
+        "train_or_val": {
+          "n": 2875,
+          "pct": 100.0
+        }
+      }
+    }
+  },
+  "test_documents_without_train_sibling": {
+    "n": 10,
+    "labels": {
+      "0": 10
+    },
+    "n_families": 3
+  },
+  "test_documents_without_train_or_val_sibling": {
+    "n": 0
+  },
+  "families_straddling_train_test": 2001,
+  "test_families_without_a_train_member": 3,
+  "logged_figures_check": {
+    "n_documents": {
+      "logged": 19164,
+      "reproduced": 19164,
+      "match": true
+    },
+    "n_families": {
+      "logged": 3194,
+      "reproduced": 3194,
+      "match": true
+    },
+    "family_size_distribution": {
+      "logged": {
+        "6": 3194
+      },
+      "reproduced": {
+        "6": 3194
+      },
+      "match": true
+    },
+    "families_train": {
+      "logged": 3191,
+      "reproduced": 3191,
+      "match": true
+    },
+    "families_val": {
+      "logged": 1963,
+      "reproduced": 1963,
+      "match": true
+    },
+    "families_test": {
+      "logged": 2004,
+      "reproduced": 2004,
+      "match": true
+    },
+    "test_with_train_sibling": {
+      "logged": 2865,
+      "reproduced": 2865,
+      "match": true
+    },
+    "test_with_val_sibling": {
+      "logged": 1567,
+      "reproduced": 1567,
+      "match": true
+    },
+    "test_with_train_or_val_sibling": {
+      "logged": 2875,
+      "reproduced": 2875,
+      "match": true
+    },
+    "val_with_train_sibling": {
+      "logged": 2867,
+      "reproduced": 2867,
+      "match": true
+    },
+    "test_without_train_sibling": {
+      "logged": 10,
+      "reproduced": 10,
+      "match": true
+    },
+    "test_without_train_sibling_labels": {
+      "logged": {
+        "0": 10
+      },
+      "reproduced": {
+        "0": 10
+      },
+      "match": true
+    },
+    "test_without_train_or_val_sibling": {
+      "logged": 0,
+      "reproduced": 0,
+      "match": true
+    }
+  },
+  "all_logged_figures_reproduced": true
+}
