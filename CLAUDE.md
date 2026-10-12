@@ -2,14 +2,13 @@
 
 > ### ▶ START HERE: read `CONTEXT.md` first
 > `CONTEXT.md` (repo root) is the project handover: current state, headline results, where every
-> artefact lives, how to restore the 6.12 GB GitHub Release on a new machine, and — most important —
+> artefact lives (the 6.12 GB of heavy artefacts are not in this repository), and — most important —
 > the **six caveats** that must not be re-derived or cited around (void LIME numbers, d3_en
 > seed-family leakage, the Table 6.5 comparator pool, D1/D3 provenance overlap, fabricated
 > references, the explanation sets' realised error counts). This file below holds the *operating rules*; `CONTEXT.md` holds the *state*.
 > The append-only canonical log is `notes/decisions.md`.
-> Submitted dissertation: `AKIN-AYDIN-DISSERTATION.pdf` (85 pp, 7 chapters + STARD-AI and
-> group-sensitivity appendices). It is NOT encrypted; if a PDF reader claims it is, extract with
-> `pypdf` instead.
+> Submitted dissertation: 85 pp, 7 chapters + STARD-AI and group-sensitivity appendices. Its PDF is
+> not in this repository: heavy artefacts and private material are available from the author on request.
 
 ## Project
 
@@ -138,10 +137,10 @@ longer reproducible from current code (use `LEGACY_VOID_SPLIT_EXPRESSION`); `not
 its erratum. Review PASS 5/5 (S1–S5) with corrections applied. See `notes/lime_fix_summary.md`,
 decisions.md (2026-07-26 pre-reg + result).
 
-**Status (2026-10-12):** dissertation **submitted** (`AKIN-AYDIN-DISSERTATION.pdf` = LaTeX compile
-"main 18", 1 Sep 2026; STARD-AI = Appendix A, so supervisor item 5 is done) and **viva completed**.
-**DeSE 2026 paper in progress**, written in OpenAI Prism with a Cowork agent. Its source and PDF
-are tracked in `paper/` since 2026-10-12 (`main.tex`, `refs.bib`, `main.pdf`). A read-only audit of
+**Status (2026-10-12):** dissertation **submitted** (LaTeX compile "main 18", 1 Sep 2026; the PDF is
+not in this repository; STARD-AI = Appendix A, so supervisor item 5 is done) and **viva completed**.
+**DeSE 2026 paper in progress**, written in OpenAI Prism with a Cowork agent. The conference paper
+(source and PDF) lives outside git. A read-only audit of
 that draft against this repo matched 257 of 264 sub-claims. The mismatches, plus three undisclosed
 implementation details, are logged in decisions.md (2026-10-12 AUDIT-PAPER) and in `CONTEXT.md`
 caveat 6. Heavy artefacts are restored on the second machine from the verified `_release` zips.
@@ -287,7 +286,7 @@ caveat 6. Heavy artefacts are restored on the second machine from the verified `
 
 ## Reference Errata (Important — do not cite these)
 
-Three references in the original `proposal.docx` were found to be fabricated (LLM
+Three references in the original project proposal (`proposal.docx`, not in this repository) were found to be fabricated (LLM
 hallucination). DO NOT cite them in any output:
 
 - Aljofey et al. (2022) "IEEE Access 10, 15321-15333" — does not exist. Real paper:
@@ -307,7 +306,7 @@ hallucination). DO NOT cite them in any output:
 Never add Co-Authored-By, Claude-Session or 'Generated with Claude Code' lines to commit messages or pull request descriptions. Commits are authored by the repository owner only.
 
 ## Heavy artefacts (added 2026-09-01)
-- Files over GitHub's 100 MB limit (transformer checkpoints, data caches, GloVe, raw data, preproc cache) are NOT in git: they live as assets of GitHub Release `artefacts-v1`. See ARTEFACTS.md; create with tools/archive_artefacts.ps1, restore on a fresh clone with tools/restore_artefacts.ps1 (verifies SHA-256).
+- Files over GitHub's 100 MB limit (transformer checkpoints, data caches, GloVe, raw data, preproc cache) are NOT in git: they live as assets of GitHub Release `artefacts-v1` of the author's private repository, not of this one; heavy artefacts and private material are available from the author on request. See ARTEFACTS.md; create with tools/archive_artefacts.ps1, restore with tools/restore_artefacts.ps1 (verifies SHA-256; needs access to the private release).
 - XAI attribution JSONs, stats scores and HPO logs are committed directly (about 32 MB). `_release/` is the ignored staging folder.
 - Restoring without `gh`: if the release zips are already local (e.g. a cloud backup of `_release/`), check them against `MANIFEST.sha256`, then run `tar.exe -xf <zip>` from the repo root. Every restored path is git-ignored. The second machine was restored this way on 2026-10-12 (22/22 hashes matched).
-- viva/ holds the final viva package (deck, Q&A PDF, assistant briefs) and viva/build/ the scripts that regenerate them.
+- The viva package, the dissertation PDFs, the project proposal and the conference-paper source are not in this repository: heavy artefacts and private material are available from the author on request.

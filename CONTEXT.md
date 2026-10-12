@@ -7,13 +7,9 @@ rules; this file holds the *state of the work*, the *verdicts*, and — most imp
 
 - **Project:** An Explainable Machine Learning Framework for Detecting AI-Generated Phishing Emails
 - **Author:** Akın Aydın — MSc Machine Learning, Liverpool John Moores University
-- **Final dissertation PDF (submitted version):** `AKIN-AYDIN-DISSERTATION.pdf` (repo root),
-  85 pages, 7 chapters + 2 appendices. **It is NOT encrypted** (no `/Encrypt`; producer
-  `pdfTeX-1.40.28`) — but some built-in PDF readers wrongly report "password-protected" and refuse
-  it. If that happens, extract with `pypdf` instead:
-  `PdfReader(path).pages[i].extract_text()` works fine (write to a UTF-8 file; the Windows console
-  cannot print `ı`). Extraction drops some inter-word spaces, so quote from the PDF itself.
-- **Earlier draft with supervisor feedback:** `Dissertation-full-draft-Akin-AydinFeedback.pdf`
+- **Final dissertation (submitted version):** 85 pages, 7 chapters + 2 appendices. Neither its PDF
+  nor the earlier draft with supervisor feedback is in this repository: heavy artefacts and private
+  material are available from the author on request.
 - **Canonical decision log:** `notes/decisions.md` — append-only, ~124 KB, every pre-registration,
   amendment and result entry in chronological order. **This is the ground truth.**
 
@@ -61,7 +57,7 @@ transformers stay the hardest family to explain faithfully; plausibility is **or
 conservative**. *RQ3:* **linear TF-IDF + SHAP** gives the best overall balance — but on *replaced*
 grounds, not the original void-arm reasoning.
 
-### Thesis map (`AKIN-AYDIN-DISSERTATION.pdf`)
+### Thesis map (submitted dissertation)
 
 | ch | title | p. |
 |---|---|--:|
@@ -222,33 +218,25 @@ src/                       cleaning, splits, features, experiments/, xai/
 results/                   metric tables, hpo/ + transformers/ finalist params, hitl/, stats/, xai*/
 data/splits/               frozen split JSONs (+ d3_en_grouped.json)
 figures/                   PNG + PDF per phase (xai_lime_fix/ supersedes xai/ for LIME)
-viva/                      deck, Q&A, presentation, build scripts
-tools/                     archive_artefacts.ps1 / restore_artefacts.ps1
-ARTEFACTS.md               what lives in the GitHub Release and how to restore it
+tools/                     archive_artefacts.ps1 / restore_artefacts.ps1 (private release)
+ARTEFACTS.md               what the heavy-artefact archives contain
 ```
 
-**Heavy artefacts are NOT in git.** They are GitHub Release **`artefacts-v1`** on
-`akinaydin0/msc-thesis` (private): 24 assets, **6.12 GB** — 15 checkpoint zips (9x256 + 6x512),
-`data_raw`, `data_cache`, `data_processed`, GloVe, preproc cache, plus `MANIFEST.sha256`.
-Verified 2026-09-01: every asset's byte size matches its local zip, and a fresh download reproduced
-its manifest SHA-256 and extracted to the correct paths.
+**Heavy artefacts are NOT in git and not part of this repository.** They are GitHub Release
+**`artefacts-v1`** of the author's private repository: 24 assets, **6.12 GB** — 15 checkpoint zips
+(9x256 + 6x512), `data_raw`, `data_cache`, `data_processed`, GloVe, preproc cache, plus
+`MANIFEST.sha256`. Verified 2026-09-01: every asset's byte size matches its local zip, and a fresh
+download reproduced its manifest SHA-256 and extracted to the correct paths.
 
-### Restore on a new machine
+### Restore (with access to the private release)
 
-```bash
-git clone https://github.com/akinaydin0/msc-thesis.git
-cd msc-thesis
-gh auth login
-powershell -ExecutionPolicy Bypass -File ./tools/restore_artefacts.ps1
-python -m venv venv
-```
+Heavy artefacts and private material are available from the author on request. With access, run
+`tools/restore_artefacts.ps1` from the repository root (it needs `gh` and the private release), or
+check every zip against `MANIFEST.sha256` and run `tar.exe -xf <zip>` from the repository root.
+Every restored path is git-ignored. The second machine was restored this way on 2026-10-12, with
+22/22 hashes matching. Then create the environment (`python -m venv venv`, see below).
 
 Use **forward slashes** for the script path in bash/Git Bash — backslashes get swallowed.
-
-**No `gh`, or the zips are already local** (e.g. a cloud backup of `_release/`): check every zip
-against `MANIFEST.sha256`, then run `tar.exe -xf <zip>` from the repo root and skip the
-`gh release download` line. Every restored path is git-ignored. The second machine was restored this
-way on 2026-10-12, with 22/22 hashes matching.
 
 `requirements.txt` pins `torch==2.11.0+cu128`, which needs an NVIDIA GPU + CUDA wheel. On a GPU-less
 machine install CPU torch instead
@@ -277,9 +265,10 @@ instability caveat (Ch6), and the **STARD-AI checklist (Appendix A)** — so sup
 **done**, not outstanding.
 
 Status (2026-10-12):
-- **Viva — completed.** `viva/` keeps the deck, Q&A pack and presentation.
-- **DeSE 2026 paper — in progress.** It is written in OpenAI Prism with a Cowork agent, and a source
-  snapshot is in `paper/`. A read-only audit of that draft (2026-10-12) matched 257 of 264 sub-claims.
+- **Viva — completed.** The viva material is not in this repository (heavy artefacts and private
+  material are available from the author on request).
+- **DeSE 2026 paper — in progress.** It is written in OpenAI Prism with a Cowork agent; the
+  conference paper lives outside git. A read-only audit of that draft (2026-10-12) matched 257 of 264 sub-claims.
   The paper needs four corrections:
   - the explanation-set error counts (caveat 6);
   - "every test family has a training sibling" (caveat 2);
