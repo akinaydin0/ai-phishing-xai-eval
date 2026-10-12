@@ -140,11 +140,17 @@ decisions.md (2026-07-26 pre-reg + result).
 
 **Status (2026-10-12):** dissertation **submitted** (`AKIN-AYDIN-DISSERTATION.pdf` = LaTeX compile
 "main 18", 1 Sep 2026; STARD-AI = Appendix A, so supervisor item 5 is done) and **viva completed**.
-**DeSE 2026 paper in progress**, written in OpenAI Prism with a Cowork agent. A snapshot of its source
-is in `paper/` (`main.tex`, `refs.bib`, `main.pdf`; untracked as of 2026-10-12). A read-only audit of
+**DeSE 2026 paper in progress**, written in OpenAI Prism with a Cowork agent. Its source and PDF
+are tracked in `paper/` since 2026-10-12 (`main.tex`, `refs.bib`, `main.pdf`). A read-only audit of
 that draft against this repo matched 257 of 264 sub-claims. The mismatches, plus three undisclosed
 implementation details, are logged in decisions.md (2026-10-12 AUDIT-PAPER) and in `CONTEXT.md`
 caveat 6. Heavy artefacts are restored on the second machine from the verified `_release` zips.
+
+**Reviewer response (2026-10-12):**
+- The D3 family audit was reconstructed: `src/experiments/d3_family_audit.py` reproduces 13/13 logged figures.
+- A pre-registered family-cluster bootstrap was run for C1c / C4 / C5 (`results/stats/cluster_bootstrap_*.json`).
+  C1c and C4 still exclude 0 and C5 still includes 0. Design effects are 0.96 / 1.29 / 1.27.
+
 **Next:** DeSE paper finalisation (deadlines: item 8 below).
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
@@ -295,6 +301,10 @@ hallucination). DO NOT cite them in any output:
 - Plan before executing; checkpoint at methodological decisions before committing to them.
 - Flag inference vs cited fact. Don't fabricate statistics — if data isn't present, say so.
 - Use the existing venv. Commit at logical milestones with descriptive messages.
+
+## Git
+
+Never add Co-Authored-By, Claude-Session or 'Generated with Claude Code' lines to commit messages or pull request descriptions. Commits are authored by the repository owner only.
 
 ## Heavy artefacts (added 2026-09-01)
 - Files over GitHub's 100 MB limit (transformer checkpoints, data caches, GloVe, raw data, preproc cache) are NOT in git: they live as assets of GitHub Release `artefacts-v1`. See ARTEFACTS.md; create with tools/archive_artefacts.ps1, restore on a fresh clone with tools/restore_artefacts.ps1 (verifies SHA-256).
