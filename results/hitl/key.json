@@ -1,0 +1,8404 @@
+{
+ "directive": "D10",
+ "seed": 42,
+ "sets": {
+  "d1_sb_017547c4cef2__tfidf__A": {
+   "doc_uid": "d1_sb_017547c4cef2",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    44,
+    542,
+    197,
+    268,
+    495,
+    76,
+    386,
+    389,
+    404,
+    348
+   ],
+   "tokens": [
+    "video",
+    "comments",
+    "cnn",
+    "05",
+    "LANDFALL",
+    "HER",
+    "2008",
+    "04",
+    "SHOWBIZ",
+    "WORLD"
+   ]
+  },
+  "d1_sb_017547c4cef2__tfidf__B": {
+   "doc_uid": "d1_sb_017547c4cef2",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "CNN",
+    "com",
+    "Daily",
+    "Top",
+    "10",
+    "THE",
+    "DAILY",
+    "TOP",
+    "10",
+    "from"
+   ]
+  },
+  "d1_sb_017547c4cef2__tfidf__C": {
+   "doc_uid": "d1_sb_017547c4cef2",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    0,
+    10,
+    36,
+    52,
+    79,
+    104,
+    129,
+    146,
+    155,
+    180
+   ],
+   "tokens": [
+    "CNN",
+    "CNN",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn"
+   ]
+  },
+  "d1_sb_02caaf957fc5__tfidf__A": {
+   "doc_uid": "d1_sb_02caaf957fc5",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    3,
+    21,
+    43,
+    47,
+    23,
+    2,
+    20,
+    27,
+    48,
+    25
+   ],
+   "tokens": [
+    "health",
+    "health",
+    "our",
+    "our",
+    "life",
+    "your",
+    "your",
+    "glad",
+    "site",
+    "we"
+   ]
+  },
+  "d1_sb_02caaf957fc5__tfidf__B": {
+   "doc_uid": "d1_sb_02caaf957fc5",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "helpful",
+    "for",
+    "your",
+    "health",
+    "Dear",
+    "4bc2655c86e80a73abda26152f3f8fd7",
+    "Summer",
+    "is",
+    "a",
+    "best"
+   ]
+  },
+  "d1_sb_02caaf957fc5__tfidf__C": {
+   "doc_uid": "d1_sb_02caaf957fc5",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    9,
+    41,
+    23,
+    46,
+    42,
+    39,
+    21,
+    28,
+    57,
+    48
+   ],
+   "tokens": [
+    "best",
+    "can",
+    "life",
+    "Visit",
+    "use",
+    "October",
+    "health",
+    "to",
+    "04",
+    "site"
+   ]
+  },
+  "d1_sb_054c64014f71__tfidf__A": {
+   "doc_uid": "d1_sb_054c64014f71",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    8,
+    43,
+    49,
+    7,
+    18,
+    33,
+    32,
+    2,
+    42,
+    36
+   ],
+   "tokens": [
+    "your",
+    "French",
+    "returns",
+    "Turn",
+    "Become",
+    "extent",
+    "the",
+    "t",
+    "on",
+    "commercial"
+   ]
+  },
+  "d1_sb_054c64014f71__tfidf__B": {
+   "doc_uid": "d1_sb_054c64014f71",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    29,
+    16,
+    18,
+    8,
+    23,
+    28,
+    30,
+    20,
+    3,
+    6
+   ],
+   "tokens": [
+    "dearcan",
+    "love",
+    "Become",
+    "your",
+    "will",
+    "http",
+    "com",
+    "lover",
+    "believe",
+    "incredible"
+   ]
+  },
+  "d1_sb_054c64014f71__tfidf__C": {
+   "doc_uid": "d1_sb_054c64014f71",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "You",
+    "won",
+    "t",
+    "believe",
+    "It",
+    "s",
+    "incredible",
+    "Turn",
+    "your",
+    "small"
+   ]
+  },
+  "d1_sb_07a4688e463b__tfidf__A": {
+   "doc_uid": "d1_sb_07a4688e463b",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    0,
+    6,
+    5,
+    2,
+    3,
+    1,
+    4,
+    7
+   ],
+   "tokens": [
+    "Money",
+    "money",
+    "my",
+    "take",
+    "56",
+    "Please",
+    "off",
+    "Ta"
+   ]
+  },
+  "d1_sb_07a4688e463b__tfidf__B": {
+   "doc_uid": "d1_sb_07a4688e463b",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "tokens": [
+    "Money",
+    "Please",
+    "take",
+    "56",
+    "off",
+    "my",
+    "money",
+    "Ta"
+   ]
+  },
+  "d1_sb_07a4688e463b__tfidf__C": {
+   "doc_uid": "d1_sb_07a4688e463b",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    6,
+    1,
+    0,
+    3,
+    5,
+    2,
+    7,
+    4
+   ],
+   "tokens": [
+    "money",
+    "Please",
+    "Money",
+    "56",
+    "my",
+    "take",
+    "Ta",
+    "off"
+   ]
+  },
+  "d1_sb_0c55e64c8f49__tfidf__A": {
+   "doc_uid": "d1_sb_0c55e64c8f49",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    84,
+    7,
+    83,
+    113,
+    53,
+    114,
+    124,
+    120,
+    75,
+    85
+   ],
+   "tokens": [
+    "love",
+    "huge",
+    "your",
+    "your",
+    "remedy",
+    "life",
+    "ne",
+    "ed",
+    "ra",
+    "wand"
+   ]
+  },
+  "d1_sb_0c55e64c8f49__tfidf__B": {
+   "doc_uid": "d1_sb_0c55e64c8f49",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    69,
+    96,
+    54,
+    95,
+    73,
+    66,
+    34,
+    78,
+    22,
+    71
+   ],
+   "tokens": [
+    "called",
+    "makes",
+    "pr",
+    "and",
+    "Mi",
+    "us",
+    "believed",
+    "Just",
+    "guess",
+    "than"
+   ]
+  },
+  "d1_sb_0c55e64c8f49__tfidf__C": {
+   "doc_uid": "d1_sb_0c55e64c8f49",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "You",
+    "must",
+    "be",
+    "The",
+    "Real",
+    "Man",
+    "with",
+    "huge",
+    "dignity",
+    "jte"
+   ]
+  },
+  "d1_sb_0fd335619b46__tfidf__A": {
+   "doc_uid": "d1_sb_0fd335619b46",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    128,
+    308,
+    301,
+    545,
+    9,
+    419,
+    376,
+    380,
+    246,
+    275
+   ],
+   "tokens": [
+    "email",
+    "S",
+    "cnn",
+    "LP",
+    "from",
+    "cnn",
+    "PURE",
+    "cnn",
+    "lawsuit",
+    "OBAMA"
+   ]
+  },
+  "d1_sb_0fd335619b46__tfidf__B": {
+   "doc_uid": "d1_sb_0fd335619b46",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    0,
+    10,
+    36,
+    53,
+    74,
+    100,
+    116,
+    124,
+    151,
+    175
+   ],
+   "tokens": [
+    "CNN",
+    "CNN",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn"
+   ]
+  },
+  "d1_sb_0fd335619b46__tfidf__C": {
+   "doc_uid": "d1_sb_0fd335619b46",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "CNN",
+    "com",
+    "Daily",
+    "Top",
+    "10",
+    "THE",
+    "DAILY",
+    "TOP",
+    "10",
+    "from"
+   ]
+  },
+  "d1_sb_13d68b055945__tfidf__A": {
+   "doc_uid": "d1_sb_13d68b055945",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    359,
+    280,
+    490,
+    554,
+    264,
+    518,
+    128,
+    140,
+    284,
+    142
+   ],
+   "tokens": [
+    "them",
+    "term",
+    "be",
+    "was",
+    "up",
+    "of",
+    "any",
+    "known",
+    "transformed",
+    "through"
+   ]
+  },
+  "d1_sb_13d68b055945__tfidf__B": {
+   "doc_uid": "d1_sb_13d68b055945",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    42,
+    119,
+    174,
+    241,
+    270,
+    396,
+    415,
+    446,
+    577,
+    41
+   ],
+   "tokens": [
+    "Bismarck",
+    "Bismarck",
+    "BISMARCK",
+    "BISMARCK",
+    "Bismarck",
+    "Bismarck",
+    "Bismarck",
+    "Bismarck",
+    "Bismarck",
+    "Prince"
+   ]
+  },
+  "d1_sb_13d68b055945__tfidf__C": {
+   "doc_uid": "d1_sb_13d68b055945",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Herzlich",
+    "Willkommen",
+    "My",
+    "grandfather",
+    "was",
+    "pleased",
+    "at",
+    "the",
+    "cordial",
+    "greetings"
+   ]
+  },
+  "d1_sb_1575814b5232__tfidf__A": {
+   "doc_uid": "d1_sb_1575814b5232",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    3,
+    85,
+    90,
+    75,
+    32,
+    47,
+    41,
+    86,
+    50,
+    100
+   ],
+   "tokens": [
+    "Custom",
+    "30303",
+    "A",
+    "click",
+    "0700",
+    "result",
+    "email",
+    "2008",
+    "CNN",
+    "policy"
+   ]
+  },
+  "d1_sb_1575814b5232__tfidf__B": {
+   "doc_uid": "d1_sb_1575814b5232",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    0,
+    5,
+    43,
+    50,
+    81,
+    3,
+    8,
+    13,
+    72,
+    2
+   ],
+   "tokens": [
+    "CNN",
+    "CNN",
+    "CNN",
+    "CNN",
+    "CNN",
+    "Custom",
+    "Custom",
+    "Custom",
+    "custom",
+    "My"
+   ]
+  },
+  "d1_sb_1575814b5232__tfidf__C": {
+   "doc_uid": "d1_sb_1575814b5232",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "CNN",
+    "Alerts",
+    "My",
+    "Custom",
+    "Alert",
+    "CNN",
+    "Alerts",
+    "My",
+    "Custom",
+    "Alert"
+   ]
+  },
+  "d1_sb_16da2d992da0__tfidf__A": {
+   "doc_uid": "d1_sb_16da2d992da0",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    17,
+    34,
+    58,
+    84,
+    16,
+    26,
+    33,
+    83,
+    3,
+    72
+   ],
+   "tokens": [
+    "account",
+    "account",
+    "account",
+    "account",
+    "your",
+    "your",
+    "your",
+    "your",
+    "PayPal",
+    "paypal"
+   ]
+  },
+  "d1_sb_16da2d992da0__tfidf__B": {
+   "doc_uid": "d1_sb_16da2d992da0",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "notifcation",
+    "support",
+    "com",
+    "PayPal",
+    "Secure",
+    "Dear",
+    "Client",
+    "It",
+    "looks",
+    "like"
+   ]
+  },
+  "d1_sb_16da2d992da0__tfidf__C": {
+   "doc_uid": "d1_sb_16da2d992da0",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    42,
+    125,
+    102,
+    81,
+    74,
+    7,
+    110,
+    19,
+    87,
+    136
+   ],
+   "tokens": [
+    "to",
+    "Friday",
+    "you",
+    "can",
+    "terms",
+    "It",
+    "us",
+    "we",
+    "on",
+    "Sunday"
+   ]
+  },
+  "d1_sb_179f76bb653a__tfidf__A": {
+   "doc_uid": "d1_sb_179f76bb653a",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    80,
+    13,
+    45,
+    97,
+    21,
+    6,
+    23,
+    120,
+    126,
+    130
+   ],
+   "tokens": [
+    "transaction",
+    "money",
+    "funds",
+    "funds",
+    "investment",
+    "your",
+    "your",
+    "your",
+    "your",
+    "Your"
+   ]
+  },
+  "d1_sb_179f76bb653a__tfidf__B": {
+   "doc_uid": "d1_sb_179f76bb653a",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Dear",
+    "Friend",
+    "Dear",
+    "Friend",
+    "I",
+    "need",
+    "your",
+    "services",
+    "in",
+    "a"
+   ]
+  },
+  "d1_sb_179f76bb653a__tfidf__C": {
+   "doc_uid": "d1_sb_179f76bb653a",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    6,
+    133,
+    3,
+    29,
+    99,
+    40,
+    4,
+    50,
+    28,
+    127
+   ],
+   "tokens": [
+    "your",
+    "2",
+    "Friend",
+    "to",
+    "question",
+    "arrangement",
+    "I",
+    "legal",
+    "decided",
+    "full"
+   ]
+  },
+  "d1_sb_18d7de6a39cd__tfidf__A": {
+   "doc_uid": "d1_sb_18d7de6a39cd",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    14,
+    16,
+    1,
+    8,
+    4,
+    15,
+    17,
+    11,
+    13,
+    0
+   ],
+   "tokens": [
+    "prices",
+    "pickreal",
+    "accessories",
+    "splendid",
+    "Top",
+    "http",
+    "com",
+    "sold",
+    "unbelievable",
+    "Elegant"
+   ]
+  },
+  "d1_sb_18d7de6a39cd__tfidf__B": {
+   "doc_uid": "d1_sb_18d7de6a39cd",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    12,
+    4,
+    10,
+    3,
+    1,
+    13,
+    8,
+    6,
+    17,
+    11
+   ],
+   "tokens": [
+    "at",
+    "Top",
+    "are",
+    "sale",
+    "accessories",
+    "unbelievable",
+    "splendid",
+    "articles",
+    "com",
+    "sold"
+   ]
+  },
+  "d1_sb_18d7de6a39cd__tfidf__C": {
+   "doc_uid": "d1_sb_18d7de6a39cd",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Elegant",
+    "accessories",
+    "for",
+    "sale",
+    "Top",
+    "notch",
+    "articles",
+    "of",
+    "splendid",
+    "beauty"
+   ]
+  },
+  "d1_sb_1b7c9aed90de__tfidf__A": {
+   "doc_uid": "d1_sb_1b7c9aed90de",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    7,
+    0,
+    1,
+    8,
+    5,
+    4,
+    2,
+    3,
+    6
+   ],
+   "tokens": [
+    "WATCH",
+    "For",
+    "f96b5baa494132853167d05b69b7719f",
+    "fctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQ",
+    "nude",
+    "Britney",
+    "Paris",
+    "and",
+    "RlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWC"
+   ]
+  },
+  "d1_sb_1b7c9aed90de__tfidf__B": {
+   "doc_uid": "d1_sb_1b7c9aed90de",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    7,
+    4,
+    5,
+    2,
+    3,
+    1,
+    6,
+    8,
+    0
+   ],
+   "tokens": [
+    "WATCH",
+    "Britney",
+    "nude",
+    "Paris",
+    "and",
+    "f96b5baa494132853167d05b69b7719f",
+    "RlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWC",
+    "fctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQ",
+    "For"
+   ]
+  },
+  "d1_sb_1b7c9aed90de__tfidf__C": {
+   "doc_uid": "d1_sb_1b7c9aed90de",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "tokens": [
+    "For",
+    "f96b5baa494132853167d05b69b7719f",
+    "Paris",
+    "and",
+    "Britney",
+    "nude",
+    "RlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWC",
+    "WATCH",
+    "fctQgoXPkNCWjSHSnQuGerRlWCoyfctQgoXPkNCWjSHSnQuGerRlWCoyfctQ"
+   ]
+  },
+  "d1_sb_20d415687a7c__tfidf__A": {
+   "doc_uid": "d1_sb_20d415687a7c",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    26,
+    87,
+    57,
+    13,
+    14,
+    70,
+    47,
+    40,
+    89,
+    36
+   ],
+   "tokens": [
+    "Password",
+    "to",
+    "Ustream",
+    "is",
+    "your",
+    "ANYWHERE",
+    "sign",
+    "events",
+    "Ustream",
+    "concerts"
+   ]
+  },
+  "d1_sb_20d415687a7c__tfidf__B": {
+   "doc_uid": "d1_sb_20d415687a7c",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Welcome",
+    "To",
+    "Ustream",
+    "tv",
+    "Thank",
+    "you",
+    "for",
+    "signing",
+    "up",
+    "with"
+   ]
+  },
+  "d1_sb_20d415687a7c__tfidf__C": {
+   "doc_uid": "d1_sb_20d415687a7c",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    14,
+    38,
+    45,
+    49,
+    66,
+    85,
+    72,
+    42,
+    70,
+    33
+   ],
+   "tokens": [
+    "your",
+    "your",
+    "your",
+    "your",
+    "your",
+    "your",
+    "the",
+    "video",
+    "ANYWHERE",
+    "live"
+   ]
+  },
+  "d1_sb_22009fb2fbbe__tfidf__A": {
+   "doc_uid": "d1_sb_22009fb2fbbe",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    11,
+    2,
+    8,
+    4,
+    16,
+    7,
+    13,
+    0,
+    5,
+    6
+   ],
+   "tokens": [
+    "confidence",
+    "things",
+    "valuable",
+    "life",
+    "com",
+    "most",
+    "http",
+    "Re",
+    "that",
+    "are"
+   ]
+  },
+  "d1_sb_22009fb2fbbe__tfidf__B": {
+   "doc_uid": "d1_sb_22009fb2fbbe",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Re",
+    "Three",
+    "things",
+    "of",
+    "life",
+    "that",
+    "are",
+    "most",
+    "valuable",
+    "Love"
+   ]
+  },
+  "d1_sb_22009fb2fbbe__tfidf__C": {
+   "doc_uid": "d1_sb_22009fb2fbbe",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    9,
+    15,
+    4,
+    11,
+    16,
+    7,
+    8,
+    10,
+    13,
+    3
+   ],
+   "tokens": [
+    "Love",
+    "bornforgiveness",
+    "life",
+    "confidence",
+    "com",
+    "most",
+    "valuable",
+    "self",
+    "http",
+    "of"
+   ]
+  },
+  "d1_sb_231f61037446__tfidf__A": {
+   "doc_uid": "d1_sb_231f61037446",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "looking",
+    "for",
+    "hans",
+    "heinrich",
+    "waengler",
+    "dear",
+    "linguist",
+    "members",
+    "i",
+    "am"
+   ]
+  },
+  "d1_sb_231f61037446__tfidf__B": {
+   "doc_uid": "d1_sb_231f61037446",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    0,
+    5,
+    32,
+    6,
+    8,
+    17,
+    10,
+    27,
+    13,
+    25
+   ],
+   "tokens": [
+    "looking",
+    "dear",
+    "pcmail",
+    "linguist",
+    "i",
+    "german",
+    "interested",
+    "trier",
+    "x",
+    "d"
+   ]
+  },
+  "d1_sb_231f61037446__tfidf__C": {
+   "doc_uid": "d1_sb_231f61037446",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    15,
+    17,
+    28,
+    5,
+    35,
+    2,
+    16,
+    10,
+    4,
+    8
+   ],
+   "tokens": [
+    "pictures",
+    "german",
+    "germany",
+    "dear",
+    "de",
+    "hans",
+    "of",
+    "interested",
+    "waengler",
+    "i"
+   ]
+  },
+  "d1_sb_233a61ac9692__tfidf__A": {
+   "doc_uid": "d1_sb_233a61ac9692",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    114,
+    352,
+    15,
+    554,
+    427,
+    133,
+    381,
+    335,
+    299,
+    97
+   ],
+   "tokens": [
+    "but",
+    "as",
+    "AND",
+    "I",
+    "There",
+    "am",
+    "as",
+    "if",
+    "deceased",
+    "for"
+   ]
+  },
+  "d1_sb_233a61ac9692__tfidf__B": {
+   "doc_uid": "d1_sb_233a61ac9692",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "PRIVATE",
+    "AND",
+    "URGENT",
+    "ATTN",
+    "HELPER",
+    "STRICTLY",
+    "CONFIDENTIAL",
+    "FROM",
+    "THE",
+    "DESK"
+   ]
+  },
+  "d1_sb_233a61ac9692__tfidf__C": {
+   "doc_uid": "d1_sb_233a61ac9692",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    212,
+    287,
+    317,
+    337,
+    344,
+    394,
+    497,
+    23,
+    152,
+    322
+   ],
+   "tokens": [
+    "money",
+    "money",
+    "money",
+    "money",
+    "money",
+    "money",
+    "money",
+    "BANK",
+    "BANK",
+    "Bank"
+   ]
+  },
+  "d1_sb_29b2086ff4b1__tfidf__A": {
+   "doc_uid": "d1_sb_29b2086ff4b1",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "From",
+    "Robyn",
+    "Borne",
+    "Thank",
+    "you",
+    "all",
+    "for",
+    "your",
+    "many",
+    "messages"
+   ]
+  },
+  "d1_sb_29b2086ff4b1__tfidf__B": {
+   "doc_uid": "d1_sb_29b2086ff4b1",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    45,
+    7,
+    54,
+    41,
+    8,
+    46,
+    4,
+    29,
+    37,
+    51
+   ],
+   "tokens": [
+    "growth",
+    "your",
+    "your",
+    "best",
+    "many",
+    "of",
+    "you",
+    "you",
+    "you",
+    "you"
+   ]
+  },
+  "d1_sb_29b2086ff4b1__tfidf__C": {
+   "doc_uid": "d1_sb_29b2086ff4b1",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    4,
+    66,
+    60,
+    19,
+    58,
+    13,
+    28,
+    47,
+    7,
+    53
+   ],
+   "tokens": [
+    "you",
+    "me",
+    "keep",
+    "said",
+    "friendship",
+    "on",
+    "represent",
+    "this",
+    "your",
+    "for"
+   ]
+  },
+  "d1_sb_2aa305e1c356__tfidf__A": {
+   "doc_uid": "d1_sb_2aa305e1c356",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    0,
+    10,
+    36,
+    53,
+    74,
+    100,
+    116,
+    124,
+    151,
+    175
+   ],
+   "tokens": [
+    "CNN",
+    "CNN",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn",
+    "cnn"
+   ]
+  },
+  "d1_sb_2aa305e1c356__tfidf__B": {
+   "doc_uid": "d1_sb_2aa305e1c356",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    361,
+    617,
+    233,
+    502,
+    112,
+    102,
+    37,
+    295,
+    53,
+    197
+   ],
+   "tokens": [
+    "com",
+    "Daily",
+    "email",
+    "index",
+    "06",
+    "video",
+    "com",
+    "06",
+    "cnn",
+    "GARR"
+   ]
+  },
+  "d1_sb_2aa305e1c356__tfidf__C": {
+   "doc_uid": "d1_sb_2aa305e1c356",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "CNN",
+    "com",
+    "Daily",
+    "Top",
+    "10",
+    "THE",
+    "DAILY",
+    "TOP",
+    "10",
+    "from"
+   ]
+  },
+  "d1_sb_2d40e126004e__tfidf__A": {
+   "doc_uid": "d1_sb_2d40e126004e",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "genie",
+    "video",
+    "update",
+    "i",
+    "have",
+    "received",
+    "many",
+    "inquiries",
+    "from",
+    "outside"
+   ]
+  },
+  "d1_sb_2d40e126004e__tfidf__B": {
+   "doc_uid": "d1_sb_2d40e126004e",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    1,
+    24,
+    30,
+    86,
+    6,
+    79,
+    33,
+    89,
+    20,
+    47
+   ],
+   "tokens": [
+    "video",
+    "video",
+    "secret",
+    "secret",
+    "many",
+    "ordering",
+    "wild",
+    "wild",
+    "months",
+    "here"
+   ]
+  },
+  "d1_sb_2d40e126004e__tfidf__C": {
+   "doc_uid": "d1_sb_2d40e126004e",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    39,
+    60,
+    90,
+    56,
+    58,
+    53,
+    103,
+    87,
+    75,
+    100
+   ],
+   "tokens": [
+    "255",
+    "wgbh",
+    "child",
+    "number",
+    "the",
+    "and",
+    "series",
+    "of",
+    "8881",
+    "of"
+   ]
+  },
+  "d1_sb_2dcd4d3352ff__tfidf__A": {
+   "doc_uid": "d1_sb_2dcd4d3352ff",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Surely",
+    "the",
+    "best",
+    "enhancement",
+    "solution",
+    "Bigger",
+    "dimension",
+    "will",
+    "also",
+    "increase"
+   ]
+  },
+  "d1_sb_2dcd4d3352ff__tfidf__B": {
+   "doc_uid": "d1_sb_2dcd4d3352ff",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    26,
+    3,
+    9,
+    6,
+    2,
+    25,
+    24,
+    19,
+    17,
+    13
+   ],
+   "tokens": [
+    "wearplaces",
+    "enhancement",
+    "increase",
+    "dimension",
+    "best",
+    "http",
+    "you",
+    "offer",
+    "we",
+    "your"
+   ]
+  },
+  "d1_sb_2dcd4d3352ff__tfidf__C": {
+   "doc_uid": "d1_sb_2dcd4d3352ff",
+   "corpus": "d1_sb",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    35,
+    30,
+    51,
+    10,
+    43,
+    18,
+    40,
+    32,
+    28,
+    27
+   ],
+   "tokens": [
+    "these",
+    "potentialmarket",
+    "is",
+    "the",
+    "insight",
+    "can",
+    "given",
+    "sum",
+    "Always",
+    "com"
+   ]
+  },
+  "d2_07bdde7faf62__tfidf__A": {
+   "doc_uid": "d2_07bdde7faf62",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "click",
+    "here",
+    "for",
+    "more",
+    "information",
+    "about",
+    "ets",
+    "the",
+    "next",
+    "generation"
+   ]
+  },
+  "d2_07bdde7faf62__tfidf__B": {
+   "doc_uid": "d2_07bdde7faf62",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    6,
+    2,
+    0,
+    8,
+    9,
+    1,
+    4,
+    5,
+    7,
+    3
+   ],
+   "tokens": [
+    "ets",
+    "for",
+    "click",
+    "next",
+    "generation",
+    "here",
+    "information",
+    "about",
+    "the",
+    "more"
+   ]
+  },
+  "d2_07bdde7faf62__tfidf__C": {
+   "doc_uid": "d2_07bdde7faf62",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    1,
+    3,
+    0,
+    4,
+    2,
+    9,
+    8,
+    7,
+    6,
+    5
+   ],
+   "tokens": [
+    "here",
+    "more",
+    "click",
+    "information",
+    "for",
+    "generation",
+    "next",
+    "the",
+    "ets",
+    "about"
+   ]
+  },
+  "d2_0ab6b544ebac__tfidf__A": {
+   "doc_uid": "d2_0ab6b544ebac",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    54,
+    0,
+    67,
+    82,
+    33,
+    3,
+    96,
+    140,
+    32,
+    80
+   ],
+   "tokens": [
+    "de",
+    "hello",
+    "no",
+    "no",
+    "70",
+    "blood",
+    "many",
+    "satisfaction",
+    "over",
+    "brought"
+   ]
+  },
+  "d2_0ab6b544ebac__tfidf__B": {
+   "doc_uid": "d2_0ab6b544ebac",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    25,
+    100,
+    87,
+    34,
+    120,
+    50,
+    102,
+    113,
+    122,
+    62
+   ],
+   "tokens": [
+    "his",
+    "as",
+    "his",
+    "with",
+    "bloodst",
+    "and",
+    "slave",
+    "aback",
+    "total",
+    "larboard"
+   ]
+  },
+  "d2_0ab6b544ebac__tfidf__C": {
+   "doc_uid": "d2_0ab6b544ebac",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "hello",
+    "do",
+    "yowait",
+    "blood",
+    "bade",
+    "him",
+    "interrupting",
+    "and",
+    "he",
+    "set"
+   ]
+  },
+  "d2_0b48feee9474__tfidf__A": {
+   "doc_uid": "d2_0b48feee9474",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    119,
+    233,
+    252,
+    258,
+    325,
+    196,
+    137,
+    100,
+    95,
+    7
+   ],
+   "tokens": [
+    "many",
+    "thatdoes",
+    "years",
+    "in",
+    "coriolanus",
+    "money",
+    "as",
+    "in",
+    "freedom",
+    "of"
+   ]
+  },
+  "d2_0b48feee9474__tfidf__B": {
+   "doc_uid": "d2_0b48feee9474",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "zesty",
+    "have",
+    "xme",
+    "in",
+    "clamorous",
+    "is",
+    "krieger",
+    "of",
+    "hearse",
+    "or"
+   ]
+  },
+  "d2_0b48feee9474__tfidf__C": {
+   "doc_uid": "d2_0b48feee9474",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    163,
+    184,
+    196,
+    59,
+    226,
+    61,
+    60,
+    266,
+    285,
+    208
+   ],
+   "tokens": [
+    "money",
+    "money",
+    "money",
+    "online",
+    "online",
+    "account",
+    "bank",
+    "removed",
+    "removed",
+    "http"
+   ]
+  },
+  "d2_0b7f87b90663__tfidf__A": {
+   "doc_uid": "d2_0b7f87b90663",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    13,
+    10,
+    4,
+    21,
+    2,
+    23,
+    3,
+    14,
+    12,
+    15
+   ],
+   "tokens": [
+    "find",
+    "sure",
+    "gift",
+    "your",
+    "home",
+    "by",
+    "depot",
+    "a",
+    "can",
+    "use"
+   ]
+  },
+  "d2_0b7f87b90663__tfidf__B": {
+   "doc_uid": "d2_0b7f87b90663",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    5,
+    19,
+    1,
+    21,
+    22,
+    0,
+    7,
+    3,
+    4,
+    18
+   ],
+   "tokens": [
+    "card",
+    "card",
+    "your",
+    "your",
+    "area",
+    "claim",
+    "1000",
+    "depot",
+    "gift",
+    "gift"
+   ]
+  },
+  "d2_0b7f87b90663__tfidf__C": {
+   "doc_uid": "d2_0b7f87b90663",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "claim",
+    "your",
+    "home",
+    "depot",
+    "gift",
+    "card",
+    "a",
+    "1000",
+    "value",
+    "were"
+   ]
+  },
+  "d2_0db0b230244d__tfidf__A": {
+   "doc_uid": "d2_0db0b230244d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    93,
+    316,
+    342,
+    366,
+    375,
+    451,
+    481,
+    495,
+    125,
+    138
+   ],
+   "tokens": [
+    "2005",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "software",
+    "software"
+   ]
+  },
+  "d2_0db0b230244d__tfidf__B": {
+   "doc_uid": "d2_0db0b230244d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "dbsj",
+    "could",
+    "see",
+    "eight",
+    "dollars",
+    "a",
+    "share",
+    "again",
+    "this",
+    "could"
+   ]
+  },
+  "d2_0db0b230244d__tfidf__C": {
+   "doc_uid": "d2_0db0b230244d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    361,
+    266,
+    187,
+    20,
+    70,
+    15,
+    505,
+    171,
+    373,
+    333
+   ],
+   "tokens": [
+    "events",
+    "insurance",
+    "industries",
+    "nine",
+    "investment",
+    "siebel",
+    "undervalued",
+    "family",
+    "forward",
+    "b"
+   ]
+  },
+  "d2_13376a2370d1__tfidf__A": {
+   "doc_uid": "d2_13376a2370d1",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "the",
+    "original",
+    "message",
+    "was",
+    "received",
+    "at",
+    "tue",
+    "19",
+    "jul",
+    "2005"
+   ]
+  },
+  "d2_13376a2370d1__tfidf__B": {
+   "doc_uid": "d2_13376a2370d1",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    0,
+    17,
+    57,
+    5,
+    34,
+    6,
+    11,
+    40,
+    20,
+    50
+   ],
+   "tokens": [
+    "the",
+    "the",
+    "projecthoneypot",
+    "at",
+    "many",
+    "tue",
+    "57",
+    "com",
+    "had",
+    "many"
+   ]
+  },
+  "d2_13376a2370d1__tfidf__C": {
+   "doc_uid": "d2_13376a2370d1",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    9,
+    8,
+    6,
+    19,
+    28,
+    22,
+    61,
+    58,
+    7,
+    21
+   ],
+   "tokens": [
+    "2005",
+    "jul",
+    "tue",
+    "addresses",
+    "reason",
+    "fatal",
+    "to",
+    "org",
+    "19",
+    "permanent"
+   ]
+  },
+  "d2_135f52b5cc80__tfidf__A": {
+   "doc_uid": "d2_135f52b5cc80",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2
+   ],
+   "tokens": [
+    "fun",
+    "pics",
+    "htm"
+   ]
+  },
+  "d2_135f52b5cc80__tfidf__B": {
+   "doc_uid": "d2_135f52b5cc80",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    1,
+    2,
+    0
+   ],
+   "tokens": [
+    "pics",
+    "htm",
+    "fun"
+   ]
+  },
+  "d2_135f52b5cc80__tfidf__C": {
+   "doc_uid": "d2_135f52b5cc80",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2
+   ],
+   "tokens": [
+    "fun",
+    "pics",
+    "htm"
+   ]
+  },
+  "d2_14caf6959c96__tfidf__A": {
+   "doc_uid": "d2_14caf6959c96",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "utf",
+    "8",
+    "q",
+    "at",
+    "0",
+    "24",
+    "for",
+    "draug",
+    "utf",
+    "8"
+   ]
+  },
+  "d2_14caf6959c96__tfidf__B": {
+   "doc_uid": "d2_14caf6959c96",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    42,
+    33,
+    8,
+    35,
+    64,
+    61,
+    3,
+    54,
+    16,
+    9
+   ],
+   "tokens": [
+    "much",
+    "the",
+    "utf",
+    "of",
+    "verify",
+    "greatly",
+    "at",
+    "equal",
+    "time",
+    "8"
+   ]
+  },
+  "d2_14caf6959c96__tfidf__C": {
+   "doc_uid": "d2_14caf6959c96",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    36,
+    0,
+    8,
+    29,
+    28,
+    43,
+    30,
+    31,
+    19,
+    42
+   ],
+   "tokens": [
+    "life",
+    "utf",
+    "utf",
+    "pills",
+    "pain",
+    "more",
+    "medication",
+    "to",
+    "much",
+    "much"
+   ]
+  },
+  "d2_14f2115a96f2__tfidf__A": {
+   "doc_uid": "d2_14f2115a96f2",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    115,
+    119,
+    42,
+    57,
+    54,
+    24,
+    114,
+    61,
+    58,
+    1
+   ],
+   "tokens": [
+    "remove",
+    "remove",
+    "money",
+    "lowest",
+    "to",
+    "online",
+    "interested",
+    "world",
+    "prices",
+    "free"
+   ]
+  },
+  "d2_14f2115a96f2__tfidf__B": {
+   "doc_uid": "d2_14f2115a96f2",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    117,
+    8,
+    28,
+    81,
+    15,
+    112,
+    35,
+    5,
+    119,
+    32
+   ],
+   "tokens": [
+    "ph",
+    "on",
+    "generate",
+    "your",
+    "100",
+    "center",
+    "across",
+    "0450",
+    "remove",
+    "20"
+   ]
+  },
+  "d2_14f2115a96f2__tfidf__C": {
+   "doc_uid": "d2_14f2115a96f2",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "toll",
+    "free",
+    "1",
+    "877",
+    "546",
+    "0450",
+    "increase",
+    "your",
+    "on",
+    "line"
+   ]
+  },
+  "d2_1768b410cffd__tfidf__A": {
+   "doc_uid": "d2_1768b410cffd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    46,
+    11,
+    23,
+    162,
+    3,
+    57,
+    158,
+    89,
+    163,
+    129
+   ],
+   "tokens": [
+    "wed",
+    "2004",
+    "demokritos",
+    "content",
+    "demokritos",
+    "200403310601",
+    "norton",
+    "2004",
+    "transfer",
+    "bit"
+   ]
+  },
+  "d2_1768b410cffd__tfidf__B": {
+   "doc_uid": "d2_1768b410cffd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    73,
+    11,
+    49,
+    89,
+    4,
+    16,
+    24,
+    45,
+    66,
+    72
+   ],
+   "tokens": [
+    "to",
+    "2004",
+    "2004",
+    "2004",
+    "gr",
+    "gr",
+    "gr",
+    "gr",
+    "gr",
+    "gr"
+   ]
+  },
+  "d2_1768b410cffd__tfidf__C": {
+   "doc_uid": "d2_1768b410cffd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "from",
+    "paliourg",
+    "iit",
+    "demokritos",
+    "gr",
+    "wed",
+    "mar",
+    "31",
+    "09",
+    "01"
+   ]
+  },
+  "d2_18e99fa47926__tfidf__A": {
+   "doc_uid": "d2_18e99fa47926",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "top",
+    "quality",
+    "software",
+    "special",
+    "offer",
+    "1",
+    "windows",
+    "xp",
+    "professional",
+    "microsoft"
+   ]
+  },
+  "d2_18e99fa47926__tfidf__B": {
+   "doc_uid": "d2_18e99fa47926",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    134,
+    167,
+    64,
+    91,
+    150,
+    42,
+    125,
+    40,
+    4,
+    7
+   ],
+   "tokens": [
+    "2004",
+    "system",
+    "second",
+    "encyclopedia",
+    "suite",
+    "server",
+    "adobe",
+    "windows",
+    "offer",
+    "xp"
+   ]
+  },
+  "d2_18e99fa47926__tfidf__C": {
+   "doc_uid": "d2_18e99fa47926",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    33,
+    36,
+    93,
+    100,
+    105,
+    134,
+    138,
+    142,
+    2,
+    1
+   ],
+   "tokens": [
+    "2004",
+    "2004",
+    "2004",
+    "2004",
+    "2004",
+    "2004",
+    "2004",
+    "2004",
+    "software",
+    "quality"
+   ]
+  },
+  "d2_19509eacd95a__tfidf__A": {
+   "doc_uid": "d2_19509eacd95a",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    23,
+    37,
+    27,
+    45,
+    26,
+    10,
+    35,
+    47,
+    30,
+    38
+   ],
+   "tokens": [
+    "the",
+    "house",
+    "out",
+    "us",
+    "fill",
+    "refinance",
+    "refinance",
+    "our",
+    "form",
+    "poor"
+   ]
+  },
+  "d2_19509eacd95a__tfidf__B": {
+   "doc_uid": "d2_19509eacd95a",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "intelligence",
+    "bad",
+    "credit",
+    "great",
+    "we",
+    "want",
+    "you",
+    "we",
+    "want",
+    "to"
+   ]
+  },
+  "d2_19509eacd95a__tfidf__C": {
+   "doc_uid": "d2_19509eacd95a",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    32,
+    52,
+    12,
+    22,
+    36,
+    33,
+    19,
+    49,
+    42,
+    10
+   ],
+   "tokens": [
+    "we",
+    "you",
+    "that",
+    "in",
+    "your",
+    "want",
+    "you",
+    "to",
+    "we",
+    "refinance"
+   ]
+  },
+  "d2_22f7325368b4__tfidf__A": {
+   "doc_uid": "d2_22f7325368b4",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    50,
+    1,
+    74,
+    65,
+    77,
+    37,
+    63,
+    70,
+    92,
+    73
+   ],
+   "tokens": [
+    "gun",
+    "ve",
+    "avocet",
+    "dew",
+    "godwit",
+    "gradate",
+    "almost",
+    "secretary",
+    "bitten",
+    "familiarly"
+   ]
+  },
+  "d2_22f7325368b4__tfidf__B": {
+   "doc_uid": "d2_22f7325368b4",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    14,
+    11,
+    9,
+    13,
+    71,
+    0,
+    16,
+    7,
+    8,
+    1
+   ],
+   "tokens": [
+    "site",
+    "vi",
+    "to",
+    "our",
+    "stygian",
+    "sa",
+    "sa",
+    "onl",
+    "ine",
+    "ve"
+   ]
+  },
+  "d2_22f7325368b4__tfidf__C": {
+   "doc_uid": "d2_22f7325368b4",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "sa",
+    "ve",
+    "7",
+    "_",
+    "0",
+    "ord",
+    "ering",
+    "onl",
+    "ine",
+    "to"
+   ]
+  },
+  "d2_2398050b3508__tfidf__A": {
+   "doc_uid": "d2_2398050b3508",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "good",
+    "morning",
+    "afternoon",
+    "today",
+    "everyone",
+    "should",
+    "have",
+    "received",
+    "a",
+    "binder"
+   ]
+  },
+  "d2_2398050b3508__tfidf__B": {
+   "doc_uid": "d2_2398050b3508",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    21,
+    38,
+    30,
+    0,
+    35,
+    18,
+    36,
+    39,
+    23,
+    40
+   ],
+   "tokens": [
+    "delivered",
+    "delivered",
+    "email",
+    "good",
+    "one",
+    "others",
+    "to",
+    "to",
+    "you",
+    "you"
+   ]
+  },
+  "d2_2398050b3508__tfidf__C": {
+   "doc_uid": "d2_2398050b3508",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    40,
+    43,
+    30,
+    33,
+    31,
+    29,
+    14,
+    28,
+    27,
+    37
+   ],
+   "tokens": [
+    "you",
+    "octavia",
+    "email",
+    "me",
+    "or",
+    "please",
+    "your",
+    "binder",
+    "a",
+    "be"
+   ]
+  },
+  "d2_2bf8085d4661__tfidf__A": {
+   "doc_uid": "d2_2bf8085d4661",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    1023,
+    514,
+    977,
+    580,
+    1022,
+    1119,
+    233,
+    734,
+    463,
+    159
+   ],
+   "tokens": [
+    "that",
+    "made",
+    "the",
+    "s",
+    "fact",
+    "email",
+    "sheets",
+    "associated",
+    "any",
+    "0"
+   ]
+  },
+  "d2_2bf8085d4661__tfidf__B": {
+   "doc_uid": "d2_2bf8085d4661",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    226,
+    375,
+    438,
+    464,
+    488,
+    497,
+    500,
+    512,
+    540,
+    565
+   ],
+   "tokens": [
+    "2005",
+    "2005",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements",
+    "statements"
+   ]
+  },
+  "d2_2bf8085d4661__tfidf__C": {
+   "doc_uid": "d2_2bf8085d4661",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "executive",
+    "hospitality",
+    "corp",
+    "ehpc",
+    "operator",
+    "of",
+    "joseph",
+    "s",
+    "a",
+    "500"
+   ]
+  },
+  "d2_2e99cb2f3cfa__tfidf__A": {
+   "doc_uid": "d2_2e99cb2f3cfa",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    40,
+    39,
+    42,
+    19,
+    34,
+    16,
+    31,
+    29,
+    10,
+    28
+   ],
+   "tokens": [
+    "interested",
+    "not",
+    "pt",
+    "results",
+    "the",
+    "before",
+    "us",
+    "order",
+    "plll",
+    "plll"
+   ]
+  },
+  "d2_2e99cb2f3cfa__tfidf__B": {
+   "doc_uid": "d2_2e99cb2f3cfa",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    16,
+    40,
+    37,
+    4,
+    44,
+    36,
+    15,
+    7,
+    1,
+    24
+   ],
+   "tokens": [
+    "before",
+    "interested",
+    "3",
+    "rockhard",
+    "ut",
+    "of",
+    "min",
+    "disolve",
+    "clalls",
+    "normal"
+   ]
+  },
+  "d2_2e99cb2f3cfa__tfidf__C": {
+   "doc_uid": "d2_2e99cb2f3cfa",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "new",
+    "clalls",
+    "softtabs",
+    "lnstant",
+    "rockhard",
+    "erectlons",
+    "simply",
+    "disolve",
+    "half",
+    "a"
+   ]
+  },
+  "d2_305b0ab75271__tfidf__A": {
+   "doc_uid": "d2_305b0ab75271",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    40,
+    44,
+    50,
+    27,
+    59,
+    22,
+    26,
+    37,
+    45,
+    46
+   ],
+   "tokens": [
+    "95",
+    "95",
+    "choose",
+    "adobe",
+    "adobe",
+    "oo",
+    "oo",
+    "oo",
+    "more",
+    "more"
+   ]
+  },
+  "d2_305b0ab75271__tfidf__B": {
+   "doc_uid": "d2_305b0ab75271",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    3,
+    87,
+    26,
+    97,
+    93,
+    9,
+    23,
+    50,
+    21,
+    94
+   ],
+   "tokens": [
+    "hope",
+    "symantec",
+    "oo",
+    "affect",
+    "central",
+    "all",
+    "you",
+    "choose",
+    "299",
+    "ears"
+   ]
+  },
+  "d2_305b0ab75271__tfidf__C": {
+   "doc_uid": "d2_305b0ab75271",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "car",
+    "noble",
+    "quiet",
+    "hope",
+    "super",
+    "cheaap",
+    "softwares",
+    "shiiip",
+    "to",
+    "all"
+   ]
+  },
+  "d2_31a1d8611c6c__tfidf__A": {
+   "doc_uid": "d2_31a1d8611c6c",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "contact",
+    "us",
+    "today",
+    "for",
+    "a",
+    "free",
+    "consultation",
+    "on",
+    "the",
+    "many"
+   ]
+  },
+  "d2_31a1d8611c6c__tfidf__B": {
+   "doc_uid": "d2_31a1d8611c6c",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    25,
+    48,
+    5,
+    40,
+    45,
+    47,
+    44,
+    1,
+    51,
+    13
+   ],
+   "tokens": [
+    "ra",
+    "advertisement",
+    "free",
+    "ca",
+    "message",
+    "an",
+    "mail",
+    "us",
+    "solicitation",
+    "your"
+   ]
+  },
+  "d2_31a1d8611c6c__tfidf__C": {
+   "doc_uid": "d2_31a1d8611c6c",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    49,
+    5,
+    23,
+    27,
+    15,
+    13,
+    28,
+    16,
+    48,
+    10
+   ],
+   "tokens": [
+    "and",
+    "free",
+    "reuben",
+    "800",
+    "your",
+    "your",
+    "539",
+    "equipment",
+    "advertisement",
+    "options"
+   ]
+  },
+  "d2_3966b59f6b6d__tfidf__A": {
+   "doc_uid": "d2_3966b59f6b6d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    14,
+    4,
+    16,
+    15,
+    13,
+    6,
+    20,
+    8,
+    7,
+    1
+   ],
+   "tokens": [
+    "all",
+    "s",
+    "hires",
+    "new",
+    "welcome",
+    "work",
+    "to",
+    "dedication",
+    "and",
+    "celebration"
+   ]
+  },
+  "d2_3966b59f6b6d__tfidf__B": {
+   "doc_uid": "d2_3966b59f6b6d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "in",
+    "celebration",
+    "of",
+    "everyone",
+    "s",
+    "hard",
+    "work",
+    "and",
+    "dedication",
+    "congratulations"
+   ]
+  },
+  "d2_3966b59f6b6d__tfidf__C": {
+   "doc_uid": "d2_3966b59f6b6d",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    5,
+    11,
+    23,
+    14,
+    15,
+    18,
+    7,
+    17,
+    20,
+    0
+   ],
+   "tokens": [
+    "hard",
+    "your",
+    "us",
+    "all",
+    "new",
+    "good",
+    "and",
+    "and",
+    "to",
+    "in"
+   ]
+  },
+  "d2_3b3f2e9b18dd__tfidf__A": {
+   "doc_uid": "d2_3b3f2e9b18dd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    1,
+    4,
+    2,
+    5,
+    3,
+    0
+   ],
+   "tokens": [
+    "thought",
+    "was",
+    "this",
+    "interesting",
+    "link",
+    "i"
+   ]
+  },
+  "d2_3b3f2e9b18dd__tfidf__B": {
+   "doc_uid": "d2_3b3f2e9b18dd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "tokens": [
+    "i",
+    "thought",
+    "this",
+    "link",
+    "was",
+    "interesting"
+   ]
+  },
+  "d2_3b3f2e9b18dd__tfidf__C": {
+   "doc_uid": "d2_3b3f2e9b18dd",
+   "corpus": "d2",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    3,
+    4,
+    0,
+    5,
+    2,
+    1
+   ],
+   "tokens": [
+    "link",
+    "was",
+    "i",
+    "interesting",
+    "this",
+    "thought"
+   ]
+  },
+  "d3_en_06aff5a99282__tfidf__A": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    195,
+    172,
+    74,
+    168,
+    241,
+    293,
+    46,
+    219,
+    11,
+    55
+   ],
+   "tokens": [
+    "continuous",
+    "credentials",
+    "records",
+    "using",
+    "highest",
+    "This",
+    "our",
+    "information",
+    "Critical",
+    "platform"
+   ]
+  },
+  "d3_en_06aff5a99282__tfidf__B": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Urgent",
+    "Verify",
+    "Your",
+    "TransactFlow",
+    "Account",
+    "Details",
+    "to",
+    "Avoid",
+    "Service",
+    "Interruption"
+   ]
+  },
+  "d3_en_06aff5a99282__tfidf__C": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    106,
+    236,
+    1,
+    68,
+    260,
+    121,
+    229,
+    177,
+    65,
+    163
+   ],
+   "tokens": [
+    "billing",
+    "cooperation",
+    "Verify",
+    "verify",
+    "verify",
+    "accessing",
+    "48",
+    "screen",
+    "imperative",
+    "provided"
+   ]
+  },
+  "d3_en_06aff5a99282__transformer__A": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Urgent",
+    "Verify",
+    "Your",
+    "TransactFlow",
+    "Account",
+    "Details",
+    "to",
+    "Avoid",
+    "Service",
+    "Interruption"
+   ]
+  },
+  "d3_en_06aff5a99282__transformer__B": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "B",
+   "positions": [
+    154,
+    151,
+    0,
+    156,
+    17,
+    41,
+    4,
+    123,
+    2,
+    135
+   ],
+   "tokens": [
+    "need",
+    "account",
+    "Urgent",
+    "do",
+    "Account",
+    "account",
+    "Account",
+    "account",
+    "Your",
+    "This"
+   ]
+  },
+  "d3_en_06aff5a99282__transformer__C": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    212,
+    266,
+    283,
+    56,
+    46,
+    12,
+    95,
+    96,
+    137,
+    149
+   ],
+   "tokens": [
+    "temporary",
+    "attention",
+    "seamless",
+    "and",
+    "our",
+    "Update",
+    "outdated",
+    "contact",
+    "is",
+    "of"
+   ]
+  },
+  "d3_en_06aff5a99282__transformer__D": {
+   "doc_uid": "d3_en_06aff5a99282",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "D",
+   "positions": [
+    40,
+    41,
+    106,
+    82,
+    97,
+    296,
+    295,
+    105,
+    0,
+    101
+   ],
+   "tokens": [
+    "your",
+    "account",
+    "billing",
+    "your",
+    "information",
+    "automated",
+    "an",
+    "your",
+    "Urgent",
+    "requirements"
+   ]
+  },
+  "d3_en_0acd3e705bba__tfidf__A": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Urgent",
+    "Verification",
+    "Needed",
+    "for",
+    "Order",
+    "2024",
+    "07",
+    "01",
+    "Dear",
+    "Valued"
+   ]
+  },
+  "d3_en_0acd3e705bba__tfidf__B": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    69,
+    132,
+    60,
+    93,
+    200,
+    243,
+    82,
+    148,
+    90,
+    106
+   ],
+   "tokens": [
+    "payment",
+    "payment",
+    "document",
+    "document",
+    "procurement",
+    "procurement",
+    "imperative",
+    "cooperation",
+    "attached",
+    "attached"
+   ]
+  },
+  "d3_en_0acd3e705bba__tfidf__C": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    131,
+    38,
+    252,
+    134,
+    41,
+    189,
+    60,
+    181,
+    113,
+    128
+   ],
+   "tokens": [
+    "upcoming",
+    "documentation",
+    "trading",
+    "understand",
+    "identified",
+    "questions",
+    "document",
+    "delay",
+    "account",
+    "issues"
+   ]
+  },
+  "d3_en_0acd3e705bba__transformer__A": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Urgent",
+    "Verification",
+    "Needed",
+    "for",
+    "Order",
+    "2024",
+    "07",
+    "01",
+    "Dear",
+    "Valued"
+   ]
+  },
+  "d3_en_0acd3e705bba__transformer__B": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "B",
+   "positions": [
+    112,
+    0,
+    69,
+    67,
+    2,
+    52,
+    53,
+    113,
+    132,
+    95
+   ],
+   "tokens": [
+    "bank",
+    "Urgent",
+    "payment",
+    "processing",
+    "Needed",
+    "your",
+    "account",
+    "account",
+    "payment",
+    "your"
+   ]
+  },
+  "d3_en_0acd3e705bba__transformer__C": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    243,
+    68,
+    69,
+    226,
+    200,
+    233,
+    242,
+    227,
+    235,
+    52
+   ],
+   "tokens": [
+    "procurement",
+    "your",
+    "payment",
+    "Suite",
+    "procurement",
+    "971",
+    "Email",
+    "1500",
+    "876",
+    "your"
+   ]
+  },
+  "d3_en_0acd3e705bba__transformer__D": {
+   "doc_uid": "d3_en_0acd3e705bba",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    214,
+    86,
+    240,
+    160,
+    147,
+    198,
+    79,
+    219,
+    222,
+    141
+   ],
+   "tokens": [
+    "Al",
+    "these",
+    "876",
+    "at",
+    "and",
+    "contact",
+    "order",
+    "Horizon",
+    "Head",
+    "inconvenient"
+   ]
+  },
+  "d3_en_139a683d42ff__tfidf__A": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Invitation",
+    "to",
+    "Provide",
+    "Input",
+    "Fiscal",
+    "Year",
+    "2025",
+    "Budget",
+    "Draft",
+    "Review"
+   ]
+  },
+  "d3_en_139a683d42ff__tfidf__B": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    248,
+    289,
+    333,
+    332,
+    4,
+    26,
+    363,
+    168,
+    66,
+    251
+   ],
+   "tokens": [
+    "document",
+    "produce",
+    "impact",
+    "positive",
+    "Fiscal",
+    "Fiscal",
+    "NY",
+    "program",
+    "meticulously",
+    "earliest"
+   ]
+  },
+  "d3_en_139a683d42ff__tfidf__C": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    281,
+    294,
+    31,
+    330,
+    208,
+    138,
+    415,
+    215,
+    207,
+    353
+   ],
+   "tokens": [
+    "2024",
+    "budget",
+    "the",
+    "making",
+    "that",
+    "sufficient",
+    "email",
+    "current",
+    "department",
+    "906"
+   ]
+  },
+  "d3_en_139a683d42ff__transformer__A": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    401,
+    402,
+    429,
+    234,
+    235,
+    413,
+    246,
+    247,
+    412,
+    232
+   ],
+   "tokens": [
+    "is",
+    "confidential",
+    "prohibited",
+    "financial",
+    "resources",
+    "delete",
+    "draft",
+    "budget",
+    "please",
+    "of"
+   ]
+  },
+  "d3_en_139a683d42ff__transformer__B": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "B",
+   "positions": [
+    170,
+    87,
+    4,
+    18,
+    5,
+    70,
+    29,
+    7,
+    6,
+    12
+   ],
+   "tokens": [
+    "3",
+    "essential",
+    "Fiscal",
+    "embarking",
+    "Year",
+    "Finance",
+    "budget",
+    "Budget",
+    "2025",
+    "Heads"
+   ]
+  },
+  "d3_en_139a683d42ff__transformer__C": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Invitation",
+    "to",
+    "Provide",
+    "Input",
+    "Fiscal",
+    "Year",
+    "2025",
+    "Budget",
+    "Draft",
+    "Review"
+   ]
+  },
+  "d3_en_139a683d42ff__transformer__D": {
+   "doc_uid": "d3_en_139a683d42ff",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    339,
+    248,
+    147,
+    55,
+    197,
+    253,
+    121,
+    40,
+    151,
+    396
+   ],
+   "tokens": [
+    "Chief",
+    "document",
+    "activities",
+    "across",
+    "Are",
+    "We",
+    "allocations",
+    "is",
+    "Strategic",
+    "and"
+   ]
+  },
+  "d3_en_156335de1394__tfidf__A": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    190,
+    165,
+    151,
+    59,
+    8,
+    229,
+    99,
+    142,
+    124,
+    138
+   ],
+   "tokens": [
+    "August",
+    "be",
+    "you",
+    "and",
+    "15",
+    "executive",
+    "What",
+    "comprised",
+    "engaging",
+    "leadership"
+   ]
+  },
+  "d3_en_156335de1394__tfidf__B": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    33,
+    237,
+    0,
+    200,
+    198,
+    19,
+    48,
+    220,
+    191,
+    202
+   ],
+   "tokens": [
+    "Academy",
+    "Academy",
+    "Unlock",
+    "miss",
+    "Don",
+    "inspire",
+    "developing",
+    "confidence",
+    "31",
+    "opportunity"
+   ]
+  },
+  "d3_en_156335de1394__tfidf__C": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Unlock",
+    "Your",
+    "Leadership",
+    "Potential",
+    "Executive",
+    "Development",
+    "Program",
+    "September",
+    "15",
+    "Hello"
+   ]
+  },
+  "d3_en_156335de1394__transformer__A": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    60,
+    18,
+    32,
+    210,
+    152,
+    100,
+    189,
+    201,
+    145,
+    11
+   ],
+   "tokens": [
+    "cultivating",
+    "and",
+    "Leadership",
+    "impactful",
+    "through",
+    "You",
+    "by",
+    "this",
+    "executives",
+    "you"
+   ]
+  },
+  "d3_en_156335de1394__transformer__B": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    147,
+    145,
+    169,
+    161,
+    148,
+    32,
+    138,
+    141,
+    160,
+    170
+   ],
+   "tokens": [
+    "leadership",
+    "executives",
+    "your",
+    "actionable",
+    "coaches",
+    "Leadership",
+    "leadership",
+    "faculty",
+    "gain",
+    "role"
+   ]
+  },
+  "d3_en_156335de1394__transformer__C": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Unlock",
+    "Your",
+    "Leadership",
+    "Potential",
+    "Executive",
+    "Development",
+    "Program",
+    "September",
+    "15",
+    "Hello"
+   ]
+  },
+  "d3_en_156335de1394__transformer__D": {
+   "doc_uid": "d3_en_156335de1394",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "D",
+   "positions": [
+    2,
+    4,
+    16,
+    0,
+    26,
+    1,
+    5,
+    3,
+    6,
+    15
+   ],
+   "tokens": [
+    "Leadership",
+    "Executive",
+    "leadership",
+    "Unlock",
+    "Executive",
+    "Your",
+    "Development",
+    "Potential",
+    "Program",
+    "your"
+   ]
+  },
+  "d3_en_22ec6a011e78__tfidf__A": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    312,
+    60,
+    9,
+    349,
+    298,
+    213,
+    270,
+    69,
+    108,
+    302
+   ],
+   "tokens": [
+    "any",
+    "ASOS",
+    "Fashion",
+    "from",
+    "individuality",
+    "and",
+    "sales",
+    "all",
+    "accessories",
+    "customer"
+   ]
+  },
+  "d3_en_22ec6a011e78__tfidf__B": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Latest",
+    "Fashion",
+    "Arrivals",
+    "ASOS",
+    "Premier",
+    "Shipping",
+    "Returns",
+    "Hello",
+    "Fashion"
+   ]
+  },
+  "d3_en_22ec6a011e78__tfidf__C": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    385,
+    126,
+    278,
+    112,
+    50,
+    46,
+    267,
+    47,
+    351,
+    134
+   ],
+   "tokens": [
+    "Road",
+    "statement",
+    "subscribe",
+    "tailored",
+    "favorite",
+    "exclusive",
+    "exclusive",
+    "pieces",
+    "communications",
+    "perfect"
+   ]
+  },
+  "d3_en_22ec6a011e78__transformer__A": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "A",
+   "positions": [
+    10,
+    3,
+    16,
+    6,
+    0,
+    32,
+    18,
+    195,
+    53,
+    89
+   ],
+   "tokens": [
+    "Enthusiast",
+    "Arrivals",
+    "the",
+    "Shipping",
+    "Your",
+    "Immerse",
+    "community",
+    "women",
+    "enhance",
+    "trends"
+   ]
+  },
+  "d3_en_22ec6a011e78__transformer__B": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Latest",
+    "Fashion",
+    "Arrivals",
+    "ASOS",
+    "Premier",
+    "Shipping",
+    "Returns",
+    "Hello",
+    "Fashion"
+   ]
+  },
+  "d3_en_22ec6a011e78__transformer__C": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    113,
+    8,
+    111,
+    294,
+    180,
+    45,
+    202,
+    43,
+    313,
+    132
+   ],
+   "tokens": [
+    "to",
+    "Hello",
+    "products",
+    "helping",
+    "to",
+    "and",
+    "com",
+    "spring",
+    "inquiries",
+    "find"
+   ]
+  },
+  "d3_en_22ec6a011e78__transformer__D": {
+   "doc_uid": "d3_en_22ec6a011e78",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "D",
+   "positions": [
+    0,
+    1,
+    32,
+    33,
+    2,
+    3,
+    128,
+    129,
+    126,
+    127
+   ],
+   "tokens": [
+    "Your",
+    "Latest",
+    "Immerse",
+    "yourself",
+    "Fashion",
+    "Arrivals",
+    "outfits",
+    "ensuring",
+    "statement",
+    "making"
+   ]
+  },
+  "d3_en_3a2986cbac53__tfidf__A": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exploring",
+    "Summer",
+    "2025",
+    "Research",
+    "Opportunity",
+    "at",
+    "the",
+    "University",
+    "of",
+    "Cambridge"
+   ]
+  },
+  "d3_en_3a2986cbac53__tfidf__B": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    327,
+    352,
+    328,
+    360,
+    148,
+    279,
+    130,
+    99,
+    180,
+    358
+   ],
+   "tokens": [
+    "and",
+    "and",
+    "eager",
+    "contribution",
+    "group",
+    "the",
+    "primary",
+    "a",
+    "Learning",
+    "a"
+   ]
+  },
+  "d3_en_3a2986cbac53__tfidf__C": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    394,
+    1,
+    58,
+    85,
+    49,
+    75,
+    44,
+    401,
+    27,
+    76
+   ],
+   "tokens": [
+    "2022",
+    "Summer",
+    "summer",
+    "Summer",
+    "curriculum",
+    "distinguished",
+    "India",
+    "India",
+    "undergraduate",
+    "mentorship"
+   ]
+  },
+  "d3_en_3a2986cbac53__transformer__A": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    275,
+    17,
+    236,
+    261,
+    372,
+    338,
+    140,
+    134,
+    188,
+    123
+   ],
+   "tokens": [
+    "driven",
+    "finds",
+    "interdisciplinary",
+    "knowledge",
+    "forward",
+    "your",
+    "After",
+    "signal",
+    "to",
+    "Indian"
+   ]
+  },
+  "d3_en_3a2986cbac53__transformer__B": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    393,
+    394,
+    75,
+    76,
+    389,
+    390,
+    387,
+    388,
+    391,
+    392
+   ],
+   "tokens": [
+    "Engineering",
+    "2022",
+    "distinguished",
+    "mentorship",
+    "Patel",
+    "B",
+    "Sincerely",
+    "Akash",
+    "Tech",
+    "Electrical"
+   ]
+  },
+  "d3_en_3a2986cbac53__transformer__C": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exploring",
+    "Summer",
+    "2025",
+    "Research",
+    "Opportunity",
+    "at",
+    "the",
+    "University",
+    "of",
+    "Cambridge"
+   ]
+  },
+  "d3_en_3a2986cbac53__transformer__D": {
+   "doc_uid": "d3_en_3a2986cbac53",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "D",
+   "positions": [
+    21,
+    0,
+    12,
+    4,
+    20,
+    23,
+    74,
+    159,
+    147,
+    59
+   ],
+   "tokens": [
+    "am",
+    "Exploring",
+    "Chen",
+    "Opportunity",
+    "I",
+    "Patel",
+    "your",
+    "your",
+    "your",
+    "internship"
+   ]
+  },
+  "d3_en_498f54a03ed4__tfidf__A": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    159,
+    1,
+    87,
+    190,
+    144,
+    219,
+    28,
+    10,
+    110,
+    130
+   ],
+   "tokens": [
+    "implement",
+    "Alert",
+    "a",
+    "password",
+    "your",
+    "of",
+    "address",
+    "IMMEDIATE",
+    "understand",
+    "takeovers"
+   ]
+  },
+  "d3_en_498f54a03ed4__tfidf__B": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    101,
+    212,
+    74,
+    79,
+    165,
+    29,
+    200,
+    153,
+    193,
+    277
+   ],
+   "tokens": [
+    "social",
+    "response",
+    "sold",
+    "presence",
+    "delay",
+    "daniel",
+    "sensitive",
+    "must",
+    "activation",
+    "reply"
+   ]
+  },
+  "d3_en_498f54a03ed4__tfidf__C": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Critical",
+    "Alert",
+    "Your",
+    "Identity",
+    "Detected",
+    "on",
+    "Illegal",
+    "Data",
+    "Markets",
+    "ATTENTION"
+   ]
+  },
+  "d3_en_498f54a03ed4__transformer__A": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    257,
+    187,
+    241,
+    237,
+    189,
+    228,
+    258,
+    242,
+    227,
+    12
+   ],
+   "tokens": [
+    "immediate",
+    "accounts",
+    "your",
+    "your",
+    "immediate",
+    "you",
+    "attention",
+    "personal",
+    "assisting",
+    "REQUIRED"
+   ]
+  },
+  "d3_en_498f54a03ed4__transformer__B": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Critical",
+    "Alert",
+    "Your",
+    "Identity",
+    "Detected",
+    "on",
+    "Illegal",
+    "Data",
+    "Markets",
+    "ATTENTION"
+   ]
+  },
+  "d3_en_498f54a03ed4__transformer__C": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    132,
+    210,
+    23,
+    212,
+    133,
+    2,
+    186,
+    144,
+    9,
+    81
+   ],
+   "tokens": [
+    "financial",
+    "Your",
+    "your",
+    "response",
+    "fraud",
+    "Your",
+    "your",
+    "your",
+    "ATTENTION",
+    "your"
+   ]
+  },
+  "d3_en_498f54a03ed4__transformer__D": {
+   "doc_uid": "d3_en_498f54a03ed4",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    253,
+    236,
+    122,
+    69,
+    170,
+    247,
+    226,
+    274,
+    232,
+    190
+   ],
+   "tokens": [
+    "Thank",
+    "of",
+    "a",
+    "information",
+    "provides",
+    "protect",
+    "to",
+    "Please",
+    "and",
+    "password"
+   ]
+  },
+  "d3_en_5250002913ac__tfidf__A": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    10,
+    180,
+    269,
+    192,
+    26,
+    239,
+    57,
+    106,
+    166,
+    49
+   ],
+   "tokens": [
+    "Lena",
+    "require",
+    "eagerly",
+    "by",
+    "a",
+    "policy",
+    "pressing",
+    "plenary",
+    "access",
+    "to"
+   ]
+  },
+  "d3_en_5250002913ac__tfidf__B": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    14,
+    68,
+    57,
+    205,
+    273,
+    236,
+    127,
+    190,
+    234,
+    101
+   ],
+   "tokens": [
+    "Educational",
+    "distinguished",
+    "pressing",
+    "response",
+    "response",
+    "influence",
+    "presentation",
+    "presentation",
+    "opportunity",
+    "leaders"
+   ]
+  },
+  "d3_en_5250002913ac__tfidf__C": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Secure",
+    "Your",
+    "Speaker",
+    "Slot",
+    "UNESCO",
+    "Future",
+    "Energy",
+    "Forum",
+    "2025",
+    "Dear"
+   ]
+  },
+  "d3_en_5250002913ac__transformer__A": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Secure",
+    "Your",
+    "Speaker",
+    "Slot",
+    "UNESCO",
+    "Future",
+    "Energy",
+    "Forum",
+    "2025",
+    "Dear"
+   ]
+  },
+  "d3_en_5250002913ac__transformer__B": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    227,
+    177,
+    135,
+    218,
+    108,
+    307,
+    225,
+    154,
+    93,
+    104
+   ],
+   "tokens": [
+    "strongly",
+    "org",
+    "aligns",
+    "We",
+    "interactive",
+    "manage",
+    "but",
+    "new",
+    "international",
+    "will"
+   ]
+  },
+  "d3_en_5250002913ac__transformer__C": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    67,
+    68,
+    50,
+    0,
+    217,
+    218,
+    112,
+    151,
+    150,
+    1
+   ],
+   "tokens": [
+    "Your",
+    "distinguished",
+    "convene",
+    "Secure",
+    "deadline",
+    "We",
+    "opportunities",
+    "crucial",
+    "be",
+    "Your"
+   ]
+  },
+  "d3_en_5250002913ac__transformer__D": {
+   "doc_uid": "d3_en_5250002913ac",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "D",
+   "positions": [
+    0,
+    83,
+    22,
+    67,
+    1,
+    31,
+    44,
+    27,
+    147,
+    6
+   ],
+   "tokens": [
+    "Secure",
+    "perspective",
+    "you",
+    "Your",
+    "Your",
+    "inaugural",
+    "2025",
+    "keynote",
+    "Your",
+    "Energy"
+   ]
+  },
+  "d3_en_525d0c39fc16__tfidf__A": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    391,
+    412,
+    28,
+    33,
+    315,
+    10,
+    277,
+    282,
+    128,
+    407
+   ],
+   "tokens": [
+    "https",
+    "impact",
+    "for",
+    "accessories",
+    "experience",
+    "Returns",
+    "you",
+    "of",
+    "risk",
+    "EliteThreads"
+   ]
+  },
+  "d3_en_525d0c39fc16__tfidf__B": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    431,
+    168,
+    272,
+    41,
+    280,
+    250,
+    248,
+    296,
+    42,
+    165
+   ],
+   "tokens": [
+    "2023",
+    "Her",
+    "signing",
+    "exclusive",
+    "exclusive",
+    "miss",
+    "Don",
+    "inbox",
+    "opportunity",
+    "favorite"
+   ]
+  },
+  "d3_en_525d0c39fc16__tfidf__C": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Guide",
+    "to",
+    "Elite",
+    "Apparel",
+    "Special",
+    "Offer",
+    "on",
+    "Express",
+    "Shipping"
+   ]
+  },
+  "d3_en_525d0c39fc16__transformer__A": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Guide",
+    "to",
+    "Elite",
+    "Apparel",
+    "Special",
+    "Offer",
+    "on",
+    "Express",
+    "Shipping"
+   ]
+  },
+  "d3_en_525d0c39fc16__transformer__B": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "B",
+   "positions": [
+    67,
+    4,
+    171,
+    169,
+    30,
+    32,
+    172,
+    6,
+    168,
+    189
+   ],
+   "tokens": [
+    "your",
+    "Apparel",
+    "dresses",
+    "Uncover",
+    "forward",
+    "and",
+    "chic",
+    "Offer",
+    "Her",
+    "sharp"
+   ]
+  },
+  "d3_en_525d0c39fc16__transformer__C": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    170,
+    171,
+    172,
+    173,
+    174,
+    162,
+    163,
+    164,
+    165,
+    166
+   ],
+   "tokens": [
+    "elegant",
+    "dresses",
+    "chic",
+    "tops",
+    "and",
+    "find",
+    "your",
+    "next",
+    "favorite",
+    "piece"
+   ]
+  },
+  "d3_en_525d0c39fc16__transformer__D": {
+   "doc_uid": "d3_en_525d0c39fc16",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    13,
+    223,
+    38,
+    391,
+    402,
+    180,
+    187,
+    269,
+    434,
+    122
+   ],
+   "tokens": [
+    "net",
+    "youth",
+    "we",
+    "https",
+    "applies",
+    "https",
+    "Him",
+    "fashion",
+    "Our",
+    "Shipping"
+   ]
+  },
+  "d3_en_563f6baeb492__tfidf__A": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    309,
+    376,
+    185,
+    44,
+    3,
+    388,
+    328,
+    96,
+    250,
+    283
+   ],
+   "tokens": [
+    "news",
+    "no",
+    "savings",
+    "s",
+    "Pro",
+    "your",
+    "Your",
+    "for",
+    "Don",
+    "us"
+   ]
+  },
+  "d3_en_563f6baeb492__tfidf__B": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    252,
+    250,
+    256,
+    323,
+    95,
+    35,
+    40,
+    211,
+    391,
+    175
+   ],
+   "tokens": [
+    "miss",
+    "Don",
+    "opportunities",
+    "exclusive",
+    "engineered",
+    "tailored",
+    "professional",
+    "professional",
+    "click",
+    "Beyond"
+   ]
+  },
+  "d3_en_563f6baeb492__tfidf__C": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Special",
+    "Announcement",
+    "Lenovo",
+    "Pro",
+    "Deals",
+    "on",
+    "ThinkStations",
+    "and",
+    "ThinkPads",
+    "Inside"
+   ]
+  },
+  "d3_en_563f6baeb492__transformer__A": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    2,
+    125,
+    233,
+    373,
+    105,
+    122,
+    250,
+    37,
+    178,
+    220
+   ],
+   "tokens": [
+    "Lenovo",
+    "8GB",
+    "help",
+    "27560",
+    "Imagine",
+    "Windows",
+    "Don",
+    "today",
+    "desktop",
+    "when"
+   ]
+  },
+  "d3_en_563f6baeb492__transformer__B": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    12,
+    13,
+    14,
+    15,
+    8,
+    9,
+    10,
+    11,
+    168,
+    169
+   ],
+   "tokens": [
+    "Markowitz",
+    "We",
+    "re",
+    "thrilled",
+    "ThinkPads",
+    "Inside",
+    "Greetings",
+    "Ted",
+    "a",
+    "24"
+   ]
+  },
+  "d3_en_563f6baeb492__transformer__C": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    12,
+    10,
+    26,
+    66,
+    1,
+    67,
+    61,
+    40,
+    37,
+    78
+   ],
+   "tokens": [
+    "Markowitz",
+    "Greetings",
+    "Business",
+    "your",
+    "Announcement",
+    "operations",
+    "empower",
+    "professional",
+    "today",
+    "technology"
+   ]
+  },
+  "d3_en_563f6baeb492__transformer__D": {
+   "doc_uid": "d3_en_563f6baeb492",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "D",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Special",
+    "Announcement",
+    "Lenovo",
+    "Pro",
+    "Deals",
+    "on",
+    "ThinkStations",
+    "and",
+    "ThinkPads",
+    "Inside"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__tfidf__A": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Important",
+    "Notification",
+    "Review",
+    "Your",
+    "PayGuard",
+    "Profile",
+    "Dear",
+    "User",
+    "This",
+    "is"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__tfidf__B": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    5,
+    80,
+    54,
+    64,
+    26,
+    68,
+    62,
+    81,
+    3,
+    25
+   ],
+   "tokens": [
+    "Profile",
+    "prompt",
+    "confirm",
+    "proceed",
+    "account",
+    "secure",
+    "measure",
+    "action",
+    "Your",
+    "your"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__tfidf__C": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    58,
+    59,
+    57,
+    7,
+    76,
+    46,
+    35,
+    25,
+    16,
+    55
+   ],
+   "tokens": [
+    "is",
+    "a",
+    "This",
+    "User",
+    "Thank",
+    "that",
+    "of",
+    "your",
+    "systems",
+    "your"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__transformer__A": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Important",
+    "Notification",
+    "Review",
+    "Your",
+    "PayGuard",
+    "Profile",
+    "Dear",
+    "User",
+    "This",
+    "is"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__transformer__B": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    79,
+    56,
+    5,
+    27,
+    40,
+    24,
+    3,
+    34,
+    8,
+    12
+   ],
+   "tokens": [
+    "your",
+    "details",
+    "Profile",
+    "information",
+    "mandatory",
+    "of",
+    "Your",
+    "functionality",
+    "This",
+    "notification"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__transformer__C": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    4,
+    3,
+    1,
+    12,
+    14,
+    36,
+    25,
+    29,
+    26,
+    72
+   ],
+   "tokens": [
+    "PayGuard",
+    "Your",
+    "Notification",
+    "notification",
+    "PayGuard",
+    "your",
+    "your",
+    "ensure",
+    "account",
+    "payguard"
+   ]
+  },
+  "d3_en_5c7635c0ac6a__transformer__D": {
+   "doc_uid": "d3_en_5c7635c0ac6a",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "D",
+   "positions": [
+    26,
+    14,
+    0,
+    68,
+    25,
+    84,
+    27,
+    55,
+    40,
+    73
+   ],
+   "tokens": [
+    "account",
+    "PayGuard",
+    "Important",
+    "secure",
+    "your",
+    "PayGuard",
+    "information",
+    "your",
+    "mandatory",
+    "securelogin"
+   ]
+  },
+  "d3_en_5d550721f9a2__tfidf__A": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exclusive",
+    "Opportunity",
+    "Unclaimed",
+    "Fund",
+    "Transfer",
+    "Action",
+    "Required",
+    "Greetings",
+    "I",
+    "am"
+   ]
+  },
+  "d3_en_5d550721f9a2__tfidf__B": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    177,
+    57,
+    218,
+    0,
+    385,
+    256,
+    1,
+    367,
+    257,
+    34
+   ],
+   "tokens": [
+    "profile",
+    "insight",
+    "claim",
+    "Exclusive",
+    "response",
+    "portal",
+    "Opportunity",
+    "opportunity",
+    "com",
+    "verify"
+   ]
+  },
+  "d3_en_5d550721f9a2__tfidf__C": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    394,
+    372,
+    110,
+    335,
+    367,
+    160,
+    222,
+    167,
+    408,
+    21
+   ],
+   "tokens": [
+    "delay",
+    "your",
+    "or",
+    "note",
+    "opportunity",
+    "act",
+    "guarantee",
+    "why",
+    "International",
+    "Commission"
+   ]
+  },
+  "d3_en_5d550721f9a2__transformer__A": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "A",
+   "positions": [
+    3,
+    19,
+    2,
+    43,
+    42,
+    136,
+    1,
+    5,
+    0,
+    20
+   ],
+   "tokens": [
+    "Fund",
+    "Assets",
+    "Unclaimed",
+    "assets",
+    "financial",
+    "financial",
+    "Opportunity",
+    "Action",
+    "Exclusive",
+    "Recovery"
+   ]
+  },
+  "d3_en_5d550721f9a2__transformer__B": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exclusive",
+    "Opportunity",
+    "Unclaimed",
+    "Fund",
+    "Transfer",
+    "Action",
+    "Required",
+    "Greetings",
+    "I",
+    "am"
+   ]
+  },
+  "d3_en_5d550721f9a2__transformer__C": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    381,
+    30,
+    363,
+    275,
+    31,
+    199,
+    222,
+    136,
+    336,
+    128
+   ],
+   "tokens": [
+    "a",
+    "mission",
+    "and",
+    "Once",
+    "is",
+    "me",
+    "guarantee",
+    "financial",
+    "that",
+    "address"
+   ]
+  },
+  "d3_en_5d550721f9a2__transformer__D": {
+   "doc_uid": "d3_en_5d550721f9a2",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "D",
+   "positions": [
+    126,
+    46,
+    131,
+    132,
+    125,
+    43,
+    42,
+    36,
+    18,
+    19
+   ],
+   "tokens": [
+    "mandate",
+    "beneficiaries",
+    "unclaimed",
+    "assets",
+    "our",
+    "assets",
+    "financial",
+    "facilitate",
+    "International",
+    "Assets"
+   ]
+  },
+  "d3_en_688dcff77345__tfidf__A": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    106,
+    143,
+    14,
+    61,
+    165,
+    60,
+    77,
+    59,
+    88,
+    162
+   ],
+   "tokens": [
+    "verify",
+    "joining",
+    "created",
+    "features",
+    "Unsubscribe",
+    "all",
+    "provided",
+    "access",
+    "co",
+    "co"
+   ]
+  },
+  "d3_en_688dcff77345__tfidf__B": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    13,
+    120,
+    43,
+    38,
+    189,
+    25,
+    186,
+    123,
+    194,
+    175
+   ],
+   "tokens": [
+    "recently",
+    "creation",
+    "This",
+    "you",
+    "contact",
+    "To",
+    "in",
+    "not",
+    "co",
+    "for"
+   ]
+  },
+  "d3_en_688dcff77345__tfidf__C": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Action",
+    "Required",
+    "Complete",
+    "Your",
+    "Account",
+    "Setup",
+    "at",
+    "UrbanCrafts",
+    "Hello",
+    "We"
+   ]
+  },
+  "d3_en_688dcff77345__transformer__A": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    165,
+    0,
+    1,
+    2,
+    3,
+    166,
+    50,
+    51,
+    167,
+    168
+   ],
+   "tokens": [
+    "Unsubscribe",
+    "Action",
+    "Required",
+    "Complete",
+    "Your",
+    "This",
+    "protect",
+    "your",
+    "email",
+    "was"
+   ]
+  },
+  "d3_en_688dcff77345__transformer__B": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Action",
+    "Required",
+    "Complete",
+    "Your",
+    "Account",
+    "Setup",
+    "at",
+    "UrbanCrafts",
+    "Hello",
+    "We"
+   ]
+  },
+  "d3_en_688dcff77345__transformer__C": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    139,
+    147,
+    102,
+    58,
+    19,
+    159,
+    43,
+    180,
+    190,
+    37
+   ],
+   "tokens": [
+    "priorities",
+    "Best",
+    "and",
+    "fully",
+    "your",
+    "90210",
+    "This",
+    "If",
+    "us",
+    "require"
+   ]
+  },
+  "d3_en_688dcff77345__transformer__D": {
+   "doc_uid": "d3_en_688dcff77345",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "D",
+   "positions": [
+    0,
+    87,
+    19,
+    24,
+    2,
+    71,
+    35,
+    3,
+    6,
+    7
+   ],
+   "tokens": [
+    "Action",
+    "urbancrafts",
+    "your",
+    "goods",
+    "Complete",
+    "artisans",
+    "account",
+    "Your",
+    "at",
+    "UrbanCrafts"
+   ]
+  },
+  "d3_en_71ba49d3ceae__tfidf__A": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    60,
+    27,
+    56,
+    66,
+    107,
+    103,
+    125,
+    62,
+    16,
+    61
+   ],
+   "tokens": [
+    "document",
+    "shipment",
+    "attached",
+    "parcel",
+    "parcel",
+    "swiftly",
+    "ATTACHMENT",
+    "important",
+    "courier",
+    "contains"
+   ]
+  },
+  "d3_en_71ba49d3ceae__tfidf__B": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Action",
+    "Required",
+    "Your",
+    "FedEx",
+    "Delivery",
+    "Attempt",
+    "Dear",
+    "Valued",
+    "Customer",
+    "We"
+   ]
+  },
+  "d3_en_71ba49d3ceae__tfidf__C": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    6,
+    35,
+    76,
+    45,
+    39,
+    2,
+    109,
+    92,
+    119,
+    32
+   ],
+   "tokens": [
+    "Dear",
+    "the",
+    "or",
+    "To",
+    "for",
+    "Your",
+    "being",
+    "cause",
+    "Sincerely",
+    "an"
+   ]
+  },
+  "d3_en_71ba49d3ceae__transformer__A": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Action",
+    "Required",
+    "Your",
+    "FedEx",
+    "Delivery",
+    "Attempt",
+    "Dear",
+    "Valued",
+    "Customer",
+    "We"
+   ]
+  },
+  "d3_en_71ba49d3ceae__transformer__B": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    61,
+    118,
+    85,
+    10,
+    14,
+    116,
+    71,
+    28,
+    41,
+    11
+   ],
+   "tokens": [
+    "contains",
+    "FedEx",
+    "facility",
+    "regret",
+    "that",
+    "for",
+    "to",
+    "This",
+    "number",
+    "to"
+   ]
+  },
+  "d3_en_71ba49d3ceae__transformer__C": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    0,
+    46,
+    85,
+    84,
+    82,
+    91,
+    22,
+    27,
+    2,
+    112
+   ],
+   "tokens": [
+    "Action",
+    "ensure",
+    "facility",
+    "FedEx",
+    "your",
+    "may",
+    "delivery",
+    "shipment",
+    "Your",
+    "the"
+   ]
+  },
+  "d3_en_71ba49d3ceae__transformer__D": {
+   "doc_uid": "d3_en_71ba49d3ceae",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "D",
+   "positions": [
+    4,
+    3,
+    24,
+    22,
+    2,
+    26,
+    0,
+    5,
+    8,
+    27
+   ],
+   "tokens": [
+    "Delivery",
+    "FedEx",
+    "your",
+    "delivery",
+    "Your",
+    "FedEx",
+    "Action",
+    "Attempt",
+    "Customer",
+    "shipment"
+   ]
+  },
+  "d3_en_a369051bdef8__tfidf__A": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    0,
+    38,
+    112,
+    53,
+    80,
+    59,
+    136,
+    90,
+    18,
+    52
+   ],
+   "tokens": [
+    "Unlock",
+    "drone",
+    "drone",
+    "institutions",
+    "institutions",
+    "hands",
+    "levels",
+    "engineered",
+    "educational",
+    "educational"
+   ]
+  },
+  "d3_en_a369051bdef8__tfidf__B": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    193,
+    35,
+    114,
+    166,
+    100,
+    113,
+    90,
+    170,
+    11,
+    217
+   ],
+   "tokens": [
+    "Discover",
+    "and",
+    "structural",
+    "are",
+    "powerful",
+    "dynamics",
+    "engineered",
+    "collaborative",
+    "Hello",
+    "com"
+   ]
+  },
+  "d3_en_a369051bdef8__tfidf__C": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Unlock",
+    "New",
+    "Possibilities",
+    "in",
+    "UAV",
+    "Education",
+    "and",
+    "Research",
+    "with",
+    "SkyPilot"
+   ]
+  },
+  "d3_en_a369051bdef8__transformer__A": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Unlock",
+    "New",
+    "Possibilities",
+    "in",
+    "UAV",
+    "Education",
+    "and",
+    "Research",
+    "with",
+    "SkyPilot"
+   ]
+  },
+  "d3_en_a369051bdef8__transformer__B": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "B",
+   "positions": [
+    0,
+    82,
+    24,
+    161,
+    146,
+    3,
+    41,
+    15,
+    124,
+    40
+   ],
+   "tokens": [
+    "Unlock",
+    "guided",
+    "Robotics",
+    "your",
+    "your",
+    "in",
+    "This",
+    "leader",
+    "platform",
+    "platform"
+   ]
+  },
+  "d3_en_a369051bdef8__transformer__C": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    82,
+    81,
+    167,
+    214,
+    230,
+    197,
+    244,
+    80,
+    106,
+    164
+   ],
+   "tokens": [
+    "guided",
+    "has",
+    "keen",
+    "at",
+    "your",
+    "Lab",
+    "globalrobotics",
+    "institutions",
+    "Students",
+    "Additionally"
+   ]
+  },
+  "d3_en_a369051bdef8__transformer__D": {
+   "doc_uid": "d3_en_a369051bdef8",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "D",
+   "positions": [
+    236,
+    235,
+    234,
+    0,
+    233,
+    182,
+    183,
+    18,
+    189,
+    240
+   ],
+   "tokens": [
+    "Director",
+    "Petrova",
+    "Lena",
+    "Unlock",
+    "Dr",
+    "reach",
+    "Your",
+    "educational",
+    "shaping",
+    "Global"
+   ]
+  },
+  "d3_en_bacdb9c18288__tfidf__A": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Hot",
+    "off",
+    "the",
+    "press",
+    "New",
+    "column",
+    "by",
+    "Professor",
+    "Davies",
+    "online"
+   ]
+  },
+  "d3_en_bacdb9c18288__tfidf__B": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    44,
+    294,
+    234,
+    163,
+    48,
+    332,
+    334,
+    145,
+    17,
+    162
+   ],
+   "tokens": [
+    "just",
+    "exclusive",
+    "miss",
+    "labor",
+    "provoking",
+    "Stay",
+    "stay",
+    "costs",
+    "brand",
+    "reshaping"
+   ]
+  },
+  "d3_en_bacdb9c18288__tfidf__C": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    193,
+    324,
+    291,
+    172,
+    144,
+    271,
+    44,
+    308,
+    133,
+    279
+   ],
+   "tokens": [
+    "regularly",
+    "critical",
+    "discourse",
+    "Goals",
+    "rising",
+    "https",
+    "just",
+    "Academic",
+    "Pressures",
+    "We"
+   ]
+  },
+  "d3_en_bacdb9c18288__transformer__A": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Hot",
+    "off",
+    "the",
+    "press",
+    "New",
+    "column",
+    "by",
+    "Professor",
+    "Davies",
+    "online"
+   ]
+  },
+  "d3_en_bacdb9c18288__transformer__B": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    360,
+    318,
+    319,
+    214,
+    215,
+    316,
+    317,
+    9,
+    212,
+    213
+   ],
+   "tokens": [
+    "unsubscribe",
+    "cutting",
+    "edge",
+    "business",
+    "leaders",
+    "platform",
+    "with",
+    "online",
+    "academics",
+    "policymakers"
+   ]
+  },
+  "d3_en_bacdb9c18288__transformer__C": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    0,
+    17,
+    3,
+    1,
+    26,
+    126,
+    2,
+    38,
+    11,
+    72
+   ],
+   "tokens": [
+    "Hot",
+    "brand",
+    "press",
+    "off",
+    "now",
+    "strategies",
+    "the",
+    "authority",
+    "We",
+    "economic"
+   ]
+  },
+  "d3_en_bacdb9c18288__transformer__D": {
+   "doc_uid": "d3_en_bacdb9c18288",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    145,
+    337,
+    65,
+    171,
+    366,
+    166,
+    45,
+    332,
+    274,
+    95
+   ],
+   "tokens": [
+    "costs",
+    "regards",
+    "comprehensive",
+    "Development",
+    "preferences",
+    "requiring",
+    "published",
+    "Stay",
+    "org",
+    "contemporary"
+   ]
+  },
+  "d3_en_c0f96db26dfb__tfidf__A": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    149,
+    492,
+    190,
+    10,
+    19,
+    249,
+    179,
+    378,
+    487,
+    158
+   ],
+   "tokens": [
+    "processing",
+    "clarification",
+    "but",
+    "for",
+    "this",
+    "Smart",
+    "to",
+    "work",
+    "for",
+    "opportunity"
+   ]
+  },
+  "d3_en_c0f96db26dfb__tfidf__B": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    426,
+    433,
+    339,
+    249,
+    498,
+    65,
+    519,
+    200,
+    342,
+    0
+   ],
+   "tokens": [
+    "author",
+    "author",
+    "DOI",
+    "Smart",
+    "response",
+    "Zenith",
+    "Zenith",
+    "biomedical",
+    "citation",
+    "Exclusive"
+   ]
+  },
+  "d3_en_c0f96db26dfb__tfidf__C": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exclusive",
+    "Call",
+    "for",
+    "Papers",
+    "Innovations",
+    "in",
+    "Scientific",
+    "Discovery",
+    "Waived",
+    "Fees"
+   ]
+  },
+  "d3_en_c0f96db26dfb__transformer__A": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    168,
+    166,
+    488,
+    198,
+    221,
+    341,
+    332,
+    315,
+    123,
+    162
+   ],
+   "tokens": [
+    "journal",
+    "open",
+    "any",
+    "environmental",
+    "Environmental",
+    "easy",
+    "be",
+    "reviewers",
+    "and",
+    "findings"
+   ]
+  },
+  "d3_en_c0f96db26dfb__transformer__B": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    473,
+    474,
+    475,
+    476,
+    469,
+    470,
+    471,
+    472,
+    446,
+    447
+   ],
+   "tokens": [
+    "of",
+    "your",
+    "scientific",
+    "breakthroughs",
+    "facilitate",
+    "the",
+    "global",
+    "dissemination",
+    "and",
+    "research"
+   ]
+  },
+  "d3_en_c0f96db26dfb__transformer__C": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    16,
+    0,
+    15,
+    129,
+    66,
+    14,
+    161,
+    82,
+    8,
+    1
+   ],
+   "tokens": [
+    "Berenson",
+    "Exclusive",
+    "Dr",
+    "your",
+    "Scientific",
+    "Prof",
+    "your",
+    "scientific",
+    "Waived",
+    "Call"
+   ]
+  },
+  "d3_en_c0f96db26dfb__transformer__D": {
+   "doc_uid": "d3_en_c0f96db26dfb",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "D",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Exclusive",
+    "Call",
+    "for",
+    "Papers",
+    "Innovations",
+    "in",
+    "Scientific",
+    "Discovery",
+    "Waived",
+    "Fees"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__tfidf__A": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    88,
+    51,
+    79,
+    47,
+    15,
+    1,
+    39,
+    54,
+    32,
+    50
+   ],
+   "tokens": [
+    "2023",
+    "attached",
+    "prompt",
+    "accounts",
+    "simple",
+    "Account",
+    "account",
+    "follow",
+    "the",
+    "the"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__tfidf__B": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Important",
+    "Account",
+    "Update",
+    "Required",
+    "for",
+    "DigitalCoin",
+    "Wallet",
+    "Hello",
+    "DigitalCoin",
+    "is"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__tfidf__C": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    10,
+    46,
+    82,
+    74,
+    72,
+    56,
+    60,
+    17,
+    1,
+    2
+   ],
+   "tokens": [
+    "dedicated",
+    "their",
+    "this",
+    "protocols",
+    "latest",
+    "instructions",
+    "your",
+    "secure",
+    "Account",
+    "Update"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__transformer__A": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "A",
+   "positions": [
+    1,
+    6,
+    5,
+    88,
+    4,
+    66,
+    24,
+    31,
+    10,
+    8
+   ],
+   "tokens": [
+    "Account",
+    "Wallet",
+    "DigitalCoin",
+    "2023",
+    "for",
+    "mandatory",
+    "security",
+    "ensure",
+    "dedicated",
+    "DigitalCoin"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__transformer__B": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    66,
+    47,
+    1,
+    39,
+    0,
+    80,
+    83,
+    78,
+    82,
+    88
+   ],
+   "tokens": [
+    "mandatory",
+    "accounts",
+    "Account",
+    "account",
+    "Important",
+    "attention",
+    "matter",
+    "your",
+    "this",
+    "2023"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__transformer__C": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    50,
+    68,
+    80,
+    74,
+    75,
+    45,
+    4,
+    21,
+    83,
+    86
+   ],
+   "tokens": [
+    "the",
+    "to",
+    "attention",
+    "protocols",
+    "Thank",
+    "validate",
+    "for",
+    "deployed",
+    "matter",
+    "Team"
+   ]
+  },
+  "d3_en_c3cb1d395ff1__transformer__D": {
+   "doc_uid": "d3_en_c3cb1d395ff1",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "D",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Important",
+    "Account",
+    "Update",
+    "Required",
+    "for",
+    "DigitalCoin",
+    "Wallet",
+    "Hello",
+    "DigitalCoin",
+    "is"
+   ]
+  },
+  "d3_en_d8937f6147ca__tfidf__A": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "A",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Exclusive",
+    "Invitation",
+    "Balenciaga",
+    "New",
+    "Arrivals",
+    "Hello",
+    "Honey",
+    "Potter",
+    "At"
+   ]
+  },
+  "d3_en_d8937f6147ca__tfidf__B": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    7,
+    355,
+    232,
+    99,
+    127,
+    1,
+    19,
+    255,
+    224,
+    8
+   ],
+   "tokens": [
+    "Honey",
+    "Honey",
+    "miss",
+    "statement",
+    "inspire",
+    "Exclusive",
+    "exclusive",
+    "exclusive",
+    "ultimate",
+    "Potter"
+   ]
+  },
+  "d3_en_d8937f6147ca__tfidf__C": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "C",
+   "positions": [
+    329,
+    152,
+    315,
+    210,
+    331,
+    407,
+    359,
+    343,
+    83,
+    95
+   ],
+   "tokens": [
+    "is",
+    "understand",
+    "us",
+    "token",
+    "ready",
+    "review",
+    "Reserve",
+    "fashion",
+    "featuring",
+    "coveted"
+   ]
+  },
+  "d3_en_d8937f6147ca__transformer__A": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "A",
+   "positions": [
+    430,
+    431,
+    432,
+    433,
+    0,
+    1,
+    38,
+    39,
+    48,
+    49
+   ],
+   "tokens": [
+    "Company",
+    "Registration",
+    "Number",
+    "4567890",
+    "Your",
+    "Exclusive",
+    "early",
+    "access",
+    "your",
+    "chance"
+   ]
+  },
+  "d3_en_d8937f6147ca__transformer__B": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "B",
+   "positions": [
+    231,
+    6,
+    300,
+    344,
+    441,
+    59,
+    120,
+    116,
+    194,
+    358
+   ],
+   "tokens": [
+    "t",
+    "Hello",
+    "striving",
+    "needs",
+    "rights",
+    "pieces",
+    "is",
+    "modern",
+    "you",
+    "Runway"
+   ]
+  },
+  "d3_en_d8937f6147ca__transformer__C": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "C",
+   "positions": [
+    149,
+    2,
+    10,
+    63,
+    68,
+    111,
+    115,
+    0,
+    181,
+    147
+   ],
+   "tokens": [
+    "fashion",
+    "Invitation",
+    "Runway",
+    "brand",
+    "designs",
+    "brand",
+    "redefining",
+    "Your",
+    "store",
+    "forefront"
+   ]
+  },
+  "d3_en_d8937f6147ca__transformer__D": {
+   "doc_uid": "d3_en_d8937f6147ca",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "D",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Your",
+    "Exclusive",
+    "Invitation",
+    "Balenciaga",
+    "New",
+    "Arrivals",
+    "Hello",
+    "Honey",
+    "Potter",
+    "At"
+   ]
+  },
+  "d3_en_e2b2eb614a71__tfidf__A": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "random",
+   "label": "A",
+   "positions": [
+    82,
+    36,
+    74,
+    69,
+    50,
+    62,
+    49,
+    1,
+    4,
+    18
+   ],
+   "tokens": [
+    "Corporation",
+    "attached",
+    "Chairman",
+    "of",
+    "review",
+    "are",
+    "Please",
+    "Approval",
+    "Attached",
+    "has"
+   ]
+  },
+  "d3_en_e2b2eb614a71__tfidf__B": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "lime",
+   "label": "B",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Payment",
+    "Approval",
+    "Reference",
+    "Document",
+    "Attached",
+    "Dear",
+    "Valued",
+    "Customer",
+    "We",
+    "are"
+   ]
+  },
+  "d3_en_e2b2eb614a71__tfidf__C": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "tfidf",
+   "method": "shap",
+   "label": "C",
+   "positions": [
+    0,
+    17,
+    48,
+    3,
+    41,
+    53,
+    4,
+    36,
+    52,
+    77
+   ],
+   "tokens": [
+    "Payment",
+    "payment",
+    "transaction",
+    "Document",
+    "document",
+    "document",
+    "Attached",
+    "attached",
+    "attached",
+    "Executive"
+   ]
+  },
+  "d3_en_e2b2eb614a71__transformer__A": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "ig",
+   "label": "A",
+   "positions": [
+    0,
+    4,
+    17,
+    1,
+    8,
+    23,
+    6,
+    15,
+    48,
+    26
+   ],
+   "tokens": [
+    "Payment",
+    "Attached",
+    "payment",
+    "Approval",
+    "We",
+    "financial",
+    "Valued",
+    "your",
+    "transaction",
+    "your"
+   ]
+  },
+  "d3_en_e2b2eb614a71__transformer__B": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "shap",
+   "label": "B",
+   "positions": [
+    0,
+    24,
+    77,
+    74,
+    17,
+    82,
+    7,
+    39,
+    68,
+    76
+   ],
+   "tokens": [
+    "Payment",
+    "department",
+    "Executive",
+    "Chairman",
+    "payment",
+    "Corporation",
+    "Customer",
+    "email",
+    "Bank",
+    "Chief"
+   ]
+  },
+  "d3_en_e2b2eb614a71__transformer__C": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "lime",
+   "label": "C",
+   "positions": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "tokens": [
+    "Payment",
+    "Approval",
+    "Reference",
+    "Document",
+    "Attached",
+    "Dear",
+    "Valued",
+    "Customer",
+    "We",
+    "are"
+   ]
+  },
+  "d3_en_e2b2eb614a71__transformer__D": {
+   "doc_uid": "d3_en_e2b2eb614a71",
+   "corpus": "d3_en",
+   "family": "transformer",
+   "method": "random",
+   "label": "D",
+   "positions": [
+    43,
+    64,
+    50,
+    24,
+    76,
+    62,
+    74,
+    22,
+    47,
+    8
+   ],
+   "tokens": [
+    "all",
+    "Thank",
+    "review",
+    "department",
+    "Chief",
+    "are",
+    "Chairman",
+    "our",
+    "the",
+    "We"
+   ]
+  }
+ },
+ "docs": {
+  "d1_sb_017547c4cef2": {
+   "corpus": "d1_sb",
+   "hash": "017547c4cef29333760a4c81bc099465696c888a",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 623
+  },
+  "d1_sb_02caaf957fc5": {
+   "corpus": "d1_sb",
+   "hash": "02caaf957fc567b1e7cb8fd62f775613a7978e92",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 60
+  },
+  "d1_sb_054c64014f71": {
+   "corpus": "d1_sb",
+   "hash": "054c64014f719a5f607523562adad8ee945d6751",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 50
+  },
+  "d1_sb_07a4688e463b": {
+   "corpus": "d1_sb",
+   "hash": "07a4688e463be6aa0cdda0046eb9a5035166a504",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 8
+  },
+  "d1_sb_0c55e64c8f49": {
+   "corpus": "d1_sb",
+   "hash": "0c55e64c8f49278d274f8aa1d6c9b0dfabe39a1c",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 128
+  },
+  "d1_sb_0fd335619b46": {
+   "corpus": "d1_sb",
+   "hash": "0fd335619b464765a9d15ee6777a4eb318454784",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 637
+  },
+  "d1_sb_13d68b055945": {
+   "corpus": "d1_sb",
+   "hash": "13d68b0559450ed014f48847a6a052961785d782",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 580
+  },
+  "d1_sb_1575814b5232": {
+   "corpus": "d1_sb",
+   "hash": "1575814b52328abd080e3dc9f7e3f28c7d25f64c",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 103
+  },
+  "d1_sb_16da2d992da0": {
+   "corpus": "d1_sb",
+   "hash": "16da2d992da0313abc4867fc04ac13e714f00690",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 137
+  },
+  "d1_sb_179f76bb653a": {
+   "corpus": "d1_sb",
+   "hash": "179f76bb653a2a156b60779c23eeca913ed2ea82",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 191
+  },
+  "d1_sb_18d7de6a39cd": {
+   "corpus": "d1_sb",
+   "hash": "18d7de6a39cd480312cab8d607a4f0226eee9ede",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 18
+  },
+  "d1_sb_1b7c9aed90de": {
+   "corpus": "d1_sb",
+   "hash": "1b7c9aed90dec69102e61d32eaa3808605b593c6",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 9
+  },
+  "d1_sb_20d415687a7c": {
+   "corpus": "d1_sb",
+   "hash": "20d415687a7c48da9ebb125eadb6500cff05e43e",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 95
+  },
+  "d1_sb_22009fb2fbbe": {
+   "corpus": "d1_sb",
+   "hash": "22009fb2fbbec97111e9f0e60089be4b488f9eb7",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 17
+  },
+  "d1_sb_231f61037446": {
+   "corpus": "d1_sb",
+   "hash": "231f61037446d0d2fc51d1c689d3ef5db92b5e95",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 36
+  },
+  "d1_sb_233a61ac9692": {
+   "corpus": "d1_sb",
+   "hash": "233a61ac9692173f63b0dd31063f2ae50a53db7d",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 627
+  },
+  "d1_sb_29b2086ff4b1": {
+   "corpus": "d1_sb",
+   "hash": "29b2086ff4b1b994f86609558c557f9d9148322f",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 74
+  },
+  "d1_sb_2aa305e1c356": {
+   "corpus": "d1_sb",
+   "hash": "2aa305e1c3564026bd6e5ab218d5b75a9139fb82",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 637
+  },
+  "d1_sb_2d40e126004e": {
+   "corpus": "d1_sb",
+   "hash": "2d40e126004e209e811a92149b1b4a9fa005ea8d",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 104
+  },
+  "d1_sb_2dcd4d3352ff": {
+   "corpus": "d1_sb",
+   "hash": "2dcd4d3352ffb7aadfe90fbe7a2490bf6a042d04",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 52
+  },
+  "d2_07bdde7faf62": {
+   "corpus": "d2",
+   "hash": "07bdde7faf621ba51bd16c9b4a744603a93e37fc",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 10
+  },
+  "d2_0ab6b544ebac": {
+   "corpus": "d2",
+   "hash": "0ab6b544ebac659f6527031e3862e2f2733dc75b",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 145
+  },
+  "d2_0b48feee9474": {
+   "corpus": "d2",
+   "hash": "0b48feee9474a892ca8b5343ded16c7249cb3039",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 347
+  },
+  "d2_0b7f87b90663": {
+   "corpus": "d2",
+   "hash": "0b7f87b906635a871f24d2b89e807395593912a5",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 26
+  },
+  "d2_0db0b230244d": {
+   "corpus": "d2",
+   "hash": "0db0b230244d873f81cbc4538328948fecfe4e0a",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 545
+  },
+  "d2_13376a2370d1": {
+   "corpus": "d2",
+   "hash": "13376a2370d11b1b993872ef77220b461946de8b",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 65
+  },
+  "d2_135f52b5cc80": {
+   "corpus": "d2",
+   "hash": "135f52b5cc803a1f0fa938a07689bbb4cadaf795",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 3
+  },
+  "d2_14caf6959c96": {
+   "corpus": "d2",
+   "hash": "14caf6959c96605800a0e51719c78b3d23f5e472",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 66
+  },
+  "d2_14f2115a96f2": {
+   "corpus": "d2",
+   "hash": "14f2115a96f25e76ed51b712d3bb939998e8322a",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 120
+  },
+  "d2_1768b410cffd": {
+   "corpus": "d2",
+   "hash": "1768b410cffd164ea8cdc12a0dd55875a5d7bd6d",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 179
+  },
+  "d2_18e99fa47926": {
+   "corpus": "d2",
+   "hash": "18e99fa4792668e49e02e5d4f2511de2fd9995da",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 186
+  },
+  "d2_19509eacd95a": {
+   "corpus": "d2",
+   "hash": "19509eacd95ad49320fb0a4a9d0cb4603687df63",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 54
+  },
+  "d2_22f7325368b4": {
+   "corpus": "d2",
+   "hash": "22f7325368b4423d0bf0d7ba49ab757f26f1a1e7",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 99
+  },
+  "d2_2398050b3508": {
+   "corpus": "d2",
+   "hash": "2398050b3508a02153f3cf39f51909e947f472d7",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 46
+  },
+  "d2_2bf8085d4661": {
+   "corpus": "d2",
+   "hash": "2bf8085d466158d876460d8573801d0bf45baef7",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 1165
+  },
+  "d2_2e99cb2f3cfa": {
+   "corpus": "d2",
+   "hash": "2e99cb2f3cfa58dc1d72c0b2e07b0b3e61952c61",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 45
+  },
+  "d2_305b0ab75271": {
+   "corpus": "d2",
+   "hash": "305b0ab7527154b7566661546bdc8cf5b8cd0a62",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 98
+  },
+  "d2_31a1d8611c6c": {
+   "corpus": "d2",
+   "hash": "31a1d8611c6c922aa2fe28dc7221fc6f00941f99",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 52
+  },
+  "d2_3966b59f6b6d": {
+   "corpus": "d2",
+   "hash": "3966b59f6b6d88eeab17bfa7d3f3ede54d9562b2",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 24
+  },
+  "d2_3b3f2e9b18dd": {
+   "corpus": "d2",
+   "hash": "3b3f2e9b18ddb6e1d391137bf09f5e995aee35fc",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 6
+  },
+  "d3_en_06aff5a99282": {
+   "corpus": "d3_en",
+   "hash": "06aff5a99282729af070ad0aad0f3c245bbae5dd",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 305
+  },
+  "d3_en_0acd3e705bba": {
+   "corpus": "d3_en",
+   "hash": "0acd3e705bbac48e6a6215234add6b69b39154c4",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 256
+  },
+  "d3_en_139a683d42ff": {
+   "corpus": "d3_en",
+   "hash": "139a683d42ff75f1cd856056eb399e6889d073f6",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 430
+  },
+  "d3_en_156335de1394": {
+   "corpus": "d3_en",
+   "hash": "156335de13944b4a8ff7d4bd13d9d11ad0b4e0cb",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 239
+  },
+  "d3_en_22ec6a011e78": {
+   "corpus": "d3_en",
+   "hash": "22ec6a011e787085efd6fbc535029474430b3a74",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 391
+  },
+  "d3_en_3a2986cbac53": {
+   "corpus": "d3_en",
+   "hash": "3a2986cbac5387696bc606e18fd8143c58d649bd",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 403
+  },
+  "d3_en_498f54a03ed4": {
+   "corpus": "d3_en",
+   "hash": "498f54a03ed4ce10510d5f85eac97ae50b135fa2",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 281
+  },
+  "d3_en_5250002913ac": {
+   "corpus": "d3_en",
+   "hash": "5250002913ac3455abc92a5d9c6b942e59dc852d",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 309
+  },
+  "d3_en_525d0c39fc16": {
+   "corpus": "d3_en",
+   "hash": "525d0c39fc16e53304c54950c9d577a3cb7cfa55",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 447
+  },
+  "d3_en_563f6baeb492": {
+   "corpus": "d3_en",
+   "hash": "563f6baeb49226cfe6a2177efded4c32461afded",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 401
+  },
+  "d3_en_5c7635c0ac6a": {
+   "corpus": "d3_en",
+   "hash": "5c7635c0ac6aa6240b831a165166126d2f095106",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 86
+  },
+  "d3_en_5d550721f9a2": {
+   "corpus": "d3_en",
+   "hash": "5d550721f9a23914d2fb727f8f42519be5a73737",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 412
+  },
+  "d3_en_688dcff77345": {
+   "corpus": "d3_en",
+   "hash": "688dcff7734526ba0ce54d4aba1ab32ecc5d8176",
+   "y_true": 0,
+   "stratum": "FP",
+   "n_word_tokens": 212
+  },
+  "d3_en_71ba49d3ceae": {
+   "corpus": "d3_en",
+   "hash": "71ba49d3ceae8a624552e71e9fefa2c6851ecb51",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 126
+  },
+  "d3_en_a369051bdef8": {
+   "corpus": "d3_en",
+   "hash": "a369051bdef89d9febba542c309aa7971cd36196",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 246
+  },
+  "d3_en_bacdb9c18288": {
+   "corpus": "d3_en",
+   "hash": "bacdb9c18288c703cea83d246fedf09061ae3eda",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 367
+  },
+  "d3_en_c0f96db26dfb": {
+   "corpus": "d3_en",
+   "hash": "c0f96db26dfbfa57a38dbf791122fbb2b46322e9",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 522
+  },
+  "d3_en_c3cb1d395ff1": {
+   "corpus": "d3_en",
+   "hash": "c3cb1d395ff10fb2359ce6cf120023a118d51e4e",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 89
+  },
+  "d3_en_d8937f6147ca": {
+   "corpus": "d3_en",
+   "hash": "d8937f6147ca20795217b1d0dea8e9f0d2cff8ab",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 443
+  },
+  "d3_en_e2b2eb614a71": {
+   "corpus": "d3_en",
+   "hash": "e2b2eb614a71e08572c95981f31df5f66862306d",
+   "y_true": 1,
+   "stratum": "TP",
+   "n_word_tokens": 83
+  }
+ }
+}
