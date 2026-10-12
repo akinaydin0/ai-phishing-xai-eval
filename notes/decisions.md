@@ -1820,3 +1820,63 @@ Not changed: champions, thresholds, the point estimates, the McNemar tests (whic
 Interpretation rule (binding): the cluster intervals annotate the committed comparisons and are reported in the paper whatever they show; no claim direction is introduced or reversed on their basis, and an interval that includes zero is stated as such.
 
 Script: src/experiments/cluster_bootstrap_d3.py (added with this entry). Outputs: results/stats/cluster_bootstrap_{C1c,C4,C5}.json.
+
+## 2026-10-12 · HISTORY REWRITE: public-release preparation
+
+**What.** The public version of this repository was built from a rewritten copy of its history
+(git-filter-repo 2.47.0, one invocation on a fresh clone). Nothing was force-pushed anywhere. The
+complete pre-rewrite history (53 commits, last `3c9f1cb`) and the private release of heavy artefacts
+are kept privately by the author.
+
+**Purged from every commit:**
+- `paper/`: conference-paper source and PDF (the paper lives outside git);
+- `Dissertation-full-draft-Akin-AydinFeedback.pdf`: a draft carrying third-party review annotations;
+- `AKIN-AYDIN-DISSERTATION.pdf`: the submitted dissertation;
+- `results/hitl/key.json` and `results/hitl/annotate.html`: both held the 60 complete TEST emails,
+  which come from third-party corpora that are not redistributed;
+- `viva/`: viva preparation material;
+- `interim_slides.pptx`: module guidance slides by a third party;
+- `proposal.docx`: the original project proposal.
+
+**Redacted** (two literal rules, applied to file contents and commit messages in every commit):
+- the Windows profile name of the training workstation in the `notebooks/01_eda.ipynb` cell outputs,
+  now `C:\Users\<user>\…`;
+- the programme leader's name, now `[name redacted]`, in CLAUDE.md, in the 2026-07-17 entry of this
+  log and in one commit message. This is the only change made to earlier entries of this append-only
+  log.
+
+**Commit messages.** The tool-generated `Co-Authored-By: Claude …` trailers (49 commits) were removed
+because the author is the sole author. A third literal rule removed the sentence "Co-authored-by
+trailer below." from the message of the old commit `13a464b`, where it referred to such a trailer.
+git-filter-repo also rewrote the commit hashes quoted inside commit messages to their new values.
+
+**Preserved.** Apart from the purged paths and the two redactions, file contents, authorship, author
+and commit dates and commit order are unchanged (checked for all 49 kept commits). Four commits
+touched only purged paths, became empty and were dropped: `be7ed67` (viva), `d6e0ca9` and `f9cfa40`
+(paper) and `fbf3333` (feedback draft). The rewritten history has 49 commits; `3c9f1cb` is now
+`002f2c1`.
+
+**Old hashes.** Hashes cited in earlier entries of this log, and in CLAUDE.md, CONTEXT.md and
+`notes/*_summary.md`, are pre-rewrite hashes. They map through
+`notes/history_rewrite_2026-10-12_commit_map.txt`. `be7ed67`, the baseline named in the AUDIT-PAPER
+entry, was pruned: it changed only `viva/`, so every committed artefact that entry refers to is
+identical at its parent `65d8f2a` (now `042e45b`).
+
+**HITL method key** (follow-up commit). `results/hitl/key.json` is re-added without the email text,
+together with `src/experiments/d10_restore_text.py`, which restores the text by sha1 body hash from
+the cleaned TEST splits. The restored key is byte-identical to the rated one (204,883 bytes, verified
+2026-10-12).
+- The committed key is the historical D10 package that the annotators rated (the human annotation and
+  the LLM judge).
+- Its LIME sets are the void-LIME sets that the paper discloses as FIRST10 (Amendment 4).
+- `src/experiments/d10_package.py` builds a new package with the current explainers and does not
+  reproduce the committed one.
+
+**Other follow-up commits.**
+- The inputs of the family-cluster bootstrap, previously untracked, are committed:
+  `src/experiments/cluster_bootstrap_inputs.py` and `results/stats/cluster_inputs/{c1c,c4,c5}.csv`.
+  The builder regenerates the three CSVs byte-identically, and `cluster_bootstrap_d3.py` run on them
+  reproduces `results/stats/cluster_bootstrap_{C1c,C4,C5}.json` exactly.
+- Documentation references to purged or private material now state that heavy artefacts and private
+  material are available from the author on request, and that the conference paper lives outside git.
+- Ignore rules and environment notes follow in a separate commit.

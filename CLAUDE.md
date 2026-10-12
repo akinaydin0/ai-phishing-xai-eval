@@ -150,7 +150,12 @@ caveat 6. Heavy artefacts are restored on the second machine from the verified `
 - A pre-registered family-cluster bootstrap was run for C1c / C4 / C5 (`results/stats/cluster_bootstrap_*.json`).
   C1c and C4 still exclude 0 and C5 still includes 0. Design effects are 0.96 / 1.29 / 1.27.
 
-**Next:** DeSE paper finalisation (deadlines: item 8 below).
+**Public version (2026-10-12):** this repository is built from a rewritten history (private material
+purged, two redactions, tool-generated trailers removed). See decisions.md (2026-10-12 HISTORY
+REWRITE) and `notes/history_rewrite_2026-10-12_commit_map.txt` for old → new commit hashes.
+
+**Next:** DeSE paper finalisation (deadlines: item 8 below); public release once README, LICENSE,
+DATA.md and CITATION.cff exist.
 
 > **Standing rule:** every task's final commit updates this Current Phase section.
 
